@@ -3,7 +3,7 @@
 <properties>
 	<comment>ConvertToXml</comment>
 	
-	<entry key="mode">fileChangeMonitor</entry>
+	<entry key="mode">jarClassSearcher</entry>
 	
 	<!--
 		########################################################
@@ -106,31 +106,17 @@
 	
 
 	<!--
-#################### DEBUG SETTINGS ####################
+	#################### JAR CLASS SEARCHER ####################
 	-->
 	
-	<!--
-	Print exception trace
-	-->
-	<entry key="log.trace">true</entry>
-
-	<!--
-	Debug sql
-	-->
-	<entry key="log.query">true</entry>
+	<entry key="searcher.class">org.jboss.deployers.plugins.deployers.DeployersImpl</entry>
 	
-	<!--
-	Debug transaction
-	-->
-	<entry key="log.tx">true</entry>
-
-	<!--
-	Debug classpath-->
+	<entry key="searcher.class.folder">F:/kylin/jboss-eap-5.1/jboss-as</entry>
 	
-	<entry key="log.classpath">true</entry>
    <!--	
-	#################### TRANSACTION CONFIG ####################
+	#################### FILE CHANGE MONITOR ####################
 	-->
+	
 	<entry key="monitorFolder">F:/kylin/src/home/fileChangeMonitior</entry>
 	
 </properties>
