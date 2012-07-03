@@ -1,6 +1,7 @@
 package com.kylin.tools.startup;
 
 import java.io.File;
+import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.net.MalformedURLException;
@@ -17,7 +18,7 @@ public class ToolClassLoader extends URLClassLoader {
 	
 	private static final Logger logger = Logger.getLogger(ToolClassLoader.class);
 	
-	protected static final Class[] types = { ToolProperties.class};
+	protected static final Class[] types = { ToolProperties.class, ToolConsole.class};
 
 	public ToolClassLoader(URL u) {
 		super(new URL[] { u });
@@ -27,20 +28,22 @@ public class ToolClassLoader extends URLClassLoader {
 		super(new URL[] { });
 	}
 
-	public Tool getMigration(ToolProperties props) throws Throwable {
+	public Tool getMigration(ToolProperties props, String conf) throws Throwable {
 		
-		Map<String, String> map = loadTools();
+		Map<String, String> map = loadTools(conf);
 		
-		String cls = map.get(props.getProperty("mode"));
+		ToolConsole console = new ToolConsole(props.getProperty("mode"));
+		
+		String cls = console.getToolClass(props, map);
 		
 		logger.info("Loading Class: " + cls);
 		
-		return (Tool) loadClass(cls).getConstructor(types).newInstance(new Object[] { props});
+		return (Tool) loadClass(cls).getConstructor(types).newInstance(new Object[] { props, console});
 	}
 	
-	private Map loadTools() throws IOException {
+	private Map loadTools(String conf) throws IOException {
 		
-		InputStream in = ToolClassLoader.class.getResourceAsStream("tools.properties");
+		InputStream in = new FileInputStream(new File(conf));
 		
 		Properties prop = new Properties();
 		
@@ -52,7 +55,8 @@ public class ToolClassLoader extends URLClassLoader {
 	}
 	
 	public static void main(String[] args) throws IOException {
-		new ToolClassLoader().loadTools();
+		Map<String, String> map = new ToolClassLoader().loadTools("lib/conf/tools.properties");
+		System.out.println(map);
 	}
 
 	protected void loadStartUpJar(String name) throws MalformedURLException {

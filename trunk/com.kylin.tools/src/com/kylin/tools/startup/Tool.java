@@ -17,6 +17,8 @@ public abstract class Tool {
 	
 	protected static final String TOOL_BASE = "lib";
 	
+	protected static final String TOOL_CONF_FILE = "lib/conf/tools.properties";
+	
 	protected static final String DEPENDENCY_JAR_FOLDER ="lib/jars";
 	
 	protected static final String STARTUP_JAR_NAME = "lib/lib.jar";
@@ -28,6 +30,10 @@ public abstract class Tool {
 		// validate migration log4j configuration file exist
 		if(!(new File(TOOL_LOGGER_FILE).exists())) {
 			throw new RuntimeException(new File(TOOL_LOGGER_FILE).getAbsolutePath() + " doesn't exists");
+		}
+		
+		if(!(new File(TOOL_CONF_FILE).exists())) {
+			throw new RuntimeException(new File(TOOL_CONF_FILE).getAbsolutePath() + " doesn't exists");
 		}
 		
 		// validate migration dependency file exist
@@ -53,7 +59,7 @@ public abstract class Tool {
 		try {
 //			argsValidation(args);
 			displayDebugInfo();
-			start(TOOL_CORE_FILE, "");
+			start(TOOL_CORE_FILE, TOOL_CONF_FILE);
 		} catch (Throwable t) {
 			logger.error("IPCMigration Start Error", t);
 		}
@@ -75,7 +81,7 @@ public abstract class Tool {
 		}
 	}
 
-	private static void start(String path, String option) throws Throwable {
+	private static void start(String path, String conf) throws Throwable {
 		
 		logger.info("Tools Start");
 		
@@ -83,7 +89,7 @@ public abstract class Tool {
 		
 		ToolClassLoader classloader = getClassLoader(props);
 				
-		Tool tool = classloader.getMigration(props);
+		Tool tool = classloader.getMigration(props, conf);
 		
 		tool.execute();
 	}

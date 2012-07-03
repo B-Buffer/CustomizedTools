@@ -1,18 +1,49 @@
 package com.kylin.tools;
 
+import java.io.File;
+
+import org.apache.log4j.Logger;
+
+import com.kylin.tools.filechangemonitor.FileChangeHandler;
+import com.kylin.tools.filechangemonitor.FileChangeListener;
+import com.kylin.tools.filechangemonitor.IFileChangeHandler;
+import com.kylin.tools.filechangemonitor.IFileChangeListener;
+import com.kylin.tools.startup.ToolConsole;
 import com.kylin.tools.startup.ToolProperties;
 
 public class FileChangeMonitor extends AbstractTools{
+	
+	private static final Logger logger = Logger.getLogger(FileChangeMonitor.class);
 
-	public FileChangeMonitor(ToolProperties props) {
-		super(props);
-		// TODO Auto-generated constructor stub
+	public FileChangeMonitor(ToolProperties props, ToolConsole console) {
+		super(props, console);
 	}
 
-	@Override
 	public void execute() throws Throwable {
-		// TODO Auto-generated method stub
 		
+		final String monitorFolder = props.getProperty("monitorFolder", true);
+		
+		String prompt = "FileChangeMonitor Satrting, monitor on " + monitorFolder ;
+		
+		logger.info(prompt);
+		
+		console.prompt(prompt);
+		
+		new Thread(new Runnable(){
+
+			public void run() {
+				IFileChangeListener listener = new FileChangeListener(console);
+				IFileChangeHandler handler = new FileChangeHandler();
+				while(true){
+					listener.addListener(handler, new File(monitorFolder));
+					try {
+						Thread.sleep(50);
+					} catch (InterruptedException e) {
+						logger.error(e);
+					}
+				}
+			}
+		}).start();
 	}
 
 }

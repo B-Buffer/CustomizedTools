@@ -3,13 +3,13 @@
 <properties>
 	<comment>ConvertToXml</comment>
 	
-	<entry key="mode">jarClassSearcher</entry>
+	<entry key="mode">fileChangeMonitor</entry>
 	
 	<!--
-########################################################
-	NOTE: All paths MUST be entered with forward
-	slashes (/) irrespective of the OS          
-########################################################
+		########################################################
+			NOTE: All paths MUST be entered with forward
+			slashes (/) irrespective of the OS          
+		########################################################
 	-->
 	
 	<!--
@@ -128,34 +128,9 @@
 	Debug classpath-->
 	
 	<entry key="log.classpath">true</entry>
-<!--	
+   <!--	
 	#################### TRANSACTION CONFIG ####################
 	-->
-	
-	<entry key="migrate.delete.support">false</entry>
-	
-	<entry key="migrate.tx">true</entry>
-		
-	<entry key="migrate.pageSize">100000</entry>
-	
-	<entry key="migrate.persist.thread.number">10</entry>
-	
-	<entry key="migrate.produce.thread.number">10</entry>
-	
-	<entry key="migrate.threshold.queue.capacity">100</entry>
-	
-	<entry key="migrate.batch">true</entry>
-	<entry key="migrate.batch.default">100</entry>	
-	<entry key="migrate.batch.order">100</entry>	
-	<entry key="migrate.batch.plan">5</entry>	
-	<entry key="migrate.batch.pc">100</entry>	
-	<entry key="migrate.batch.orchSubject">100</entry>	
-	<entry key="migrate.batch.audit">4</entry>
-	
-	<entry key="migrate.audit.plan">true</entry>
-	<entry key="migrate.audit.order">true</entry>
-	<entry key="migrate.audit.pc">true</entry>
-	<entry key="migrate.audit.metada">true</entry>
-	
+	<entry key="monitorFolder">F:/kylin/src/home/fileChangeMonitior</entry>
 	
 </properties>
