@@ -3,7 +3,7 @@
 <properties>
 	<comment>ConvertToXml</comment>
 	
-	<entry key="mode">jarClassSearcher</entry>
+	<entry key="mode">dbConnectionTester</entry>
 	
 	<!--
 		########################################################
@@ -13,98 +13,14 @@
 	-->
 	
 	<!--
-	######################################################
-	#iProcess Conductor database Reference configuration # 
-	######################################################
+	#################### DB CONNECTION TESTER ###################
 	-->
 	
-	<!--
-	iProcess Conductor database user(Old version)
-	'migrate.db.old.password' is not mandatory and if not provided will be prompted by the utility when required
-	-->
-	<entry key="migrate.db.old.user">IPCUSERDNA</entry>
-	<entry key="migrate.db.old.password">tibco</entry>
-	<entry key="migrate.db.old.url">jdbc:oracle:thin:@//192.168.68.93:1521/ipc113</entry>
-	<entry key="migrate.db.old.driverClass">oracle.jdbc.OracleDriver</entry>
-
+	<entry key="tester.db.driverClass">oracle.jdbc.OracleDriver</entry>
+	<entry key="tester.db.url">jdbc:oracle:thin:@//10.66.129.154:1521/JBOSS</entry>
+	<entry key="tester.db.user">GSSTEST</entry>
+	<entry key="tester.db.password">redhat</entry>
 	
-	<!--
-	Optional
-	The order ref of the order(s) to be migrated.
-	Multiple orders should be separated by semicolon (;)
-	If no value, no orders to be migrated
-	If all orders in the Old version iPC database are to be migrated, use (*)
-	for e.g. migrate.orderrefs=*
-	You can use (*) as wild char
-	for e.g. migrate.orderrefs=orderref*  	
-	-->
-	<entry key="migrate.orderrefs">*</entry>
-	
-	<!--
-	Limit orders' status.
-	multiple values should be separated by semicolon (;). 
-	No value or (*) mean no limit. 	
-	-->
-	<entry key="migrate.order.status"></entry>
-	
-	<!--
-	Limit orders' status change time after. 
-	No value mean no limit. 2000-12-14T07:31:00
-	-->
-	
-	<entry key="migrate.order.statusChanged.after"></entry>
-	
-	<!--
-	Optional
-	The plan unique id of the plan(s) to be migrated.
-	Multiple plans should be separated by semicolon (;)
-	If no value, no plans to be migrate
-	If all plans in the Old version iPC database are to be migrated, use (*)
-	for e.g. migrate.plans=*
-	You can use (*) as wild char
-	for e.g. migrate.plans=plan*  
-	
-	When both delete.orderrefs and delete.plans are supplied, the
-	orders will be deleted first followed by the plansmuep110_*;ORCH-muep110*-->
-	
-	<entry key="migrate.plans">*</entry>
-	
-	<!--
-	Limit plans' status
-	multiple values should be separated by semicolon (;) 
-	No value or (*) mean no limit. 	*-->
-	
-	<entry key="migrate.plans.status"></entry>
-	
-	<!--
-	Limit plans' status change time before. No value mean no limit.2011-12-14T07:31:00 -->
-	
-	<entry key="migrate.plans.statusChanged.after"></entry>
-	
-	<!--
-	Optional
-	The process component unique id of the process
-	components(s) to be migrated.
-	Multiple process components should be separated by semicolon (;)
-	If no value, no components to be migrate
-	If all process components in the Old version iPC database are to be migrated, use (*)
-	for e.g. migrate.pcs=*
-	You can use (*) as wild char
-	for e.g. migrate.pcs=PC*  
-	
-	When both delete.orderrefs, delete.plans and delete.pcs
-	are supplied, the orders will be deleted first followed
-	by the plans and finally the process components	-->
-	
-	<entry key="migrate.pcs">*</entry>
-	
-	<!--
-	Limit process components' create time before. No value mean no limit. 2011-12-14T07:31:00-->
-	
-	<entry key="migrate.pcs.createdDate.after"></entry>
-	
-	
-
 	<!--
 	#################### JAR CLASS SEARCHER ####################
 	-->

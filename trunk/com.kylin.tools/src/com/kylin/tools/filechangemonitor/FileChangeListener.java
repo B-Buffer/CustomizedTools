@@ -6,13 +6,13 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
-import com.kylin.tools.startup.ToolConsole;
+import com.kylin.tools.startup.ToolsConsole;
 
 public class FileChangeListener implements IFileChangeListener {
 	
-	private ToolConsole console;
+	private ToolsConsole console;
 	
-	public FileChangeListener(ToolConsole console) {
+	public FileChangeListener(ToolsConsole console) {
 		super();
 		this.console = console;
 	}

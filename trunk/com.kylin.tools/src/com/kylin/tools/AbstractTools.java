@@ -1,16 +1,16 @@
 package com.kylin.tools;
 
-import com.kylin.tools.startup.Tool;
-import com.kylin.tools.startup.ToolConsole;
-import com.kylin.tools.startup.ToolProperties;
+import com.kylin.tools.startup.Tools;
+import com.kylin.tools.startup.ToolsConsole;
+import com.kylin.tools.startup.ToolsProperties;
 
-public abstract class AbstractTools extends Tool {
+public abstract class AbstractTools extends Tools {
 	
-	protected ToolProperties props;
+	protected ToolsProperties props;
 	
-	protected ToolConsole console;
+	protected ToolsConsole console;
 	
-	public AbstractTools(ToolProperties props, ToolConsole console) {
+	public AbstractTools(ToolsProperties props, ToolsConsole console) {
 		super();
 		this.props = props;
 		this.console = console;

@@ -1,11 +1,11 @@
 package com.kylin.tools;
 
-import com.kylin.tools.startup.ToolConsole;
-import com.kylin.tools.startup.ToolProperties;
+import com.kylin.tools.startup.ToolsConsole;
+import com.kylin.tools.startup.ToolsProperties;
 
 public class FileSearcher extends AbstractTools {
 
-	public FileSearcher(ToolProperties props, ToolConsole console) {
+	public FileSearcher(ToolsProperties props, ToolsConsole console) {
 		super(props, console);
 		// TODO Auto-generated constructor stub
 	}

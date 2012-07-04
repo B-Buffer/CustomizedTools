@@ -13,14 +13,14 @@ import java.util.jar.JarFile;
 import org.apache.log4j.Logger;
 
 import com.kylin.tools.jarclasssearcher.JarClassSearcherException;
-import com.kylin.tools.startup.ToolConsole;
-import com.kylin.tools.startup.ToolProperties;
+import com.kylin.tools.startup.ToolsConsole;
+import com.kylin.tools.startup.ToolsProperties;
 
 public class JarClassSearcher extends AbstractTools {
 
 	private static final Logger logger = Logger.getLogger(JarClassSearcher.class);
 	
-	public JarClassSearcher(ToolProperties props, ToolConsole console) {
+	public JarClassSearcher(ToolsProperties props, ToolsConsole console) {
 		super(props, console);
 	}
 

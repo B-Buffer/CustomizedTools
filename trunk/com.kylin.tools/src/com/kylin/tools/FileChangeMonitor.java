@@ -8,14 +8,14 @@ import com.kylin.tools.filechangemonitor.FileChangeHandler;
 import com.kylin.tools.filechangemonitor.FileChangeListener;
 import com.kylin.tools.filechangemonitor.IFileChangeHandler;
 import com.kylin.tools.filechangemonitor.IFileChangeListener;
-import com.kylin.tools.startup.ToolConsole;
-import com.kylin.tools.startup.ToolProperties;
+import com.kylin.tools.startup.ToolsConsole;
+import com.kylin.tools.startup.ToolsProperties;
 
 public class FileChangeMonitor extends AbstractTools{
 	
 	private static final Logger logger = Logger.getLogger(FileChangeMonitor.class);
 
-	public FileChangeMonitor(ToolProperties props, ToolConsole console) {
+	public FileChangeMonitor(ToolsProperties props, ToolsConsole console) {
 		super(props, console);
 	}
 
