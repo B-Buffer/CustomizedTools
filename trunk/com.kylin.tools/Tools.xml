@@ -3,7 +3,7 @@
 <properties>
 	<comment>ConvertToXml</comment>
 	
-	<entry key="mode">dbConnectionTester</entry>
+	<entry key="mode">jarClassSearcher</entry>
 	
 	<!--
 		########################################################

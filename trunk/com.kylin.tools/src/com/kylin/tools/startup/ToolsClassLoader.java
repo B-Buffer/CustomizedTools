@@ -29,35 +29,21 @@ public class ToolsClassLoader extends URLClassLoader {
 	}
 
 	public Tools getMigration(ToolsProperties props, String conf) throws Throwable {
-		
-		Map<String, String> map = loadTools(conf);
-		
+				
 		ToolsConsole console = new ToolsConsole(props.getProperty("mode"));
 		
-		String cls = console.getToolClass(props, map);
+		String cls = console.getToolClass(props, conf);
 		
 		logger.info("Loading Class: " + cls);
 		
 		return (Tools) loadClass(cls).getConstructor(types).newInstance(new Object[] { props, console});
 	}
 	
-	private Map loadTools(String conf) throws IOException {
-		
-		InputStream in = new FileInputStream(new File(conf));
-		
-		Properties prop = new Properties();
-		
-		prop.load(in);
-		
-		in.close();
-		
-		return prop;
-	}
 	
-	public static void main(String[] args) throws IOException {
-		Map<String, String> map = new ToolsClassLoader().loadTools("lib/conf/tools.properties");
-		System.out.println(map);
-	}
+//	public static void main(String[] args) throws IOException {
+//		Map<String, String> map = new ToolsClassLoader().loadTools("lib/conf/tools.properties");
+//		System.out.println(map);
+//	}
 
 	protected void loadStartUpJar(String name) throws MalformedURLException {
 		
