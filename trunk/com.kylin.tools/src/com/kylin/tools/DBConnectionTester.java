@@ -47,7 +47,13 @@ public class DBConnectionTester extends AbstractTools {
 			stmt.execute(TABLE_DROP);
 			console.prompt("\nDrop Table Success");
 			
-		} finally {
+		} catch (Exception e) {
+			
+			console.prompt("\n Test Failed, due to " + e.getMessage() );
+			
+			e.printStackTrace();
+			
+		}finally {
 			if(rs != null) {
 				rs.close();
 			}

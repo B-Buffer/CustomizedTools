@@ -54,7 +54,7 @@ public class ToolsConsole {
 		throw new RuntimeException("can not find the tool class");
 	}
 
-	private void validateFromConsole(Map<String, String> map) {
+	private void validateFromConsole(Map<String, String> map) throws IOException {
 		
 		String ending = ".prompt";
 		
@@ -91,14 +91,29 @@ public class ToolsConsole {
 		
 	}
 	
-	private void validate(List<ToolsConsoleEntity> list) {
+	private void validate(List<ToolsConsoleEntity> list) throws IOException {
 		
 		Set<String> set = new HashSet<String>();
+		String selected = null;
+		StringBuffer sb = new StringBuffer();
+		sb.append("Select: ");
 		
 		for(int i = 0 ; i < list.size() ; i ++) {
 			ToolsConsoleEntity entity = list.get(i);
-			prompt();
+			sb.append(entity.getId() + ". " + entity.getMode() + " ");
+			if(entity.isSelected()){
+				selected = entity.getId() + "";
+			}
+			set.add(entity.getId() + "");
+			prompt(entity.toString());
 		}
+		
+		if(null != selected) {
+			sb.append("[" + selected + "]");
+		}
+		
+		UserInput input = new UserInput(set, sb.toString(), selected);
+		input.validateMode();
 	}
 
 	private Map loadTools(String conf) throws IOException {
@@ -123,14 +138,62 @@ public class ToolsConsole {
 		private Set<String> set ;
 		
 		private String prompt;
+		
+		private String selected ;
 
-		public UserInput(Set<String> set, String prompt) {
+		public UserInput(Set<String> set, String prompt, String selected ) {
 			super();
 			this.set = set;
 			this.prompt = prompt;
+			this.selected = selected;
 		}
 		
-		public String getInput() throws IOException {
+		public void validateMode() throws IOException {
+			
+			while(true) {
+				String mode = getInput();
+				
+				String prompt = "You selected " + getMode(mode) + ", yes/no [yes]";
+				
+				prompt(prompt);
+				
+				BufferedReader bufferRead = new BufferedReader(new InputStreamReader(System.in));
+				String input = bufferRead.readLine();
+				
+				if(input.toLowerCase().equals("yes") || input.toLowerCase().equals("y") || input.equals("")) {
+					setSelectedMode(mode);
+					break;
+				}
+			}
+			
+		}
+		
+		private void setSelectedMode(String input) {
+			
+			for(int i = 0 ; i < list.size() ; i ++) {
+				if((list.get(i).getId() + "").equals(input)){
+					setMode(list.get(i).getMode());
+					list.get(i).setSelected(true);
+				}else {
+					list.get(i).setSelected(false);
+				}
+			}
+		}
+
+		private String getMode(String input) {
+			
+			String mode = null;
+			
+			for(int i = 0 ; i < list.size() ; i ++) {
+				if((list.get(i).getId() + "").equals(input)){
+					mode = list.get(i).getMode();
+				}
+			}
+			
+			return mode;
+		}
+
+		private String getInput() throws IOException {
 			
 			String input = null;
 			
@@ -142,6 +205,11 @@ public class ToolsConsole {
 				input = bufferRead.readLine();
 			    
 			    if(set.contains(input)) {
+			    	break;
+			    }
+			    
+			    if((null != selected) && input.equals("")){
+			    	input = selected;
 			    	break;
 			    }
 			}
