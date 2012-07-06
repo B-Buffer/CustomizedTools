@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE properties SYSTEM "http://java.sun.com/dtd/properties.dtd">
+<properties>
+	<comment>ConvertToXml</comment>
+	
+	<entry key="mode">jarClassSearcher</entry>
+	
+	<!--
+		########################################################
+			NOTE: All paths MUST be entered with forward
+			slashes (/) irrespective of the OS          
+		########################################################
+	-->
+	
+	<!--
+	#################### DB CONNECTION TESTER ###################
+	-->
+	
+	<entry key="tester.db.driverClass">oracle.jdbc.OracleDriver</entry>
+	<entry key="tester.db.url">jdbc:oracle:thin:@//10.66.129.154:1521/JBOSS</entry>
+	<entry key="tester.db.user">GSSTEST</entry>
+	<entry key="tester.db.password">redhat</entry>
+	
+	<!--
+	#################### JAR CLASS SEARCHER ####################
+	-->
+	
+	<entry key="searcher.class">org.jboss.deployers.plugins.deployers.DeployersImpl</entry>
+	
+	<entry key="searcher.class.folder">F:/kylin/jboss-eap-5.1/jboss-as</entry>
+	
+   <!--	
+	#################### FILE CHANGE MONITOR ####################
+	-->
+	
+	<entry key="monitorFolder">F:/kylin/src/home/fileChangeMonitior</entry>
+	
+</properties>
