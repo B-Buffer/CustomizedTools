@@ -23,6 +23,11 @@ public class FileChangeMonitor extends AbstractTools{
 		
 		final String monitorFolder = props.getProperty("monitorFolder", true);
 		
+		if(!new File(monitorFolder).isDirectory() || !new File(monitorFolder).exists()) {
+			console.prompt("  FileChangeMonitor exit, due to folder '" + monitorFolder + "' does not exist");
+			Runtime.getRuntime().exit(0);
+		}
+		
 		String prompt = "FileChangeMonitor Satrting, monitor on " + monitorFolder ;
 		
 		logger.info(prompt);

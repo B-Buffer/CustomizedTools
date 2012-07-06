@@ -49,7 +49,7 @@ public class DBConnectionTester extends AbstractTools {
 			
 		} catch (Exception e) {
 			
-			console.prompt("\n Test Failed, due to " + e.getMessage() );
+			console.prompt("\n Test Failed, due to " + e.getMessage()  + "\n");
 			
 			e.printStackTrace();
 			

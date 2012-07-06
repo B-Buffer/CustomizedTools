@@ -26,18 +26,25 @@ public class JarClassSearcher extends AbstractTools {
 
 	public void execute() throws Throwable {
 		
-		String prompt = "\nSearching '" + props.getProperty("searcher.class", true) + "' Under Directory " + props.getProperty("searcher.class.folder", true) + "\n";
+		try {
+			String prompt = "\nSearching '" + props.getProperty("searcher.class", true) + "' Under Directory " + props.getProperty("searcher.class.folder", true) + "\n";
 
-		logger.info(prompt);
-		
-		console.prompt(prompt);
-		
-		Set<JarFile> jarFileSet = new HashSet<JarFile>();		
-		JarFileCollection(new File(props.getProperty("searcher.class.folder")), jarFileSet);
-		
-		List<String> result = getResultJars(jarFileSet, props.getProperty("searcher.class"));
-		
-		printToConsole(result);
+			logger.info(prompt);
+			
+			console.prompt(prompt);
+			
+			Set<JarFile> jarFileSet = new HashSet<JarFile>();		
+			JarFileCollection(new File(props.getProperty("searcher.class.folder")), jarFileSet);
+			
+			List<String> result = getResultJars(jarFileSet, props.getProperty("searcher.class"));
+			
+			printToConsole(result);
+		} catch (Exception e) {
+			
+			console.prompt("Unexpected Exception Returned, " + e.getMessage() + "\n");
+			
+			e.printStackTrace();
+		}
 	}
 
 	private void printToConsole(List<String> result) {

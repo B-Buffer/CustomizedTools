@@ -1,0 +1,60 @@
+<?xml version="1.0"?>
+  
+<project name="customizedTools" default="deploy" basedir="..">
+  
+	<property name="app.dir" value="${basedir}/customizedTools" />
+	<property name="conf.dir" value="${app.dir}/conf" />
+
+	<property name="target.dir" value="${app.dir}/target" />
+	<property name="target.classes.dir" value="${target.dir}/classes" />
+	<property name="target.dependency.dir" value="${target.dir}/dependency" />
+	
+	<property name="dist.dir" value="${app.dir}/dist" />
+
+	<target name="validateproperties" >
+		<echo>Check the following parameter is been setting correctly</echo>
+		<echo>app.dir: ${app.dir}</echo>
+		<echo>conf.dir: ${conf.dir}</echo>
+		<echo>target.dir: ${target.dir}</echo>
+		<echo>target.classes.dir: ${target.classes.dir}</echo>
+		<echo>target.dependency.dir: ${target.dependency.dir}</echo>
+		<echo>dist.dir: ${dist.dir}</echo>
+	</target>
+
+	<target name="clean" depends="validateproperties">
+		<delete dir="${dist.dir}" />
+	</target>
+	
+	<target name="prepare" depends="clean">
+		<mkdir dir="${dist.dir}" />
+		<mkdir dir="${dist.dir}/lib" />
+	</target> 
+	
+	<target name="jar" depends="prepare" description="generate run.jar">
+		<jar jarfile="${dist.dir}/run.jar">
+			<fileset dir="${target.classes.dir}">
+			<include name="com/customized/tools/startup/*.class" />
+			</fileset>
+		</jar>
+	</target>
+	
+	<target name="deploy" depends="jar">
+		
+		<copy todir="${dist.dir}/lib" >
+			<fileset dir="${app.dir}/lib" includes="**"/>
+		</copy>
+		
+		<copy todir="${dist.dir}" >
+			<fileset dir="${conf.dir}" includes="*"/>
+		</copy>
+		
+		<copy todir="${dist.dir}/lib/jars" >
+			<fileset dir="${target.dir}" includes="customizedTools-1.0.jar"/>
+			<fileset dir="${target.dependency.dir}" includes="*.jar"/>
+		</copy>
+		
+		<delete file="${dist.dir}/lib/jars/junit-4.1.jar" />
+		
+	</target>
+  
+</project> 
