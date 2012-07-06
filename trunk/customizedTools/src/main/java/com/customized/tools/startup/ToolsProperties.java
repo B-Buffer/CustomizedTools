@@ -16,7 +16,7 @@ public class ToolsProperties extends Properties {
 	public void debugPropsInfo() {
 		logger.debug("");
 		if (logger.isDebugEnabled()) {
-			logger.debug("IpcMigrationProperties info:");
+			logger.debug("Tools properties info:");
 			String key = null;
 			Iterator iterator = keySet().iterator();
 			while (iterator.hasNext()) {

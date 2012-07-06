@@ -13,20 +13,35 @@ public abstract class Tools {
 
 	private static final Logger logger = Logger.getLogger(Tools.class);
 	
-	protected static final String TOOL_LOGGER_FILE = "Tool-log4j.xml";
+	protected static String baseDir = null; 
 	
-	protected static final String TOOL_BASE = "lib";
+	protected static  String TOOL_LOGGER_FILE = null;
 	
-	protected static final String TOOL_CONF_FILE = "lib/conf/tools.properties";
+	protected static  String TOOL_BASE = null;
 	
-	protected static final String DEPENDENCY_JAR_FOLDER ="lib/jars";
+	protected static  String TOOL_CONF_FILE = null;
+	
+	protected static  String DEPENDENCY_JAR_FOLDER = null;
 	
 //	protected static final String STARTUP_JAR_NAME = "lib/lib.jar";
 	
-	protected static final String TOOL_CORE_FILE = "Tools.xml";
+	protected  static String TOOL_CORE_FILE = null;
 	
 		
 	static{
+		
+		if(System.getProperty("cts.baseDir") != null) {
+			baseDir = System.getProperty("cts.baseDir");
+		} else {
+			
+		}
+		
+		TOOL_LOGGER_FILE = baseDir + "/Tool-log4j.xml";
+		TOOL_BASE = baseDir + "/lib";
+		TOOL_CONF_FILE = baseDir + "/lib/conf/tools.properties";
+		DEPENDENCY_JAR_FOLDER = baseDir + "/lib/jars";
+		TOOL_CORE_FILE = baseDir + "/Tools.xml";
+		
 		// validate migration log4j configuration file exist
 		if(!(new File(TOOL_LOGGER_FILE).exists())) {
 			throw new RuntimeException(new File(TOOL_LOGGER_FILE).getAbsolutePath() + " doesn't exists");
