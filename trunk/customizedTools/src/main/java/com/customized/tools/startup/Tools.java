@@ -13,86 +13,74 @@ public abstract class Tools {
 
 	private static final Logger logger = Logger.getLogger(Tools.class);
 	
+	private static final String TOOLS_VERSION = "CustomizedTools 'KylinSoong' 1.0.0";
+	
 	protected static String baseDir = null; 
 	
-	protected static  String TOOL_LOGGER_FILE = null;
+	protected static  String loggerFile = null;
 	
 	protected static  String TOOL_BASE = null;
 	
-	protected static  String TOOL_CONF_FILE = null;
+	protected static  String toolsConf = null;
 	
-	protected static  String DEPENDENCY_JAR_FOLDER = null;
+	protected static  String jarFolder = null;
 	
-//	protected static final String STARTUP_JAR_NAME = "lib/lib.jar";
-	
-	protected  static String TOOL_CORE_FILE = null;
-	
+	protected static String coreFile = null;
 		
+	protected static String logDir = null;
+	
 	static{
 		
 		if(System.getProperty("cts.baseDir") != null) {
 			baseDir = System.getProperty("cts.baseDir");
 		} else {
+			baseDir = System.getProperty("CTS_HOME");
+		}
+		
+		if(baseDir == null) {
+			throw new ToolsStartException("CTS_HOME not set correctly");
+		} 
+		
+		loggerFile = baseDir + "/Tool-log4j.xml";
+		if (!(new File(loggerFile).exists())) {
+			throw new ToolsStartException(loggerFile + " doesn't exists");
+		}
 			
+		toolsConf = baseDir + "/lib/conf/tools.properties";
+		if(!(new File(toolsConf).exists())) {
+			throw new ToolsStartException(toolsConf + " doesn't exists");
+		}
+				
+		jarFolder = baseDir + "/lib/jars";
+		if(!(new File(jarFolder).exists())) {
+			throw new ToolsStartException(jarFolder + " doesn't exists");
 		}
 		
-		TOOL_LOGGER_FILE = baseDir + "/Tool-log4j.xml";
-		TOOL_BASE = baseDir + "/lib";
-		TOOL_CONF_FILE = baseDir + "/lib/conf/tools.properties";
-		DEPENDENCY_JAR_FOLDER = baseDir + "/lib/jars";
-		TOOL_CORE_FILE = baseDir + "/Tools.xml";
-		
-		// validate migration log4j configuration file exist
-		if(!(new File(TOOL_LOGGER_FILE).exists())) {
-			throw new RuntimeException(new File(TOOL_LOGGER_FILE).getAbsolutePath() + " doesn't exists");
+		coreFile = baseDir + "/Tools.xml";
+		if(!(new File(coreFile).exists())) {
+			throw new ToolsStartException(coreFile + " doesn't exists");
 		}
 		
-		if(!(new File(TOOL_CONF_FILE).exists())) {
-			throw new RuntimeException(new File(TOOL_CONF_FILE).getAbsolutePath() + " doesn't exists");
+		logDir = baseDir + "/log";
+		if(!(new File(logDir).exists())) {
+			try {
+				new File(logDir).createNewFile();
+			} catch (IOException e) {
+				throw new ToolsStartException("create " + logDir + " error", e);
+			}
 		}
 		
-		// validate migration dependency file exist
-		if(!(new File(DEPENDENCY_JAR_FOLDER).exists())) {
-			throw new RuntimeException(new File(DEPENDENCY_JAR_FOLDER).getAbsolutePath() + " doesn't exists");
-		}
-		
-		// validate migration start up file exist
-//		if(!(new File(STARTUP_JAR_NAME).exists())) {
-//			throw new RuntimeException(new File(STARTUP_JAR_NAME).getAbsolutePath() + " doesn't exists");
-//		}
-		
-		// validate migration core configuration file exist
-		if(!(new File(TOOL_CORE_FILE).exists())) {
-			throw new RuntimeException(new File(TOOL_CORE_FILE).getAbsolutePath() + " doesn't exists");
-		}
-		
+		System.setProperty("cts.log.dir", logDir);
 		// configure migration log4j
-		DOMConfigurator.configure(TOOL_LOGGER_FILE);
+		DOMConfigurator.configure(loggerFile);
 	}
 	
 	public static void main(String[] args) {
 		try {
-//			argsValidation(args);
 			displayDebugInfo();
-			start(TOOL_CORE_FILE, TOOL_CONF_FILE);
+			start(coreFile, toolsConf);
 		} catch (Throwable t) {
 			logger.error("IPCMigration Start Error", t);
-		}
-	}
-
-	private static void argsValidation(String[] args) {
-		if(args.length < 1) {
-			System.out.println("\n\nUSAGE: "+ "com.tibco.ipc.IPCMigration <Selection>\n");
-			System.out.println("<-d> Default Selection, first execute migration");
-			System.out.println("<-p> Prepare Selection, pre-operation of migration, optional");
-			System.out.println("<-r> Recover Selection, if the migration cursh you want to migrate continuely");
-			System.out.println("<-c> Clean Selection, clean the log item when migration complete");
-			System.exit(0);
-		}	
-		if(args[0].equals("-d") || args[0].equals("-p") || args[0].equals("-r")  || args[0].equals("-c")){
-			System.out.println();
-		} else {
-			throw new RuntimeException("Augument paramters invalid");
 		}
 	}
 
@@ -128,10 +116,8 @@ public abstract class Tools {
 		logger.info("Create Tools Classloader");
 		
 		ToolsClassLoader ipcl = new ToolsClassLoader();
-		
-//		ipcl.loadStartUpJar(STARTUP_JAR_NAME);
-		
-		ipcl.loadDependencyJars(DEPENDENCY_JAR_FOLDER);
+				
+		ipcl.loadDependencyJars(jarFolder);
 		
 		Thread.currentThread().setContextClassLoader(ipcl);
 		
@@ -144,15 +130,28 @@ public abstract class Tools {
 	
 	private static void displayDebugInfo() {
 		
-		 if (logger.isDebugEnabled()) {
-			 	logger.debug("");
-	            logger.debug("displayJavaInfo()");
-	            logger.debug("  java.vendor: " + System.getProperty("java.vendor"));
-	            logger.debug("  java.vm.name: " + System.getProperty("java.vm.name"));
-	            logger.debug("  java.vm.version: " + System.getProperty("java.vm.version"));
-	            logger.debug("  java.version: " + System.getProperty("java.version"));
-	            logger.debug("");
-	       }
+		logger.info(TOOLS_VERSION + " Starting");
+		
+		logger.debug("Customized Tools BaseDir: " + baseDir);
+		
+		logger.debug("Customized Tools Log4j configuration file: " + loggerFile);
+		
+		logger.debug("Customized Tools main configuration file: " + coreFile);
+		
+		logger.debug("Customized Tools properties configuration file: " + toolsConf);
+		
+		logger.debug("Customized Tools jar folder: " + jarFolder);
+		
+		logger.debug("Customized Tools log folder: " + logDir);
+		
+		if (logger.isDebugEnabled()) {
+			logger.debug("displayJavaInfo()");
+			logger.debug("  java.vendor: " + System.getProperty("java.vendor"));
+			logger.debug("  java.vm.name: " + System.getProperty("java.vm.name"));
+			logger.debug("  java.vm.version: " + System.getProperty("java.vm.version"));
+			logger.debug("  java.version: " + System.getProperty("java.version"));
+			logger.debug("");
+		}
 	}
 	
 	public abstract void execute() throws Throwable;

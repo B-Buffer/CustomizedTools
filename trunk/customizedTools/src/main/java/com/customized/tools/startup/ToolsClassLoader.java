@@ -38,12 +38,6 @@ public class ToolsClassLoader extends URLClassLoader {
 		
 		return (Tools) loadClass(cls).getConstructor(types).newInstance(new Object[] { props, console});
 	}
-	
-	
-//	public static void main(String[] args) throws IOException {
-//		Map<String, String> map = new ToolsClassLoader().loadTools("lib/conf/tools.properties");
-//		System.out.println(map);
-//	}
 
 	protected void loadStartUpJar(String name) throws MalformedURLException {
 		
@@ -66,7 +60,7 @@ public class ToolsClassLoader extends URLClassLoader {
 	
 	protected void loadDependencyJars(String folder) throws MalformedURLException {
 		
-		logger.info("load migration dependency jars to classpath");
+		logger.info("load Tools dependency jars to classpath");
 		
 		logger.debug("Recursing into " + folder);
 		
@@ -101,19 +95,19 @@ public class ToolsClassLoader extends URLClassLoader {
 			try {
 				addURL(new URL(s));
 			} catch (MalformedURLException e) {
-				throw new RuntimeException(s + " url is not a well formed url");
+				throw new ToolsStartException(s + " url is not a well formed url");
 			}
 
 		}
 	}
 	
 	protected void logClasspath(ToolsProperties properties) {
-		if(properties.getProperty("log.classpath", "false").equals("true")) {
-			logger.info("Log Classpath is available, loging classpath");
+		if(logger.isDebugEnabled()) {
+			logger.debug("loging classpath");
 			URLClassLoader loader = (URLClassLoader) Thread.currentThread().getContextClassLoader();
 			URL[] urls = loader.getURLs();
 			for (int i = 0; i < urls.length; i++) {
-				logger.info(urls[i].getPath());
+				logger.debug(urls[i].getPath());
 			}
 		}
 	}

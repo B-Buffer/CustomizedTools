@@ -1,13 +1,14 @@
 package com.customized.tools.dbconntest;
 
-public class DBConnectionTesterException extends RuntimeException {
+import com.customized.tools.startup.ToolsException;
+
+public class DBConnectionTesterException extends ToolsException {
 
 	private static final long serialVersionUID = 1L;
 	
-	private String msg;
 	
 	public DBConnectionTesterException(String msg, Throwable t){
-		super(msg, t);
+		super("CTS-DCT",msg, t);
 	}
 
 }

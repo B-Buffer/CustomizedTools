@@ -43,6 +43,8 @@ public class JarClassSearcher extends AbstractTools {
 			
 			console.prompt("Unexpected Exception Returned, " + e.getMessage() + "\n");
 			
+			logger.error(e);
+			
 			e.printStackTrace();
 		}
 	}

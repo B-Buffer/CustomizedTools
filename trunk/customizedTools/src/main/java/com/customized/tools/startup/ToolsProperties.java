@@ -14,7 +14,7 @@ public class ToolsProperties extends Properties {
 	private static final long serialVersionUID = -4468233579411633293L;
 	
 	public void debugPropsInfo() {
-		logger.debug("");
+		logger.debug("------------------");
 		if (logger.isDebugEnabled()) {
 			logger.debug("Tools properties info:");
 			String key = null;
@@ -24,13 +24,13 @@ public class ToolsProperties extends Properties {
 				logger.debug(" " + key + "=" + getProperty(key));
 			}
 		}
-		logger.debug("");
+		logger.debug("------------------");
 	}
 	
 	public String getProperty(String key, boolean checkEmpty) {
 		String val = getProperty(key);
 		if (checkEmpty && (null == val || val.length() == 0)) {
-			throw new RuntimeException(key + " does not fond in Tools.xml");
+			throw new ToolsPropertyException(key + " does not fond in Tools.xml");
 		}
 
 		return val;
@@ -57,35 +57,6 @@ public class ToolsProperties extends Properties {
 				strResult.add(s);
 		}
 		return strResult.toArray(new String[strResult.size()]);
-	}
-
-
-	/**
-	 * @return params[], params[0] driverclass, params[1] connection url, params[2] username, params[3] password
-	 */
-	public String[] getOldVersionConnParams() {
-		
-		String[] params = new String[4];
-		params[0] = getProperty("migrate.db.old.driverClass");
-		params[1] = getProperty("migrate.db.old.url");
-		params[2] = getProperty("migrate.db.old.user");
-		params[3] = getProperty("migrate.db.old.password");
-		
-		return params;
-	}
-	
-	/**
-	 * @return params[], params[0] driverclass, params[1] connection url, params[2] username, params[3] password
-	 */
-	public String[] getNewVersionConnParams() {
-		
-		String[] params = new String[4];
-		params[0] = getProperty("migrate.db.new.driverClass");
-		params[1] = getProperty("migrate.db.new.url");
-		params[2] = getProperty("migrate.db.new.user");
-		params[3] = getProperty("migrate.db.new.password");
-		
-		return params;
-	}
+	}	
 
 }

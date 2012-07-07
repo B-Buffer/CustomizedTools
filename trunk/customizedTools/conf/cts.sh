@@ -66,7 +66,7 @@ fi
 
 CTS_CLASSPATH="$CTS_CLASSPATH:$CTS_HOME/lib/jars/log4j-1.2.16.jar"
 
-JAVA_OPTS="$JAVA_OPTS -Dcts.baseDir=$DIRNAME"
+JAVA_OPTS="$JAVA_OPTS -Dcts.baseDir=$CTS_HOME"
 
 
 # Display our environment

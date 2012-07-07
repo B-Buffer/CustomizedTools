@@ -1,13 +1,12 @@
 package com.customized.tools.jarclasssearcher;
 
-public class JarClassSearcherException extends RuntimeException {
+import com.customized.tools.startup.ToolsException;
+
+public class JarClassSearcherException extends ToolsException {
 
 	private static final long serialVersionUID = -5713164813786309936L;
 	
-	private String msg;
-
 	public JarClassSearcherException(String msg) {
-		super(msg);
-		this.msg = msg;
+		super("CTS-JCS", msg);
 	}
 }
