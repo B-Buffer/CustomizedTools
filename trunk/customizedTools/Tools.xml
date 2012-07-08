@@ -13,6 +13,33 @@
 	-->
 	
 	<!--
+	#################### JMS CONNECTION TESTER ###################
+	-->
+	
+	<!-- 
+	JBoss Messaging - org.jnp.interfaces.NamingContextFactory
+	TIBCO EMS - 
+	 -->
+	<entry key="tester.jms.factory">org.jnp.interfaces.NamingContextFactory</entry>
+	
+	<!-- 
+	JBoss Messaging - jnp://localhost:1099
+	TIBCO EMS - 
+	 -->
+	<entry key="tester.jms.url">jnp://localhost:1099</entry>
+	
+	<!-- 
+	JBoss Messaging - org.jboss.naming:org.jnp.interfaces
+	TIBCO EMS - 
+	 -->
+	<entry key="tester.jms.url.pkgs">org.jboss.naming:org.jnp.interfaces</entry>
+	
+	<entry key="tester.jms.principle">admin</entry>
+	
+	<entry key="tester.jms.credentials">admin</entry>
+	
+	
+	<!--
 	#################### DB CONNECTION TESTER ###################
 	-->
 	

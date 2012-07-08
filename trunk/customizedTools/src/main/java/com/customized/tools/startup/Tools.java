@@ -148,7 +148,9 @@ public abstract class Tools {
 		
 		for(String folder : props.splitProperty("external.classloader.path", ";", false)){
 			logger.info("Load external jars " + folder);
-			ipcl.loadDependencyJars(folder);
+			if(new File(folder).exists() && new File(folder).isDirectory()){
+				ipcl.loadDependencyJars(folder);
+			}
 		}
 		
 		for(String path : props.splitProperty("external.classloader.addr", ";", false)){

@@ -26,6 +26,10 @@ public class ToolsConsole {
 	public void setMode(String mode) {
 		this.mode = mode;
 	}
+	
+	public ToolsConsole() {
+		super();
+	}
 
 	public ToolsConsole(String mode) {
 		super();
