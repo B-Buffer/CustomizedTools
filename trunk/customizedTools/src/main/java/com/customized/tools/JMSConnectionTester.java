@@ -54,7 +54,7 @@ public class JMSConnectionTester extends AbstractTools {
 		Session session = null;
 		
 		try {
-			factory = (QueueConnectionFactory) ctx.lookup("ConnectionFactory");
+			factory = (QueueConnectionFactory) ctx.lookup(props.getProperty("tester.jms.factory.jndiName", true));
 			conn = factory.createConnection();
 			
 			StringBuffer sb = new StringBuffer();
@@ -89,7 +89,7 @@ public class JMSConnectionTester extends AbstractTools {
 			
 			TextMessage message = (TextMessage)consumer.receive(5000);
 			
-			console.prompt("\n  Recieve Message: " + message.getText());
+			console.prompt("\n  Recieve Message From [" + temporaryQueue.getQueueName() + "], Message Context: " + message.getText());
 			
 			console.prompt("\n  JMS Connection Test Success");
 

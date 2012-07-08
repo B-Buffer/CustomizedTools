@@ -17,20 +17,26 @@
 	-->
 	
 	<!-- 
+	JBoss Messaging - ConnectionFactory
+	TIBCO EMS - QueueConnectionFactory
+	 -->
+	<entry key="tester.jms.factory.jndiName">ConnectionFactory</entry>
+	
+	<!-- 
 	JBoss Messaging - org.jnp.interfaces.NamingContextFactory
-	TIBCO EMS - 
+	TIBCO EMS - com.tibco.tibjms.naming.TibjmsInitialContextFactory
 	 -->
 	<entry key="tester.jms.factory">org.jnp.interfaces.NamingContextFactory</entry>
 	
 	<!-- 
 	JBoss Messaging - jnp://localhost:1099
-	TIBCO EMS - 
+	TIBCO EMS - tibjmsnaming://host1:7222
 	 -->
 	<entry key="tester.jms.url">jnp://localhost:1099</entry>
 	
 	<!-- 
 	JBoss Messaging - org.jboss.naming:org.jnp.interfaces
-	TIBCO EMS - 
+	TIBCO EMS - com.tibco.tibjms.naming
 	 -->
 	<entry key="tester.jms.url.pkgs">org.jboss.naming:org.jnp.interfaces</entry>
 	
