@@ -27,7 +27,7 @@
 	
 	<entry key="searcher.class">org.jboss.deployers.plugins.deployers.DeployersImpl</entry>
 	
-	<entry key="searcher.class.folder">F:/kylin/jboss-eap-5.1/jboss-as</entry>
+	<entry key="searcher.class.folder">/home/kylin/work/tools/jboss-eap-5.1/jboss-as</entry>
 	
    <!--	
 	#################### FILE CHANGE MONITOR ####################

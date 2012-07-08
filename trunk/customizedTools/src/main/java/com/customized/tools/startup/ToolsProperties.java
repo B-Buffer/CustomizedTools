@@ -41,6 +41,7 @@ public class ToolsProperties extends Properties {
 	}
 
 	public String[] splitProperty(String key, String splitStr, boolean checkEmpty) {
+		
 		String val = getProperty(key, checkEmpty);
 		
 		if(!checkEmpty && ( null==val || val.length()==0) ) {

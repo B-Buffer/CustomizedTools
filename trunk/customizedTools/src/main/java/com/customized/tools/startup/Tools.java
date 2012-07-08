@@ -4,7 +4,9 @@ import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.IOException;
+import java.io.InputStream;
 import java.util.InvalidPropertiesFormatException;
+import java.util.Properties;
 
 import org.apache.log4j.Logger;
 import org.apache.log4j.xml.DOMConfigurator;
@@ -17,17 +19,18 @@ public abstract class Tools {
 	
 	protected static String baseDir = null; 
 	
-	protected static  String loggerFile = null;
+	private static  String loggerFile = null;
 	
-	protected static  String TOOL_BASE = null;
+	private static  String classloaderFile = null;
 	
-	protected static  String toolsConf = null;
+	private static  String toolsConf = null;
 	
-	protected static  String jarFolder = null;
+	private static  String jarFolder = null;
 	
-	protected static String coreFile = null;
+	private static String coreFile = null;
 		
-	protected static String logDir = null;
+	private static String logDir = null;
+	
 	
 	static{
 		
@@ -49,6 +52,11 @@ public abstract class Tools {
 		toolsConf = baseDir + "/lib/conf/tools.properties";
 		if(!(new File(toolsConf).exists())) {
 			throw new ToolsStartException(toolsConf + " doesn't exists");
+		}
+		
+		classloaderFile = baseDir + "/lib/conf/classloader.xml";
+		if(!(new File(toolsConf).exists())) {
+			throw new ToolsStartException(classloaderFile + " doesn't exists");
 		}
 				
 		jarFolder = baseDir + "/lib/jars";
@@ -88,25 +96,48 @@ public abstract class Tools {
 		
 		ToolsClassLoader classloader = getClassLoader(props);
 				
-		Tools tool = classloader.getMigration(props, conf);
+		Tools tool = classloader.getTools(props, conf);
 		
 		tool.execute();
 	}
 	
-	protected static ToolsProperties loadProperties(String path) throws InvalidPropertiesFormatException, FileNotFoundException, IOException {	
+	private static void loadClassloaderXMl(ToolsProperties props) throws Exception {
+		
+		loadFromFile(props, classloaderFile);
+	}
+
+	protected static ToolsProperties loadProperties(String path) throws Exception {	
 		
 		ToolsProperties props = new ToolsProperties();
 		
-		File f = new File(path);
-		props.loadFromXML(new FileInputStream(f));
-			
-		logger.info("Property file [" + f.getAbsolutePath() + "] loaded successfully!");
+		loadFromFile(props, path);
+		
+		loadClassloaderXMl(props);
 		
 		props.debugPropsInfo();
 		
 		return props;
 	}
 	
+	private static void loadFromFile(Properties props, String path) throws Exception {
+
+		File f = new File(path);
+		InputStream in = null;
+		try {
+			in = new FileInputStream(f);
+			
+			props.loadFromXML(in);
+		} catch (Exception e) {
+			throw e;
+		}finally {
+			if(in != null) {
+				in.close();
+			}
+		}
+		
+		logger.info("Property file [" + path + "] loaded successfully!");
+	}
+
 	protected static ToolsClassLoader getClassLoader(ToolsProperties props) throws Throwable {
 
 		logger.info("Create Tools Classloader");
@@ -114,6 +145,16 @@ public abstract class Tools {
 		ToolsClassLoader ipcl = new ToolsClassLoader();
 				
 		ipcl.loadDependencyJars(jarFolder);
+		
+		for(String folder : props.splitProperty("external.classloader.path", ";", false)){
+			logger.info("Load external jars " + folder);
+			ipcl.loadDependencyJars(folder);
+		}
+		
+		for(String path : props.splitProperty("external.classloader.addr", ";", false)){
+			logger.info("Load external jars " + path);
+			ipcl.loadJarsThroughHttp(path);
+		}
 		
 		Thread.currentThread().setContextClassLoader(ipcl);
 		

@@ -28,7 +28,7 @@ public class ToolsClassLoader extends URLClassLoader {
 		super(new URL[] { });
 	}
 
-	public Tools getMigration(ToolsProperties props, String conf) throws Throwable {
+	public Tools getTools(ToolsProperties props, String conf) throws Throwable {
 				
 		ToolsConsole console = new ToolsConsole(props.getProperty("mode"));
 		
@@ -41,7 +41,7 @@ public class ToolsClassLoader extends URLClassLoader {
 
 	protected void loadStartUpJar(String name) throws MalformedURLException {
 		
-		logger.info("load migration start up jar to classpath");
+		logger.info("load Tools start up jar to classpath");
 		
 		List<URL>list = new ArrayList<URL>();
 		
@@ -110,6 +110,10 @@ public class ToolsClassLoader extends URLClassLoader {
 				logger.debug(urls[i].getPath());
 			}
 		}
+	}
+
+	public void loadJarsThroughHttp(String path) {
+		// Come soon
 	}
 	
 }
