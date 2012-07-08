@@ -4,7 +4,11 @@ public class ToolsException extends RuntimeException {
 
 	private static final long serialVersionUID = -5243883308591516193L;
 
-	public final String errorCode;
+	public String errorCode;
+
+	public void setErrorCode(String errorCode) {
+		this.errorCode = errorCode;
+	}
 
 	public ToolsException(String errorCode) {
 		super();

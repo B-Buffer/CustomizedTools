@@ -100,7 +100,7 @@ public class ToolsConsole {
 		Set<String> set = new HashSet<String>();
 		String selected = null;
 		StringBuffer sb = new StringBuffer();
-		sb.append("Select: ");
+		sb.append("\nSelect: ");
 		
 		for(int i = 0 ; i < list.size() ; i ++) {
 			ToolsConsoleEntity entity = list.get(i);
@@ -113,7 +113,7 @@ public class ToolsConsole {
 		}
 		
 		if(null != selected) {
-			sb.append("[" + selected + "]");
+			sb.append("\n[" + selected + "]");
 		}
 		
 		UserInput input = new UserInput(set, sb.toString(), selected);
@@ -157,7 +157,7 @@ public class ToolsConsole {
 			while(true) {
 				String mode = getInput();
 				
-				String prompt = "You selected " + getMode(mode) + ", yes/no [yes]";
+				String prompt = "You selected " + getMode(mode) + ", yes/no \n[yes]";
 				
 				prompt(prompt);
 				
