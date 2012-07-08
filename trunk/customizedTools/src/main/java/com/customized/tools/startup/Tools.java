@@ -63,11 +63,7 @@ public abstract class Tools {
 		
 		logDir = baseDir + "/log";
 		if(!(new File(logDir).exists())) {
-			try {
-				new File(logDir).createNewFile();
-			} catch (IOException e) {
-				throw new ToolsStartException("create " + logDir + " error", e);
-			}
+			new File(logDir).mkdir();
 		}
 		
 		System.setProperty("cts.log.dir", logDir);

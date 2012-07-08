@@ -23,7 +23,7 @@ public class ToolsException extends RuntimeException {
 	
 	public String getMessage() {
 		Throwable cause = getCause();
-		String msg = "{" + getErrorCode() + "} - " + super.getMessage();
+		String msg = "[" + getErrorCode() + "] - " + super.getMessage();
 		if (null != cause && null != cause.getMessage()) {
 			msg += " (" + cause.getMessage() + ")";
 		}

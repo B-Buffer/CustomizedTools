@@ -33,6 +33,8 @@
 	#################### FILE CHANGE MONITOR ####################
 	-->
 	
-	<entry key="monitorFolder">F:/kylin/src/home/fileChangeMonitior</entry>
+	<entry key="monitor.folder">/home/kylin/work/project/CustomizedTools/trunk/customizedTools</entry>
+	
+	<entry key="monitor.result.file">fileChangeMonitor</entry>
 	
 </properties>

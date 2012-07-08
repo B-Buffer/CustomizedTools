@@ -1,6 +1,7 @@
 package com.customized.tools.filechangemonitor;
 
 import java.io.File;
+import java.io.PrintWriter;
 import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
@@ -12,9 +13,12 @@ public class FileChangeListener implements IFileChangeListener {
 	
 	private ToolsConsole console;
 	
-	public FileChangeListener(ToolsConsole console) {
+	private PrintWriter pw;
+	
+	public FileChangeListener(ToolsConsole console, PrintWriter pw) {
 		super();
 		this.console = console;
+		this.pw = pw;
 	}
 
 	private Set<File> contentSet = null;
@@ -56,7 +60,7 @@ public class FileChangeListener implements IFileChangeListener {
 			}
 		}
 		
-		handler.hander(changeList, console);
+		handler.hander(changeList, console, pw);
 	}
 	
 	private void initializeContentSet(Set<File> contentSet, File file) {
