@@ -16,6 +16,8 @@ public class JBossLogConfAnalyser extends Analyser {
 	public void analyser() throws Throwable {
 
 		logger.info("Start JBoss Log fies, configuration files analysing");
+		
+		console.prompt("\n  JBossLogConfAnalyser start...\n");
 	}
 
 }

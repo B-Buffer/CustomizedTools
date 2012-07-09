@@ -3,7 +3,7 @@
 <properties>
 	<comment>ConvertToXml</comment>
 	
-	<entry key="mode">jarClassSearcher</entry>
+	<entry key="mode">smartAnalyser</entry>
 	
 	<!--
 		########################################################
@@ -11,6 +11,14 @@
 			slashes (/) irrespective of the OS          
 		########################################################
 	-->
+	
+	<!--
+	###################### SMART ANALYSER  #####################
+	-->
+	
+	<entry key="analyser.img.folder">/home/kylin/work/tmp/655258/jboss-eap-5.0/jboss-as/server/default/log</entry>
+	
+	<entry key="analyser.img.other">/home/kylin/work/tools/jboss-eap-5.1/jboss-as</entry>
 	
 	<!--
 	#################### JMS CONNECTION TESTER ###################
