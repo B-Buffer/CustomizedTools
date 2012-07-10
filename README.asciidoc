@@ -5,25 +5,25 @@ CustomizedTools contain a series of tools which can help you analysing and solvi
 
 * *JarClassSearcher:* search a class belong to which jar file in a defined folder
 
-link:doc/uc/jarClassSearcher.asciidoc[User Case]
+link:./doc/uc/jarClassSearcher.asciidoc[User Case]
 
 * *FileSearcher:* search file from a folder, even the file is packaged in jar, war, ear
 
-link:doc/uc/fileSearcher.asciidoc[User Case]
+link:./doc/uc/fileSearcher.asciidoc[User Case]
 
 * *FileChangeMonitor:* monitor to a defined folder, can record any change of this folder's change
 
-link:doc/uc/fileChangeMonitor.asciidoc[User Case]
+link:./doc/uc/fileChangeMonitor.asciidoc[User Case]
 
 * *DBConnectionTester:* test database connection
 
-link:doc/uc/dbConnectionTester.asciidoc[User Case]
+link:./doc/uc/dbConnectionTester.asciidoc[User Case]
 
 * *JMSConnectionTester:* test jms server connection
 
-link:doc/uc/jmsConnectionTester.asciidoc[User Case]
+link:./doc/uc/jmsConnectionTester.asciidoc[User Case]
 
 * *SmartAnalyser:* can automatic analysing JBoss log, JBoss configuration file, GC log, heap dump, thread dump
 
-link:doc/uc/smartAnalyser.asciidoc[User Case]
+link:./doc/uc/smartAnalyser.asciidoc[User Case]
 
