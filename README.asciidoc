@@ -5,7 +5,7 @@ CustomizedTools contain a series of tools which can help you analysing and solvi
 
 * *JarClassSearcher:* search a class belong to which jar file in a defined folder
 
-link:CustomizedTools/doc/uc/jarClassSearcher.asciidoc[User Case]
+** User Case: './doc/uc/jarClassSearcher.asciidoc'
 
 * *FileSearcher:* search file from a folder, even the file is packaged in jar, war, ear
 
