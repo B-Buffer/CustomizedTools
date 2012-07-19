@@ -43,16 +43,16 @@ public class SmartAnalyser extends AbstractTools {
 		try {
 			switch (status) {
 			case 1:
-				analyser = new JBossLogConfAnalyser(1, props, console);
+				analyser = new JBossLogConfAnalyser(1, props, console, imgSet);
 				break;
 			case 2:
-				analyser = new GCLogAnalyser(2, props, console);
+				analyser = new GCLogAnalyser(2, props, console, imgSet);
 				break;
 			case 3:
-				analyser = new ThreadDumpAnalyser(3, props, console);
+				analyser = new ThreadDumpAnalyser(3, props, console, imgSet);
 				break;
 			case 4:
-				analyser = new HeapDumpAnalyser(4, props, console);
+				analyser = new HeapDumpAnalyser(4, props, console, imgSet);
 				break;
 			default:
 				break;
