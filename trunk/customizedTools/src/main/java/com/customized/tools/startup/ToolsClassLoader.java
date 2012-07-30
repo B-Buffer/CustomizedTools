@@ -58,6 +58,25 @@ public class ToolsClassLoader extends URLClassLoader {
 		addURLs(list);
 	}
 	
+	public void loadexternalJar(String path) throws MalformedURLException {
+
+		logger.info("load Tools external jar to classpath");
+
+		List<URL> list = new ArrayList<URL>();
+
+		File file = new File(path);
+
+		if (logger.isDebugEnabled()) {
+			logger.debug("Examining file: " + file);
+		}
+
+		if (!file.isDirectory() && file.getAbsolutePath().endsWith(".jar")) {
+			list.add(file.toURL());
+		}
+
+		addURLs(list);
+	}
+	
 	protected void loadDependencyJars(String folder) throws MalformedURLException {
 		
 		logger.info("load Tools dependency jars to classpath");
