@@ -1,0 +1,11 @@
+Do the following can start CustomizedTools as service:
+------------------------------------------------------
+
+* modify $DIST/cts file, make sure `cts.sh` path is correct
+
+* copy $DIST/cts file to '/etc/init.d` folder
+
+* test start CustomizedTools as service as bellow:
+----
+service cts start
+----
