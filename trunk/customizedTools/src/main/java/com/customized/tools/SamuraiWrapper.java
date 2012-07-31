@@ -32,11 +32,15 @@ public class SamuraiWrapper extends AbstractTools{
 			Method method = cls.getMethod("main", new Class[]{strArray.getClass()});
 			
 			method.invoke(cls.newInstance(), new Object[]{strArray});
-		} catch (Exception e) {
+		} catch (Throwable t) {
 			
-			console.prompt("SamuraiWrapper return a Error");
+			SamuraiException ex = new SamuraiException("SamuraiWrapper return a Error", t);
 			
-			throw new SamuraiException("SamuraiWrapper return a Error", e);
+			logger.equals(ex);
+			
+			throw ex;
+		} finally {
+			console.prompt("Samurai return a error");
 		}
 	}
 

@@ -1,29 +1,22 @@
 What's the CustomizedTools
 --------------------------
 
-CustomizedTools contain a series of tools which can help you analysing and solving question quickly, it contains:
+Plese refer to ./docs for more details
 
-* *JarClassSearcher:* search a class belong to which jar file in a defined folder
 
-** User Case: '[./doc/uc/jarClassSearcher.asciidoc]'
+How to Build
+------------
 
-* *FileSearcher:* search file from a folder, even the file is packaged in jar, war, ear
+* Maven 3.0 or later & Ant 1.7 or later intalled and configured
 
-** User Case: '[./doc/uc/fileSearcher.asciidoc]'
+* mvn build source code:
+----
+mvn clean dependency:copy-dependencies intall
+----
 
-* *FileChangeMonitor:* monitor to a defined folder, can record any change of this folder's change
+* ant build distribution
+----
+ant
+----
 
-** User Case: '[./doc/uc/fileChangeMonitor.asciidoc]'
-
-* *DBConnectionTester:* test database connection
-
-** User Case: [./doc/uc/dbConnectionTester.asciidoc]'
-
-* *JMSConnectionTester:* test jms server connection
-
-** User Case: '[./doc/uc/jmsConnectionTester.asciidoc]'
-
-* *SmartAnalyser:* can automatic analysing JBoss log, JBoss configuration file, GC log, heap dump, thread dump
-
-** User Case: '[./doc/uc/smartAnalyser.asciidoc]'
-
+`dist` foulder will be generated, this is the final distribution.
