@@ -21,9 +21,6 @@ link:dbConnectionTester.asciidoc[DBConnectionTester]
 
 * *JMSConnectionTester:* test jms server connection
 
-* *GCViewer:* gc log analysing tool
-https://github.com/chewiebug/GCViewer
-
 link:jmsConnectionTester.asciidoc[JMSConnectionTester]
 
 * *SmartAnalyser:* can automatic analysing JBoss log, JBoss configuration file, GC log, heap dump, thread dump
@@ -34,3 +31,5 @@ link:smartAnalyser.asciidoc[SmartAnalyser]
 
 link:samurai.asciidoc[Samurai]
 
+* *GCViewer:* gc log analysing tool
+https://github.com/chewiebug/GCViewer
