@@ -51,31 +51,34 @@
 	<!--
 	jdbc:mysql://10.65.208.234:3306/gsspek
 	jdbc:oracle:thin:@//10.66.129.154:1521/JBOSS jdbc:oracle:thin:@//10.65.208.234:1521/orcl
+	jdbc:sqlserver://lab-jboss-db.gsslab.pnq.redhat.com:1433;databaseName=gsspek
+	jdbc:postgresql://10.66.129.69:5432/cmtdb
 
 	com.mysql.jdbc.Driver
+	org.postgresql.Driver
 	oracle.jdbc.OracleDriver
-	com.microsoft.jdbc.sqlserver.SQLServerDriver
+	com.microsoft.sqlserver.jdbc.SQLServerDriver
 	-->
 	
-	<entry key="tester.db.driverClass">com.microsoft.jdbc.sqlserver.SQLServerDriver</entry>
-	<entry key="tester.db.url">jdbc:sqlserver://lab-jboss-db.gsslab.pnq.redhat.com:1433;databaseName=gsspek</entry>
-	<entry key="tester.db.user">gsspekuser</entry>
-	<entry key="tester.db.password">gsspek1!</entry>
+	<entry key="tester.db.driverClass">oracle.jdbc.OracleDriver</entry>
+	<entry key="tester.db.url">jdbc:oracle:thin:@10.66.129.154:1521:JBOSS</entry>
+	<entry key="tester.db.user">GSSTEST</entry>
+	<entry key="tester.db.password">redhat</entry>
 	
 	<!--
 	#################### JAR CLASS SEARCHER ####################
 	-->
 	
-	<entry key="searcher.class">javax.net.ssl.KeyManager</entry>
+	<entry key="searcher.class">JUnitXMLReporter</entry>
 	
-	<entry key="searcher.class.folder">/usr/java/jdk1.6.0_31</entry>
+	<entry key="searcher.class.folder">/home/kylin/work/project/jgroups</entry>
 	
    <!--	
 	#################### FILE CHANGE MONITOR ####################
 	-->
 	
-	<entry key="monitor.folder">/home/kylin/work/tools/jboss-eap-6.0</entry>
+	<entry key="monitor.folder">/home/kylin/work/tools/jboss-soa-p.4.3.0/jboss-as</entry>
 	
-	<entry key="monitor.result.file">eap6deployFromWebConsole</entry>
+	<entry key="monitor.result.file">soaDeploy</entry>
 	
 </properties>
