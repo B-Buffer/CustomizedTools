@@ -41,7 +41,7 @@ HelloWorldTool=com.customized.tools.HelloWorldTool
 HelloWorldTool.prompt=Hello World Tool
 ----
 
-NOTE: each tool name property has a prompt property, prompt property = name + ".prompt"
+NOTE: each tool name property has a prompt property, *prompt property* = *name* + ".prompt"
 
 * Build CustomizedTools, run HelloWorldTool will be in all tools list, select HelloWorldTool, the following will be prompt:
 ----
