@@ -11,7 +11,7 @@ How to Build
 
 * mvn build source code:
 ----
-mvn clean dependency:copy-dependencies intall
+mvn clean dependency:copy-dependencies install
 ----
 
 * ant build distribution
