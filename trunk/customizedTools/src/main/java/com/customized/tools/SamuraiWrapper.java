@@ -38,7 +38,7 @@ public class SamuraiWrapper extends AbstractTools{
 			
 			logger.equals(ex);
 			
-			console.prompt("Samurai return a error");
+			console.prompt("Samurai return a error, " + ex.getMessage());
 			
 			throw ex;
 		} finally {
