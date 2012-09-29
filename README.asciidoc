@@ -1,7 +1,7 @@
 What's the CustomizedTools
 --------------------------
 
-Plese refer to ./docs for more details
+https://github.com/kylinsoong/CustomizedTools/blob/master/docs/index.asciidoc
 
 
 How to Build
