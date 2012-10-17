@@ -81,4 +81,12 @@
 	
 	<entry key="monitor.result.file">soaDeploy</entry>
 	
+	<!--	
+	####################### FILE SEARCHER #######################
+	-->
+	
+	<entry key="searcher.folder">/home/kylin/work/test/build/demo</entry>
+	
+	<entry key="searcher.fileName">IIOPInternalInvoke</entry>
+	
 </properties>
