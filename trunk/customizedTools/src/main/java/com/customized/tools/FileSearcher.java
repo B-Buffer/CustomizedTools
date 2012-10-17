@@ -25,7 +25,7 @@ public class FileSearcher extends AbstractTools {
 			throw new FileSearcherException("Search folder not exist.");
 		}
 		
-		console.prompt("FileSearcher start, searching file '" + searchName + "' under " + searchFolder + "...");
+		console.prompt("FileSearcher start, searching file '" + searchName + "' under " + searchFolder);
 		
 		List<String> result = new Searcher(searchName, searchFolder).search();
 		
