@@ -7,7 +7,7 @@ CustomizedTools contain a series of tools which can help you analysing and solvi
 
 link:jarClassSearcher.asciidoc[JarClassSearcher]
 
-* *FileSearcher:* search file from a folder, even the file is packaged in jar, war, ear
+* *FileSearcher:* search file from a folder, even the file is packaged in jar, war, ear, esb
 
 link:fileSearcher.asciidoc[FileSearcher]
 
