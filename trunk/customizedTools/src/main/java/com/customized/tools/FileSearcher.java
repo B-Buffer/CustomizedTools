@@ -29,7 +29,7 @@ public class FileSearcher extends AbstractTools {
 		
 		List<String> result = new Searcher(searchName, searchFolder).search();
 		
-		console.prompt("\n" + searchName + " be found " + result.size() + " times \n");
+		console.prompt("\n" + searchName + " be found " + result.size() + " times:");
 		
 		for(int i = 0 ; i < result.size() ; i ++) {
 			console.prompt("   " + result.get(i));
