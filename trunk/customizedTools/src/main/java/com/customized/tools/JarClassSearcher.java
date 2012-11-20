@@ -41,17 +41,16 @@ public class JarClassSearcher extends AbstractTools {
 			printToConsole(result);
 		} catch (Exception e) {
 			
-			console.prompt("Unexpected Exception Returned, " + e.getMessage() + "\n");
+			console.prompt("Unexpected Exception Returned, " + e.getMessage() + "\n Find more error info please refer to log file");
 			
-			logger.error(e);
-			
-			e.printStackTrace();
+			logger.error("Unexpected Exception Returned", e);
 		}
 	}
 
 	private void printToConsole(List<String> result) {
 
 		StringBuffer sb = new StringBuffer();
+		sb.append("\n");
 		sb.append(props.getProperty("searcher.class") + " has been found " + result.size() + " times.\n");
 		for (String str : result) {
 			sb.append("  " + str + "\n");
@@ -74,8 +73,16 @@ public class JarClassSearcher extends AbstractTools {
 			if (file.isDirectory()) {
 				JarFileCollection(file, jarFileSet);
 			} else if (file.getName().endsWith(".jar")) {
-				JarFile jarFile = new JarFile(file);
-				jarFileSet.add(jarFile);
+				JarFile jarFile;
+				try {
+					jarFile = new JarFile(file);
+					jarFileSet.add(jarFile);
+				} catch (Exception e) {
+					String prompt = "can not create jarFile via " + file ;
+					logger.error(prompt, new JarClassSearcherException(prompt, e));
+					console.prompt(prompt + ", ignored");
+				}
+				
 			}
 		}
 	}

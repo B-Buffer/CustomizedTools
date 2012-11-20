@@ -9,4 +9,8 @@ public class JarClassSearcherException extends ToolsException {
 	public JarClassSearcherException(String msg) {
 		super("CTS-JCS", msg);
 	}
+	
+	public JarClassSearcherException(String msg, Exception e) {
+		super("CTS-JCS", msg, e);
+	}
 }
