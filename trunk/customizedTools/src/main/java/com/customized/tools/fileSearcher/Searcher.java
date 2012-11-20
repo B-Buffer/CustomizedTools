@@ -11,6 +11,8 @@ import java.util.zip.ZipFile;
 
 import org.apache.log4j.Logger;
 
+import com.customized.tools.startup.ToolsConsole;
+
 
 public class Searcher {
 	
@@ -19,11 +21,13 @@ public class Searcher {
 	private String searchName ;
 	
 	private String searchFolder;
+	private ToolsConsole console;
 
-	public Searcher(String searchName, String searchFolder) {
+	public Searcher(String searchName, String searchFolder, ToolsConsole console) {
 		super();
 		this.searchName = searchName;
 		this.searchFolder = searchFolder;
+		this.console = console;
 	}
 
 	public List<String> search() throws ZipException, IOException {
@@ -49,9 +53,20 @@ public class Searcher {
 			if(f.isDirectory()) {
 				search(result, f, searchName);
 			}  else if(f.getName().endsWith(".zip") || f.getName().endsWith(".jar") || f.getName().endsWith(".war") || f.getName().endsWith(".ear") || f.getName().endsWith(".esb")) {
-				String path = f.getAbsolutePath() ;
-				path = path.substring(path.indexOf(searchFolder));
-				traverseZipFile(result, path, new ZipFile(f), searchName);
+				
+				ZipFile zipFile = null;
+				
+				try {
+					zipFile = new ZipFile(f);
+					String path = f.getAbsolutePath() ;
+					path = path.substring(path.indexOf(searchFolder));
+					traverseZipFile(result, path, zipFile, searchName);
+				} catch (Exception e) {
+					String prompt = "can not create zipFile via " + f ;
+					logger.warn(prompt, new FileSearcherException("", e));
+					console.prompt(prompt + ", ignored");
+				}
+				
 			}
 		}
 	}

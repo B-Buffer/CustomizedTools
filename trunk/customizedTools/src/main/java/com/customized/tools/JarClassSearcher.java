@@ -41,9 +41,9 @@ public class JarClassSearcher extends AbstractTools {
 			printToConsole(result);
 		} catch (Exception e) {
 			
-			console.prompt("Unexpected Exception Returned, " + e.getMessage() + "\n Find more error info please refer to log file");
+			console.prompt(errNote(e));
 			
-			logger.error("Unexpected Exception Returned", e);
+			logger.error(errProp, e);
 		}
 	}
 
