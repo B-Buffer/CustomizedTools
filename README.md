@@ -1,3 +1,9 @@
+
+
+
+CST Version 1.0 Release Notes:
+==============================
+
 What's the CustomizedTools
 --------------------------
 * A troubleshooting intelligent tool, integrate with GCViewer, samurai. CustomizedTools can analyse java thread dump, JVM GC log, JBoss log and configuring file, CustomizedTools also can test Database connection, JMS server connection, find class from jars, monitor a folder, etc
