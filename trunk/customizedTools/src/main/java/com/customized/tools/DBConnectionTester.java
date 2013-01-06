@@ -95,7 +95,5 @@ public class DBConnectionTester extends AbstractTools {
 			throw new DBConnectionTesterException("Create Connection Error ", e);
 		}
 	}
-
-
-
+	
 }
