@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<ns2:toolsContent xmlns:ns2="https://github.com/kylinsoong/CustomizedTools" version="2.0" name="CustomizedTools">
+    <analyser>
+        <path>/home/kylin/work/test</path>
+    </analyser>
+    <dbTester>
+        <driver>oracle.jdbc.OracleDriver</driver>
+        <url>jdbc:oracle:thin:@//10.66.192.144:1521/JBOSS</url>
+        <username>GSSTEST</username>
+        <password>redhat</password>
+    </dbTester>
+    <fileChangeMonitor>
+        <folderPath>/home/kylin/work/tools/jboss-eap-6.0</folderPath>
+        <resultFile>eap6deployFromWebConsole.out</resultFile>
+    </fileChangeMonitor>
+    <fileSearcher>
+        <fileName>IIOPInternalInvoke</fileName>
+        <folderPath>/home/kylin/work/test/build/demo</folderPath>
+    </fileSearcher>
+    <jarClassSearcher>
+        <className>javax.net.ssl.KeyManager</className>
+        <folderPath>/usr/java/jdk1.6.0_31</folderPath>
+    </jarClassSearcher>
+    <jmsTester>
+        <factoryJNDIName>ConnectionFactory</factoryJNDIName>
+        <factoryClassName>org.jnp.interfaces.NamingContextFactory</factoryClassName>
+        <url>jnp://localhost:1099</url>
+        <pkgs>org.jboss.naming:org.jnp.interfaces</pkgs>
+        <principle>admin</principle>
+        <credentials>admin</credentials>
+    </jmsTester>
+</ns2:toolsContent>

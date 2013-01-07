@@ -17,5 +17,10 @@ public class Analyser {
 		this.path = path;
 	}
 
+	@Override
+	public String toString() {
+		return "Analyser [path=" + path + "]";
+	}
+
 	
 }
