@@ -20,6 +20,7 @@
 	<module>common</module>
 	<module>resources</module>
 	<module>samurai</module>
+        <module>GCViewer</module>
     </modules>
 
 </project>
