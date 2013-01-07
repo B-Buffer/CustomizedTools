@@ -21,6 +21,7 @@
 	<module>resources</module>
 	<module>samurai</module>
         <module>GCViewer</module>
+	<module>gcview</module>
     </modules>
 
 </project>

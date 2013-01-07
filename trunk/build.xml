@@ -9,6 +9,8 @@
 
     <property name="common.target.dir" value="${basedir}/common/target" />
     <property name="samurai.target.dir" value="${basedir}/samurai/target" />
+    <property name="GCViewer.target.dir" value="${basedir}/GCViewer/target" />
+    <property name="gcview.target.dir" value="${basedir}/gcview/target" />
 
     <target name="validateproperties" >
         <echo>build parameter output</echo>
@@ -53,6 +55,14 @@
 
 	<copy todir="${build.dir}/modules/samurai/wrapper/main" >
             <fileset dir="${samurai.target.dir}" includes="cst-samurai.jar"/>
+        </copy>	
+
+	<copy todir="${build.dir}/modules/com/tagtraum/main" >
+            <fileset dir="${GCViewer.target.dir}" includes="gcviewer-1.32.jar"/>
+        </copy>	
+
+	<copy todir="${build.dir}/modules/com/customized/tools/gcviewer/main" >
+            <fileset dir="${gcview.target.dir}" includes="cst-gcviewer.jar"/>
         </copy>	
 
 	
