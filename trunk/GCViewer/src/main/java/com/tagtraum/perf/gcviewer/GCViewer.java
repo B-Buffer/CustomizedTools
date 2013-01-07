@@ -28,11 +28,9 @@ public class GCViewer {
                 System.exit(-1);
             } 
 
-        } 
-        else if (args.length > 1) {
+		} else if (args.length > 1) {
             usage();
-        } 
-        else {
+		} else {
         	GCViewerGui.main(args);
         }
     }
