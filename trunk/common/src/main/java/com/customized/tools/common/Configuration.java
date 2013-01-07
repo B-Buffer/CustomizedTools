@@ -4,16 +4,16 @@ import java.io.File;
 
 import javax.xml.bind.Unmarshaller;
 
-import com.customized.tools.po.Analyser;
-import com.customized.tools.po.ClassSearcher;
-import com.customized.tools.po.DBTester;
-import com.customized.tools.po.JMSTester;
-import com.customized.tools.po.Monitor;
-import com.customized.tools.po.Searcher;
-import com.customized.tools.po.ToolsContent;
+import com.customized.tools.common.po.Analyser;
+import com.customized.tools.common.po.ClassSearcher;
+import com.customized.tools.common.po.DBTester;
+import com.customized.tools.common.po.JMSTester;
+import com.customized.tools.common.po.Monitor;
+import com.customized.tools.common.po.Searcher;
+import com.customized.tools.common.po.ToolsContent;
 
 /**
- * Supply public method for other component, If 
+ * Supply public method for other component, If component need underlying configuration
  * 
  * @author kylin
  *

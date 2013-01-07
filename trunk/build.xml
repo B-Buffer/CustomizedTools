@@ -1,0 +1,63 @@
+<?xml version="1.0"?>
+<project name="com.customized.tools" default="deploy" basedir="."> 
+    <property name="build.home" value="${basedir}/build" />
+    <property name="resource.dir" value="${basedir}/resources" />
+    <property file="${basedir}/build.properties"/>
+    <property name="build.dir" value="${build.home}/${build.profile}" />
+
+    <property name="resources.dependency.dir" value="${basedir}/resources/target/dependency" />
+
+    <property name="common.target.dir" value="${basedir}/common/target" />
+    <property name="samurai.target.dir" value="${basedir}/samurai/target" />
+
+    <target name="validateproperties" >
+        <echo>build parameter output</echo>
+        <echo>build.home: ${build.home}</echo>
+	<echo>build.dir: ${build.dir}</echo>
+    </target> 
+
+    <target name="clean" depends="validateproperties">
+        <delete dir="${build.home}" />
+    </target>
+
+    <target name="prepare" depends="clean">
+        <mkdir dir="${build.dir}" />
+    </target> 
+
+    <target name="deploy" depends="prepare">
+
+	<mkdir dir="${build.dir}/configuration" />
+	<copy todir="${build.dir}/configuration" >
+	    <fileset dir="${resource.dir}" includes="toolsContent.xml"/>
+	</copy>	
+
+        
+	<copy todir="${build.dir}" >
+	    <fileset dir="${resources.dependency.dir}" includes="jboss-modules-1.1.2.GA.jar"/>
+
+	</copy>	
+
+        <mkdir dir="${build.dir}/modules" />
+
+	<copy todir="${build.dir}/modules" >
+            <fileset dir="${resource.dir}/modules" includes="**"/>
+        </copy>
+
+	<copy todir="${build.dir}/modules/com/customized/tools/common/main" >
+            <fileset dir="${common.target.dir}" includes="cst-common.jar"/>
+        </copy>	
+
+	<copy todir="${build.dir}/modules/org/apache/log4j/main" >
+            <fileset dir="${resources.dependency.dir}" includes="log4j-1.2.16.jar"/>
+        </copy>	
+
+	<copy todir="${build.dir}/modules/samurai/wrapper/main" >
+            <fileset dir="${samurai.target.dir}" includes="cst-samurai.jar"/>
+        </copy>	
+
+	
+	<mkdir dir="${build.dir}/bin" />
+
+
+    </target>
+</project> 

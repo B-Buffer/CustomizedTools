@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<module xmlns="urn:jboss:module:1.1" name="samurai.wrapper">
+
+    <resources>
+        <resource-root path="samurai.jar"/>
+        <resource-root path="cst-samurai.jar"/>
+    </resources>
+
+    <dependencies>
+    </dependencies>
+</module>
