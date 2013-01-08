@@ -49,9 +49,4 @@ public class GCViewerWrapper  {
 		}
 	}
 
-	private void cmdline() throws IOException {
-
-		
-	}
-
 }

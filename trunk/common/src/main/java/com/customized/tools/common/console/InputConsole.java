@@ -43,7 +43,31 @@ public class InputConsole extends Console {
         }
     }
 	
+	public String readFolderPath(String prompt, boolean validation) throws IOException {
+		
+		String result = "" ;
+		
+		while(true) {
+			
+			println(prompt);
+			
+			BufferedReader bufferRead = new BufferedReader(new InputStreamReader(System.in));
+			String input = bufferRead.readLine();
+			
+			if(validation && new File(input).exists() && new File(input).isDirectory()) {
+				result = input;
+				break;
+			} else if(input.length() > 0){
+				result = input;
+				break;
+			}
+		}
+		
+		return result ;
+	}
+	
 	public String readFilePath(String prompt, boolean validation) throws IOException {
+		
 		String result = "" ;
 		
 		while(true){

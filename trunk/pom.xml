@@ -22,6 +22,10 @@
 	<module>samurai</module>
         <module>GCViewer</module>
 	<module>gcview</module>
+        <module>jmstester</module>
+	<module>classsearcher</module>
+	<module>searcher</module>
+	<module>filechangemonitor</module>
     </modules>
 
 </project>

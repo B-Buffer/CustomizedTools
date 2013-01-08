@@ -1,0 +1,53 @@
+<?xml version="1.0"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+   xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
+	
+    <modelVersion>4.0.0</modelVersion>
+
+    <groupId>samurai.wrapper</groupId>
+    <artifactId>cst-jmstester</artifactId>
+    <version>2.0</version>
+    <packaging>jar</packaging>
+    <name>Customized Tools JMS Connection Tester</name>
+    <description>Customized Tools JMS Connection Tester</description>
+
+    <url>https://github.com/kylinsoong</url>
+
+    <properties>
+        <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+	<compiler.plugin.version>2.3.1</compiler.plugin.version>
+	<maven.compiler.target>1.6</maven.compiler.target>
+	<maven.compiler.source>1.6</maven.compiler.source>
+    </properties>
+   
+    <dependencies>
+	<dependency>
+	    <groupId>log4j</groupId>
+	    <artifactId>log4j</artifactId>
+	    <version>1.2.16</version>
+	    <scope>provided</scope>
+	</dependency>
+        <dependency>
+         <groupId>com.customized.tools</groupId>
+         <artifactId>cst-common</artifactId>
+         <version>${project.version}</version>
+	 <scope>provided</scope>
+      </dependency>
+    </dependencies>
+
+    <build>
+        <finalName>cst-samurai</finalName>
+	<plugins>
+	    <!-- Enforce Java 1.6 -->
+	    <plugin>
+		<artifactId>maven-compiler-plugin</artifactId>
+		<version>${compiler.plugin.version}</version>
+		<configuration>
+		    <source>${maven.compiler.source}</source>
+		    <target>${maven.compiler.target}</target>
+		</configuration>
+	    </plugin>
+	</plugins>
+    </build>
+	
+</project>

@@ -11,6 +11,9 @@
     <property name="samurai.target.dir" value="${basedir}/samurai/target" />
     <property name="GCViewer.target.dir" value="${basedir}/GCViewer/target" />
     <property name="gcview.target.dir" value="${basedir}/gcview/target" />
+    <property name="classsearcher.target.dir" value="${basedir}/classsearcher/target" />
+    <property name="searcher.target.dir" value="${basedir}/searcher/target" />
+    <property name="filechangemonitor.target.dir" value="${basedir}/filechangemonitor/target" />
 
     <target name="validateproperties" >
         <echo>build parameter output</echo>
@@ -63,8 +66,19 @@
 
 	<copy todir="${build.dir}/modules/com/customized/tools/gcviewer/main" >
             <fileset dir="${gcview.target.dir}" includes="cst-gcviewer.jar"/>
-        </copy>	
+        </copy>
 
+        <copy todir="${build.dir}/modules/com/customized/tools/classsearcher/main" >
+            <fileset dir="${classsearcher.target.dir}" includes="cst-classsearcher.jar"/>
+        </copy>
+	
+	<copy todir="${build.dir}/modules/com/customized/tools/searcher/main" >
+            <fileset dir="${searcher.target.dir}" includes="cst-searcher.jar"/>
+        </copy>
+
+	<copy todir="${build.dir}/modules/com/customized/tools/searcher/main" >
+            <fileset dir="${filechangemonitor.target.dir}" includes="cst-filechangemonitor.jar"/>
+        </copy>
 	
 	<mkdir dir="${build.dir}/bin" />
 
