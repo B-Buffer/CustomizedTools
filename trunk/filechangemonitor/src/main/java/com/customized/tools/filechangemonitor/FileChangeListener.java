@@ -7,7 +7,7 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
-import com.customized.tools.common.console.InputConsole;
+import com.customized.tools.cli.InputConsole;
 
 public class FileChangeListener implements IFileChangeListener {
 	

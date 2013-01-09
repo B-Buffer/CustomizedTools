@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<module xmlns="urn:jboss:module:1.1" name="javax.jms">
+
+    <resources>
+        <resource-root path="jms-api-1.1-rev-1.jar"/>
+    </resources>
+
+    <dependencies>
+    </dependencies>
+</module>

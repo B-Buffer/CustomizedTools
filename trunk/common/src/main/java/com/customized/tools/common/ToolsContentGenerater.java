@@ -4,13 +4,13 @@ import java.io.File;
 
 import javax.xml.bind.JAXBException;
 
-import com.customized.tools.common.po.Analyser;
-import com.customized.tools.common.po.ClassSearcher;
-import com.customized.tools.common.po.DBTester;
-import com.customized.tools.common.po.JMSTester;
-import com.customized.tools.common.po.Monitor;
-import com.customized.tools.common.po.Searcher;
-import com.customized.tools.common.po.ToolsContent;
+import com.customized.tools.po.Analyser;
+import com.customized.tools.po.ClassSearcher;
+import com.customized.tools.po.DBTester;
+import com.customized.tools.po.JMSTester;
+import com.customized.tools.po.Monitor;
+import com.customized.tools.po.Searcher;
+import com.customized.tools.po.ToolsContent;
 
 /**
  * This class used to generate default toolsContent.xml configuration

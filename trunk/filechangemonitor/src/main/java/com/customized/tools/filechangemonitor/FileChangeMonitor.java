@@ -6,8 +6,8 @@ import java.io.PrintWriter;
 
 import org.apache.log4j.Logger;
 
-import com.customized.tools.common.console.InputConsole;
-import com.customized.tools.common.po.Monitor;
+import com.customized.tools.cli.InputConsole;
+import com.customized.tools.po.Monitor;
 
 public class FileChangeMonitor {
 	
@@ -27,53 +27,61 @@ public class FileChangeMonitor {
 		this.console = console ;
 	}
 
-	public void execute() throws Throwable {
+	public void execute() {
 		
-		final String monitorFolder = fileChangeMonitor.getFolderPath();
+		logger.info("FileChangeMonitor Start");
 		
-		if( !new File(monitorFolder).exists()) {
-			logger.error(new FichangeMonitorException(monitorFolder + "' does not exist"));
-			console.prompt("  FileChangeMonitor exit, due to '" + monitorFolder + "' does not exist");
-			Runtime.getRuntime().exit(0);
-		}
-		
-		if(!new File(monitorFolder).isDirectory()) {
-			logger.error(new FichangeMonitorException(monitorFolder + "' is not a directory"));
-			console.prompt("  FileChangeMonitor exit, due to '" + monitorFolder + "' is not a directory");
-			Runtime.getRuntime().exit(0);
-		}
-		
-//		setPersistFile(fileChangeMonitor.getResultFile());
-		
-		String prompt = "FileChangeMonitor Satrting, monitor on " + monitorFolder + ", Monitor result will persist to " + getPersistFile();
-		
-		logger.info(prompt);
-		
-		console.prompt(prompt);
-		
-		if(new File(getPersistFile()).exists()){
-			new File(getPersistFile()).delete();
-		}
-		
-		new File(getPersistFile()).createNewFile();
-		
-		final PrintWriter pw = new PrintWriter(new FileOutputStream(new File(getPersistFile())), true);
-		
-		new Thread(new Runnable(){
+		try {
+			if(console.readFromCli("FileChangeMonitor")) {
+				String folder = console.readFolderPath("Input FileChangeMonitor folder path [</home/kylin/work/eap/jboss-eap-6.0>]", true);
+				fileChangeMonitor.setFolderPath(folder);
+				String file = console.readFilePath("Input FileChangeMonitor result file name [<result.log>]", false);
+				fileChangeMonitor.setResultFile(file);
+			}
+			
+			final String monitorFolder = fileChangeMonitor.getFolderPath();
+			
+			if( !new File(monitorFolder).exists()) {
+				throw new Exception("'" + monitorFolder + "' does not exist");
+			}
+			
+			if(!new File(monitorFolder).isDirectory()) {
+				throw new Exception("'" + monitorFolder + "' is not a directory");
+			}
+						
+			String prompt = "FileChangeMonitor monitor on " + monitorFolder + ", Monitor result will persist to " + getPersistFile();
+						
+			console.prompt(prompt);
+			
+			if(new File(getPersistFile()).exists()){
+				new File(getPersistFile()).delete();
+			}
+			
+			new File(getPersistFile()).createNewFile();
+			
+			final PrintWriter pw = new PrintWriter(new FileOutputStream(new File(getPersistFile())), true);
+			
+			new Thread(new Runnable(){
 
-			public void run() {
-				IFileChangeListener listener = new FileChangeListener(console, pw);
-				IFileChangeHandler handler = new FileChangeHandler();
-				while(true){
-					listener.addListener(handler, new File(monitorFolder));
-					try {
-						Thread.sleep(50);
-					} catch (InterruptedException e) {
-						logger.error(e);
+				public void run() {
+					IFileChangeListener listener = new FileChangeListener(console, pw);
+					IFileChangeHandler handler = new FileChangeHandler();
+					while(true){
+						listener.addListener(handler, new File(monitorFolder));
+						try {
+							Thread.sleep(50);
+						} catch (InterruptedException e) {
+							logger.error("", e);
+						}
 					}
 				}
-			}
-		}).start();
+			}).start();
+		} catch (Exception e) {
+			FichangeMonitorException ex = new FichangeMonitorException("FichangeMonitor Error", e);
+			console.prompt(ex.getMessage());
+			logger.error("", ex);
+			throw ex;
+		}
 	}
 
 }

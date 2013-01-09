@@ -1,8 +1,8 @@
 package com.customized.tools.jarClassSearcher.test;
 
-import com.customized.tools.common.console.InputConsole;
-import com.customized.tools.common.po.ClassSearcher;
+import com.customized.tools.cli.InputConsole;
 import com.customized.tools.jarClassSearcher.JarClassSearcher;
+import com.customized.tools.po.ClassSearcher;
 
 public class Runner {
 

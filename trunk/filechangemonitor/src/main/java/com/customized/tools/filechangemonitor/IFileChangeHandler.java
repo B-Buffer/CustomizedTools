@@ -3,7 +3,7 @@ package com.customized.tools.filechangemonitor;
 import java.io.PrintWriter;
 import java.util.List;
 
-import com.customized.tools.common.console.InputConsole;
+import com.customized.tools.cli.InputConsole;
 
 public interface IFileChangeHandler {
 

@@ -6,6 +6,7 @@
     <property name="build.dir" value="${build.home}/${build.profile}" />
 
     <property name="resources.dependency.dir" value="${basedir}/resources/target/dependency" />
+    <property name="jmstester.dependency.dir" value="${basedir}/jmstester/target/dependency" />
 
     <property name="common.target.dir" value="${basedir}/common/target" />
     <property name="samurai.target.dir" value="${basedir}/samurai/target" />
@@ -14,6 +15,11 @@
     <property name="classsearcher.target.dir" value="${basedir}/classsearcher/target" />
     <property name="searcher.target.dir" value="${basedir}/searcher/target" />
     <property name="filechangemonitor.target.dir" value="${basedir}/filechangemonitor/target" />
+    <property name="jmstester.target.dir" value="${basedir}/jmstester/target" />
+    <property name="dbtester.target.dir" value="${basedir}/dbtester/target" />
+    <property name="po.target.dir" value="${basedir}/po/target" />
+    <property name="cli.target.dir" value="${basedir}/cli/target" />
+    <property name="smartanalyser.target.dir" value="${basedir}/smartanalyser/target" />
 
     <target name="validateproperties" >
         <echo>build parameter output</echo>
@@ -76,8 +82,32 @@
             <fileset dir="${searcher.target.dir}" includes="cst-searcher.jar"/>
         </copy>
 
-	<copy todir="${build.dir}/modules/com/customized/tools/searcher/main" >
+	<copy todir="${build.dir}/modules/com/customized/tools/filechangemonitor/main" >
             <fileset dir="${filechangemonitor.target.dir}" includes="cst-filechangemonitor.jar"/>
+        </copy>
+
+	<copy todir="${build.dir}/modules/javax/jms/main" >
+            <fileset dir="${jmstester.dependency.dir}" includes="jms-api-1.1-rev-1.jar"/>
+        </copy>
+
+	<copy todir="${build.dir}/modules/com/customized/tools/jmstester/main" >
+            <fileset dir="${jmstester.target.dir}" includes="cst-jmstester.jar"/>
+        </copy>
+
+	<copy todir="${build.dir}/modules/com/customized/tools/dbtester/main" >
+            <fileset dir="${dbtester.target.dir}" includes="cst-dbtester.jar"/>
+        </copy>
+
+	<copy todir="${build.dir}/modules/com/customized/tools/po/main" >
+            <fileset dir="${po.target.dir}" includes="cst-po.jar"/>
+        </copy>
+
+	<copy todir="${build.dir}/modules/com/customized/tools/cli/main" >
+            <fileset dir="${cli.target.dir}" includes="cst-cli.jar"/>
+        </copy>
+
+	<copy todir="${build.dir}/modules/com/customized/tools/smartanalyser/main" >
+            <fileset dir="${smartanalyser.target.dir}" includes="cst-smartanalyser.jar"/>
         </copy>
 	
 	<mkdir dir="${build.dir}/bin" />

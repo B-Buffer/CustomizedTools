@@ -12,8 +12,9 @@ import java.util.jar.JarFile;
 
 import org.apache.log4j.Logger;
 
-import com.customized.tools.common.console.InputConsole;
-import com.customized.tools.common.po.ClassSearcher;
+import com.customized.tools.cli.InputConsole;
+import com.customized.tools.po.ClassSearcher;
+
 
 /**
  * JarClassSearcher search class from a folder, even class exist in jar file
@@ -39,15 +40,8 @@ public class JarClassSearcher  {
 		
 		logger.info("JarClassSearcher Start");
 		
-		String msg = "Run JarClassSearcher From Command Line\n" +
-				 "  [1]. Yes\n" +
-			     "  [2]. No";
-		int a = '1';
-		int b = '2';
-		int res = console.read(msg, a, b);
-		
 		try {
-			if(res == a) {
+			if(console.readFromCli("JarClassSearcher")) {
 				String folder = console.readFolderPath("Input jarClassSearcher folder path [</home/kylin/work/eap/jboss-eap-6.0>]", true);
 				jarClassSearcher.setFolderPath(folder);
 				String className = console.readFilePath("Input jarClassSearcher class name [<org.jboss.modules.Main>]", false);

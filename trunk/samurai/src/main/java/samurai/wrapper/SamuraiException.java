@@ -1,6 +1,6 @@
 package samurai.wrapper;
 
-import com.customized.tools.common.ToolsException;
+import com.customized.tools.po.exception.ToolsException;
 
 public class SamuraiException extends ToolsException {
 

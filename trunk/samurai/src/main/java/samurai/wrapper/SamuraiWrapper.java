@@ -4,7 +4,7 @@ import java.lang.reflect.Method;
 
 import org.apache.log4j.Logger;
 
-import com.customized.tools.common.console.Console;
+import com.customized.tools.cli.Console;
 
 public class SamuraiWrapper {
 	
@@ -33,17 +33,11 @@ public class SamuraiWrapper {
 			
 			method.invoke(cls.newInstance(), new Object[]{strArray});
 		} catch (Throwable t) {
-			
 			SamuraiException ex = new SamuraiException("SamuraiWrapper return a Error", t);
-			
 			logger.equals(ex);
-			
 			console.prompt("Samurai return a error, " + ex.getMessage());
-			
 			throw ex;
-		} finally {
-			
-		}
+		} 
 	}
 
 }

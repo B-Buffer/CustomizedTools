@@ -5,7 +5,7 @@ import java.util.List;
 
 import org.apache.log4j.Logger;
 
-import com.customized.tools.common.console.InputConsole;
+import com.customized.tools.cli.InputConsole;
 
 
 public class FileChangeHandler implements IFileChangeHandler {

@@ -17,6 +17,8 @@
     </properties>
 
     <modules>
+	<module>po</module>
+	<module>cli</module>
 	<module>common</module>
 	<module>resources</module>
 	<module>samurai</module>
@@ -26,6 +28,8 @@
 	<module>classsearcher</module>
 	<module>searcher</module>
 	<module>filechangemonitor</module>
+	<module>dbtester</module>
+	<module>smartanalyser</module>
     </modules>
 
 </project>

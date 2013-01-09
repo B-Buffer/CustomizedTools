@@ -1,6 +1,6 @@
 package com.customized.tools.gcviewer.test;
 
-import com.customized.tools.common.console.InputConsole;
+import com.customized.tools.cli.InputConsole;
 
 public class InputConsoleTest {
 

@@ -1,6 +1,6 @@
 package com.customized.tools.filechangemonitor;
 
-import com.customized.tools.common.ToolsException;
+import com.customized.tools.po.exception.ToolsException;
 
 public class FichangeMonitorException extends ToolsException {
 	

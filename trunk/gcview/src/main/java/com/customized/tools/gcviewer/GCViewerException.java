@@ -1,6 +1,6 @@
 package com.customized.tools.gcviewer;
 
-import com.customized.tools.common.ToolsException;
+import com.customized.tools.po.exception.ToolsException;
 
 public class GCViewerException extends ToolsException {
 	

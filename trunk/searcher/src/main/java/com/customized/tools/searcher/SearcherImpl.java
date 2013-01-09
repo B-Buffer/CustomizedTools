@@ -11,7 +11,7 @@ import java.util.zip.ZipFile;
 
 import org.apache.log4j.Logger;
 
-import com.customized.tools.common.console.InputConsole;
+import com.customized.tools.cli.InputConsole;
 
 public class SearcherImpl {
 	

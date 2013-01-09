@@ -1,7 +1,7 @@
 package com.customized.tools.searcher.test;
 
-import com.customized.tools.common.console.InputConsole;
-import com.customized.tools.common.po.Searcher;
+import com.customized.tools.cli.InputConsole;
+import com.customized.tools.po.Searcher;
 import com.customized.tools.searcher.FileSearcher;
 
 public class Runner {

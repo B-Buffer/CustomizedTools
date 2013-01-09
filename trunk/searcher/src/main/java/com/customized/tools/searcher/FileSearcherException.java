@@ -1,6 +1,6 @@
 package com.customized.tools.searcher;
 
-import com.customized.tools.common.ToolsException;
+import com.customized.tools.po.exception.ToolsException;
 
 public class FileSearcherException extends ToolsException {
 

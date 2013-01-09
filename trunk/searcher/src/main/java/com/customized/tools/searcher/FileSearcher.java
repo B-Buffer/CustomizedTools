@@ -5,8 +5,8 @@ import java.util.List;
 
 import org.apache.log4j.Logger;
 
-import com.customized.tools.common.console.InputConsole;
-import com.customized.tools.common.po.Searcher;
+import com.customized.tools.cli.InputConsole;
+import com.customized.tools.po.Searcher;
 
 public class FileSearcher {
 	
@@ -26,15 +26,8 @@ public class FileSearcher {
 		
 		logger.info("FileSearcher Start");
 		
-		String msg = "Run FileSearcher From Command Line\n" +
-				 "  [1]. Yes\n" +
-			     "  [2]. No";
-		int a = '1';
-		int b = '2';
-		int res = console.read(msg, a, b);
-		
 		try {
-			if(res == a) {
+			if(console.readFromCli("FileSearcher")) {
 				String folder = console.readFolderPath("Input FileSearcher folder path [</home/kylin/work/eap/jboss-eap-6.0>]", true);
 				fileSearcher.setFolderPath(folder);
 				String fileName = console.readFilePath("Input FileSearcher file name [<Main.class>]", false);
