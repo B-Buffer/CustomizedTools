@@ -38,7 +38,8 @@ public class JMSConnectionTester {
 		
 		try {
 			if(console.readFromCli("JMSConnectionTester")) {
-				//TODO-- add command line wizard
+				JMSTesterWizard wizard = (JMSTesterWizard) console.popWizard(new JMSTesterWizard(jmsTester));
+				jmsTester = wizard.getJMSTester();
 			}
 			
 			Context ctx = initialContext();

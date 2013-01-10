@@ -83,6 +83,18 @@ public class InputConsole extends Console {
         }
     }
 	
+	public int keyPress() {
+        
+        try {
+			int ret = System.in.read();
+            System.in.skip(System.in.available());
+            return ret;
+        }
+        catch(IOException e) {
+            return 0;
+        }
+    }
+	
 	public String readFolderPath(String prompt, boolean validation) throws IOException {
 		
 		String result = "" ;
@@ -121,6 +133,38 @@ public class InputConsole extends Console {
 				result = input;
 				break;
 			} else if(input.length() > 0){
+				result = input;
+				break;
+			}
+		}
+		
+		return result;
+	} 
+	
+	/**
+	 * 
+	 * @param prompt
+	 * @param validation if true null value is not allowed
+	 * @return
+	 * @throws IOException
+	 */
+	public String readString(String prompt, boolean validation)  {
+		
+		String result = "" ;
+		
+		while(true){
+			
+			println(prompt);
+			
+			String input = null;
+			try {
+				BufferedReader bufferRead = new BufferedReader(new InputStreamReader(System.in));
+				input = bufferRead.readLine();
+			} catch (IOException e) {
+				throw new RuntimeException("", e);
+			}
+			
+			if(validation && input.length() > 0){
 				result = input;
 				break;
 			}
