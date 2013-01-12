@@ -22,7 +22,8 @@ public class WizardConsole extends InputConsole {
 			int res = keyPress();
 			
 			if(res == so) {
-				break;
+				if (wizard.doOk(this))
+					break;
 			} else if(res == sp) {
 				wizard.doPre();
 			} else if(res == sn) {

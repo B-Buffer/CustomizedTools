@@ -25,6 +25,23 @@ public class InputConsole extends Console {
 			return false ;
 		}
 	}
+	
+	public boolean checkFromCli() {
+		
+		String msg = "Setting Complete\n" +
+				 "  [1]. Yes\n" +
+			     "  [2]. No\n" +
+				 "Default is [1]";
+		int a = '1';
+		int b = '2';
+		int res = readWithDef(msg, a, a, b);
+		
+		if(res == a) {
+			return true ;
+		} else {
+			return false ;
+		}
+	}
 
 	public int read(String prompt, int ...params) {
 		
@@ -164,9 +181,14 @@ public class InputConsole extends Console {
 				throw new RuntimeException("", e);
 			}
 			
-			if(validation && input.length() > 0){
-				result = input;
-				break;
+			result = input;
+			
+			if(validation ){
+				if(input.length() > 0) {
+					break;
+				}
+			} else {
+				break ;
 			}
 		}
 		

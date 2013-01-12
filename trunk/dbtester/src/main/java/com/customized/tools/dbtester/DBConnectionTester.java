@@ -40,8 +40,11 @@ public class DBConnectionTester {
 		
 		try {	
 			if(console.readFromCli("DBConnectionTester")) {
-				//TODO-- add command line wizard
+				DBTesterWizard wizard = (DBTesterWizard) console.popWizard(new DBTesterWizard(dbTester));
+				dbTester = wizard.getDBTester();
 			}
+			
+			console.prompt("DBConnectionTester Properties: " +  dbTester);
 			
 			conn = getConnection();
 			

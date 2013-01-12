@@ -42,6 +42,8 @@ public class JMSConnectionTester {
 				jmsTester = wizard.getJMSTester();
 			}
 			
+			console.prompt("JMSConnectionTester JNDI Content: " + jmsTester);
+			
 			Context ctx = initialContext();
 			
 			testConnection(ctx);

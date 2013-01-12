@@ -5,6 +5,8 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import com.customized.tools.cli.InputConsole;
+
 public abstract class Wizard  {
 	
 	private String name;
@@ -17,10 +19,73 @@ public abstract class Wizard  {
 
 	List<String> orderList = new ArrayList<String>();
 	
+	List<String> oldOrderList = new ArrayList<String>();
+	
 	Map<String, String> preContent = new HashMap<String, String>();
 	
 	Map<String, String> content = new HashMap<String, String>();
 	
+	public void updateKeyLength() {
+		
+		oldOrderList.addAll(orderList);
+		
+		List<String> tmpList = new ArrayList<String>();
+		
+		int length = maxKeyLength();
+		
+		for(int i = 0 ; i < orderList.size() ; i ++) {
+			String key = orderList.get(i);
+			String preValue = content.get(key);
+			content.remove(key);
+			preContent.remove(key);
+			
+			String newKey = appendKey(key, length);
+			
+			tmpList.add(newKey);
+			content.put(newKey, preValue);
+			preContent.put(newKey, preValue);
+		}
+		
+		orderList.clear();
+		orderList.addAll(tmpList);
+	}
+	
+	private void rollBackKey() {
+		for(int i = 0 ; i < oldOrderList.size() ; i ++) {
+			String key = orderList.get(i);
+			String value = content.get(key);
+			content.remove(key);
+			preContent.remove(key);
+			content.put(oldOrderList.get(i), value);
+			preContent.put(oldOrderList.get(i), value);
+		}
+		
+		orderList.clear();
+		orderList.addAll(oldOrderList);
+	}
+	
+	private String appendKey(String key, int length) {
+		
+		int times = (length - key.length());
+		for(int i = 0 ; i < times ; i ++) {
+			key += " ";
+		}
+		return key;
+	}
+
+	private int maxKeyLength() {
+		
+		int length = 0;
+		
+		for(String key : orderList) {
+			if(key.length() > length) {
+				length = key.length();
+			}
+		}
+		
+		return length;
+	}
+
 	public String getKey(int id) {
 		return orderList.get(id);
 	}
@@ -54,6 +119,15 @@ public abstract class Wizard  {
 		content.putAll(preContent);
 	}
 	
+	public boolean doOk(InputConsole console) {
+		if(console.checkFromCli()) {
+			rollBackKey();
+			return true ;
+		} else {
+			return false ;
+		}
+	}
+
 	public String getPrompt() {
 		
 		String start = "---------------------- " + name + " Wizard ----------------------------";
@@ -65,10 +139,10 @@ public abstract class Wizard  {
 		StringBuffer sb = new StringBuffer();
 		sb.append(start);
 		for(int i = 0 ; i < orderList.size() ; i ++) {
-			sb.append("  [" + (i + 1) + "]. " + orderList.get(i) + ": " + content.get(orderList.get(i)));
+			sb.append("\n      [" + (i + 1) + "]. " + orderList.get(i) + ": " + content.get(orderList.get(i)));
 		}
 		sb.append("\n                [p]. Previous  [n]. Next  [o]. Ok");
-		sb.append(end);
+		sb.append("\n    " + end);
 		
 		return sb.toString();
 	}

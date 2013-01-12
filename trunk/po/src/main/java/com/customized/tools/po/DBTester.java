@@ -55,6 +55,6 @@ public class DBTester {
 	@Override
 	public String toString() {
 		return "DBTester [driver=" + driver + ", url=" + url + ", username="
-				+ username + ", password=" + password + "]";
+				+ username + ", password=****** ]";
 	}
 }

@@ -12,6 +12,7 @@ public class JMSTesterWizard extends Wizard {
 	public JMSTesterWizard(JMSTester jmsTester) {
 		super("JMSConnectionTester");
 		this.jmsTester = jmsTester;
+		doInit();
 	}
 	
 	String factoryJNDIName =  "FactoryJNDIName";
@@ -48,6 +49,7 @@ public class JMSTesterWizard extends Wizard {
 		list.add(key);
 		update(key, jmsTester.getCredentials());
 		
+		updateKeyLength();
 	}
 	
 	public JMSTester getJMSTester() {
