@@ -20,6 +20,7 @@
     <property name="po.target.dir" value="${basedir}/po/target" />
     <property name="cli.target.dir" value="${basedir}/cli/target" />
     <property name="smartanalyser.target.dir" value="${basedir}/smartanalyser/target" />
+    <property name="core.target.dir" value="${basedir}/core/target" />
 
     <target name="validateproperties" >
         <echo>build parameter output</echo>
@@ -40,6 +41,7 @@
 	<mkdir dir="${build.dir}/configuration" />
 	<copy todir="${build.dir}/configuration" >
 	    <fileset dir="${resource.dir}" includes="toolsContent.xml"/>
+	    <fileset dir="${resource.dir}" includes="Tool-log4j.xml"/>
 	</copy>	
 
         
@@ -109,8 +111,16 @@
 	<copy todir="${build.dir}/modules/com/customized/tools/smartanalyser/main" >
             <fileset dir="${smartanalyser.target.dir}" includes="cst-smartanalyser.jar"/>
         </copy>
+
+	<copy todir="${build.dir}/modules/com/customized/tools/core/main" >
+            <fileset dir="${core.target.dir}" includes="cst-core.jar"/>
+        </copy>
 	
 	<mkdir dir="${build.dir}/bin" />
+
+	<mkdir dir="${build.dir}/lib" />
+	<mkdir dir="${build.dir}/out" />
+	<mkdir dir="${build.dir}/log" />
 
 
     </target>

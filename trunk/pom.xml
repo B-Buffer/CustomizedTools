@@ -20,6 +20,7 @@
 	<module>po</module>
 	<module>cli</module>
 	<module>common</module>
+	<module>core</module>
 	<module>resources</module>
 	<module>samurai</module>
         <module>GCViewer</module>

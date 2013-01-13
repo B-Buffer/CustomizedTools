@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<module xmlns="urn:jboss:module:1.1" name="com.customized.tools.core">
+
+    <resources>
+        <resource-root path="cst-core.jar"/>
+    </resources>
+
+    <dependencies>
+    </dependencies>
+</module>
