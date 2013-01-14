@@ -45,6 +45,12 @@
          <version>${project.version}</version>
 	     <scope>provided</scope>
       </dependency>
+      <dependency>
+         <groupId>com.customized.tools</groupId>
+         <artifactId>cst-common</artifactId>
+         <version>${project.version}</version>
+	     <scope>provided</scope>
+      </dependency>
     </dependencies>
 
     <build>

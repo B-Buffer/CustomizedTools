@@ -5,6 +5,8 @@ import java.io.File;
 import org.apache.log4j.Logger;
 import org.apache.log4j.xml.DOMConfigurator;
 
+import com.customized.tools.po.version.Version;
+
 public class Main {
 	
 	private static final Logger logger = Logger.getLogger(Main.class);
@@ -83,12 +85,12 @@ public class Main {
 		}
 		
 		logger.debug("Display Customized Tools Information");
-		logger.debug("Customized Tools BaseDir: " + baseDir);
-		logger.debug("Customized Tools Log4j configuration file: " + logFile);
-		logger.debug("Customized Tools main configuration file: " + toolsConf);
-		logger.debug("Customized Tools log folder: " + logDir);
-		logger.debug("Customized Tools out folder: " + outDir);
-		logger.debug("Customized Tools lib folder: " + libDir);
+		logger.debug("  Customized Tools BaseDir: " + baseDir);
+		logger.debug("  Customized Tools Log4j configuration file: " + logFile);
+		logger.debug("  Customized Tools main configuration file: " + toolsConf);
+		logger.debug("  Customized Tools log folder: " + logDir);
+		logger.debug("  Customized Tools out folder: " + outDir);
+		logger.debug("  Customized Tools lib folder: " + libDir);
 		
 		logger.debug("Display Java Information");
 		logger.debug("  java.vendor: " + System.getProperty("java.vendor"));
@@ -106,8 +108,15 @@ public class Main {
 		main.start();
 	}
 
-	private void start() {
+	void start() {
 		
+		logger.info(Version.versionString() + " Start");
+		
+		CoreContainer container = new CoreContainer(toolsConf);
+		
+		container.init();
+		
+		container.start();
 	}
 
 
