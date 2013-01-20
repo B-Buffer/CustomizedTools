@@ -1,6 +1,11 @@
 package com.customized.tools.cli;
 
+import java.util.ArrayList;
+import java.util.List;
+
 public class TreeNode {
+	
+	private final String name;
 
 	private boolean isRoot;
 	
@@ -8,23 +13,37 @@ public class TreeNode {
 	
 	private String content;
 	
-	private TreeNode father;
+	private final TreeNode father;
 	
-	private TreeNode son;
+	private List<TreeNode> sons;
 
-	public TreeNode(String content, TreeNode father, TreeNode son) {
+	public TreeNode(String name, String content, TreeNode father, TreeNode son) {
 		super();
+		this.name = name;
 		this.content = content;
 		this.father = father;
-		this.son = son;
+		sons = new ArrayList<TreeNode>();
 		
-		if(null == son) {
-			setLeaf(true);
+		addSon(son);
+		
+		updateLeaf();
+		
+		if(null == name) {
+			throw new TreeInputConsoleException("TreeNode name can not be null");
 		}
 		
 		if(null == father) {
 			setRoot(true);
 		}
+	}
+
+	private void updateLeaf() {
+		if (sons.size() == 0)
+			setLeaf(true);
+	}
+
+	public String getName() {
+		return name;
 	}
 
 	public boolean isRoot() {
@@ -55,15 +74,30 @@ public class TreeNode {
 		return father;
 	}
 
-	public void setFather(TreeNode father) {
-		this.father = father;
+	public List<TreeNode> getSons() {
+		return sons;
 	}
 
-	public TreeNode getSon() {
-		return son;
+	public void setSons(List<TreeNode> sons) {
+		this.sons = sons;
+		updateLeaf();
+	}
+	
+	public TreeNode addSon(TreeNode son) {
+		
+		if(null == son) {
+			return this;
+		}
+		
+		sons.add(son);
+		updateLeaf();
+		
+		return this;
 	}
 
-	public void setSon(TreeNode son) {
-		this.son = son;
+	public String toString() {
+		return getName();
 	}
+
+	
 }

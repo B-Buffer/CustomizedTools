@@ -4,6 +4,8 @@ public class Console {
 
 	private static final long DEFAULT_SLEEP_TIME = 1000;
 	
+	protected static final String TAB = "    ";
+	
 	public void print(Object obj) {
 		System.out.print(obj);
 	}
@@ -13,7 +15,7 @@ public class Console {
 	}
 	
 	public void prompt(Object obj) {
-		System.out.println("\n    " + obj + "\n");
+		System.out.println("\n" + TAB + obj + "\n");
 	}
 
 	public void pause(Object obj) {
