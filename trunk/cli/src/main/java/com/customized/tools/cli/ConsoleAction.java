@@ -8,4 +8,6 @@ public enum ConsoleAction {
 	PWD,
 	RM,
 	ADD,
+	HELP,
+	OTHER,
 }

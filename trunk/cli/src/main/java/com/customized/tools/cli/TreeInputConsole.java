@@ -65,10 +65,8 @@ public class TreeInputConsole extends InputConsole {
 			
 			pointer = in.readLine();
 			
-//			//TODO
-//			println(pointer);
+			switch (type(pointer)) {
 			
-			switch(type(pointer)){
 			case NULL :
 				break ;
 			case LS :
@@ -85,6 +83,12 @@ public class TreeInputConsole extends InputConsole {
 				break;
 			case ADD :
 				handleADD(pointer);
+				break;
+			case HELP :
+				handleHELP(pointer);
+				break;
+			case OTHER :
+				promptErrorCommand(pointer);
 				break;
 			}
 			
@@ -163,7 +167,7 @@ public class TreeInputConsole extends InputConsole {
 				String name = path[i];
 				TreeNode node = findNode(name);
 				if(null == node) {
-					prompt(array[1] + " does not exist");
+					prompt("[" + array[1] + "] does not exist");
 					break;
 				}
 				updateCurrentNode(node);
@@ -208,8 +212,8 @@ public class TreeInputConsole extends InputConsole {
 		for(int i = 1 ; i < array.length ; i ++) {
 			String name = array[i];
 			for(int j = 0 ; j < list.size() ; j ++) {
-				if(name.compareTo(list.get(i).getName()) == 0) {
-					getCurrentNode().getSons().remove(list.get(i));
+				if(name.compareTo(list.get(j).getName()) == 0) {
+					getCurrentNode().getSons().remove(list.get(j));
 				}
 			}
 		}
@@ -217,6 +221,30 @@ public class TreeInputConsole extends InputConsole {
 	
 	public void handleADD(String pointer) {
 		
+		String[] array = pointer.split(" ");
+		
+		if(array.length != 1) {
+			promptErrorCommand(pointer);
+			return ;
+		}
+		
+		String name = readString("Enter Node Name:", true);
+		String content = readString("Enter Node Content:", false);
+		TreeNode node = new TreeNode(name, content, getCurrentNode(), null);
+		if(getCurrentNode() == null) {
+			getRootNodes().add(node);
+		} else {
+			getCurrentNode().getSons().add(node);
+		}
+	}
+	
+	public void handleHELP(String pointer) {
+		println("[<ls>] list all nodes");
+		println("[<ls> <-l>] list all nodes with contents");
+		println("[<cd> <PATH>] redirect via PATH");
+		println("[<pwd>] show current path");
+		println("[<rm> <NODE_NAME> <*>] delete node, * hints delete all son nodes");
+		println("[<add>] add new node");
 	}
 
 	private List<TreeNode> getPrintNodes() {
@@ -270,11 +298,14 @@ public class TreeInputConsole extends InputConsole {
 			return ConsoleAction.RM;
 		} else if(pointer.toLowerCase().startsWith("add")) {
 			return ConsoleAction.ADD;
-		}else if(pointer.equals("")){
+		} else if(pointer.toLowerCase().startsWith("help")) {
+			return ConsoleAction.HELP;
+		} else if(pointer.equals("")){
 			return ConsoleAction.NULL;
+		} else {
+			return ConsoleAction.HELP;
 		}
 		
-		return ConsoleAction.NULL;
 	}
 	
 	public void addTreeNodeToRootNodeList(TreeNode node) {
