@@ -15,8 +15,6 @@ public abstract class Wizard  {
 		this.name = name ;
 	}
 
-	private static final long serialVersionUID = -4826125378899032182L;
-
 	List<String> orderList = new ArrayList<String>();
 	
 	List<String> oldOrderList = new ArrayList<String>();

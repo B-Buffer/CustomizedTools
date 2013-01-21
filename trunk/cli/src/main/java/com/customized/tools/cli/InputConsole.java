@@ -43,6 +43,7 @@ public class InputConsole extends Console {
 		}
 	}
 
+	@SuppressWarnings({ "rawtypes", "unchecked" })
 	public int read(String prompt, int ...params) {
 		
 		Set set = new HashSet();
@@ -63,6 +64,7 @@ public class InputConsole extends Console {
 		return result ;
 	}
 	
+	@SuppressWarnings({ "rawtypes", "unchecked" })
 	public int readWithDef(String prompt, int def, int ...params ) {
 		
 		Set set = new HashSet();

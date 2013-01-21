@@ -12,8 +12,25 @@ import com.customized.tools.cli.TreeNode;
  *
  */
 public class TreeInputConsoleTest {
-
-	public static void main(String[] args) throws IOException {
+	
+	/**
+	 * The TreeInputConsole Test TreeNode architecture
+	 *         a
+	 *        / \
+	 *       b   c
+	 *      /
+	 *     d
+	 *    /
+	 *   e
+	 * a is root node, has 2 son nodes b and c ;  
+	 * b has a son node d and father node is a ;
+	 * c is leaf node, father node is a ;
+	 * d has father node b and son node e ;
+	 * e is leaf node and father node is d ;
+	 * 
+	 * @throws IOException
+	 */
+	protected void testTreeNode() throws IOException {
 		
 		TreeNode a = new TreeNode("a", "[key=value]", null, null);
 		TreeNode b = new TreeNode("b", "[key=value]", a, null);
@@ -24,7 +41,21 @@ public class TreeInputConsoleTest {
 		b.addSon(d);
 		d.addSon(e);
 		
-		TreeInputConsole test = new TreeInputConsole("test", e);
+		TreeInputConsole test = new TreeInputConsole("test", a);
 		test.execute();
+	}
+	
+	protected void testTreeNodeNULL() throws IOException {
+		TreeInputConsole test = new TreeInputConsole("test", null);
+		test.execute();
+	}
+
+	public static void main(String[] args) throws IOException {
+		
+		TreeInputConsoleTest test = new TreeInputConsoleTest();
+		
+		test.testTreeNode() ;
+		
+		test.testTreeNodeNULL() ;
 	}
 }
