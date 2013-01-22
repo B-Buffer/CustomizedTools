@@ -6,14 +6,10 @@ import java.util.List;
 public class TreeNode {
 	
 	private final String name;
-
-	private boolean isRoot;
-	
-	private boolean isLeaf;
 	
 	private String content;
 	
-	private final TreeNode father;
+	private TreeNode father;
 	
 	private List<TreeNode> sons;
 
@@ -25,41 +21,16 @@ public class TreeNode {
 		sons = new ArrayList<TreeNode>();
 		
 		addSon(son);
-		
-		updateLeaf();
-		
+				
 		if(null == name) {
 			throw new TreeInputConsoleException("TreeNode name can not be null");
 		}
 		
-		if(null == father) {
-			setRoot(true);
-		}
 	}
 
-	private void updateLeaf() {
-		if (sons.size() == 0)
-			setLeaf(true);
-	}
 
 	public String getName() {
 		return name;
-	}
-
-	public boolean isRoot() {
-		return isRoot;
-	}
-
-	public void setRoot(boolean isRoot) {
-		this.isRoot = isRoot;
-	}
-
-	public boolean isLeaf() {
-		return isLeaf;
-	}
-
-	public void setLeaf(boolean isLeaf) {
-		this.isLeaf = isLeaf;
 	}
 
 	public String getContent() {
@@ -74,13 +45,16 @@ public class TreeNode {
 		return father;
 	}
 
+	public void setFather(TreeNode father) {
+		this.father = father;
+	}
+
 	public List<TreeNode> getSons() {
 		return sons;
 	}
 
 	public void setSons(List<TreeNode> sons) {
 		this.sons = sons;
-		updateLeaf();
 	}
 	
 	public TreeNode addSon(TreeNode son) {
@@ -90,7 +64,6 @@ public class TreeNode {
 		}
 		
 		sons.add(son);
-		updateLeaf();
 		
 		return this;
 	}
