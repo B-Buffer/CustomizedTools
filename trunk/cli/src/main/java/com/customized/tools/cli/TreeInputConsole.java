@@ -7,6 +7,12 @@ import java.io.InputStreamReader;
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * TreeInputConsole
+ * 
+ * @author kylin
+ *
+ */
 public class TreeInputConsole extends InputConsole {
 	
 	private final String name;
@@ -40,17 +46,8 @@ public class TreeInputConsole extends InputConsole {
 		return rootNodes;
 	}
 
-	protected void updateCurrentNode(TreeNode currentNode) {
+	public void updateCurrentNode(TreeNode currentNode) {
 		this.currentNode = currentNode;
-	}
-	
-	private void updateCursorStr(TreeNode node) {
-		if(null == node) {
-			cursor = "/";
-		} else {
-			cursor = node.getName() ;
-		}
-		cursorStr = "[" +name + " " + cursor + "]";
 	}
 	
 	public void execute() throws IOException {
@@ -88,7 +85,7 @@ public class TreeInputConsole extends InputConsole {
 				handleHELP(pointer);
 				break;
 			case OTHER :
-				promptErrorCommand(pointer);
+				handleOther(pointer);
 				break;
 			}
 			
@@ -96,7 +93,7 @@ public class TreeInputConsole extends InputConsole {
 		}
 	}
 
-	public void handleLS(String pointer) {
+	protected void handleLS(String pointer) {
 		
 		String[] array = pointer.split(" ");
 		
@@ -129,7 +126,7 @@ public class TreeInputConsole extends InputConsole {
 		}
 	}
 	
-	public void handlePWD(String pointer) {
+	protected void handlePWD(String pointer) {
 		
 		if(getCurrentNode() == null) {
 			println("/");
@@ -145,7 +142,7 @@ public class TreeInputConsole extends InputConsole {
 		}	
 	}
 	
-	public void handleCD(String pointer) {
+	protected void handleCD(String pointer) {
 
 		String[] array = pointer.split(" ");
 		
@@ -175,7 +172,7 @@ public class TreeInputConsole extends InputConsole {
 		}
 	}
 	
-	public void handleRM(String pointer) {
+	protected void handleRM(String pointer) {
 		
 		String[] array = pointer.split(" ");
 		
@@ -219,7 +216,7 @@ public class TreeInputConsole extends InputConsole {
 		}
 	}
 	
-	public void handleADD(String pointer) {
+	protected void handleADD(String pointer) {
 		
 		String[] array = pointer.split(" ");
 		
@@ -238,13 +235,79 @@ public class TreeInputConsole extends InputConsole {
 		}
 	}
 	
-	public void handleHELP(String pointer) {
+	protected void handleHELP(String pointer) {
 		println("[<ls>] list all nodes");
 		println("[<ls> <-l>] list all nodes with contents");
 		println("[<cd> <PATH>] redirect via PATH");
 		println("[<pwd>] show current path");
 		println("[<rm> <NODE_NAME> <*>] delete node, * hints delete all son nodes");
 		println("[<add>] add new node");
+	}
+	
+	protected void handleOther(String pointer) {
+		promptErrorCommand(pointer) ;
+	}
+	
+	protected void promptErrorCommand(String pointer) {
+		prompt("[" + pointer + "] can not be recognized");
+	}
+	
+	protected String getAbsolutePath() {
+		
+		String path = "";
+		
+		if(getCurrentNode() == null) {
+			path = "/";
+		} else {
+			String tmp = getCurrentNode().getName();
+			
+			TreeNode node = getCurrentNode();
+			while((node = getFatherNode(node)) != null) {
+				String old = tmp;
+				tmp = node.getName() + File.separator + old ;
+			}			
+			path = File.separator + tmp;
+		}
+		
+		return path ;
+	}
+	
+	protected void addTreeNode(TreeNode treeNode) {
+		if(getCurrentNode() == null) {
+			getRootNodes().add(treeNode);
+		} else {
+			getCurrentNode().addSon(treeNode);
+		}
+	}
+	
+	protected void removeTreeNode(String name) {
+		
+		if(getCurrentNode() == null) {
+			remove(getRootNodes(), name);
+		} else {
+			remove(getCurrentNode().getSons(), name);
+		}
+	}
+	
+	private void remove(List<TreeNode> nodes, String name) {
+		
+		int size = nodes.size();
+		
+		for(int i = 0 ; i < size ; i ++) {
+			if(nodes.get(i).getName().compareTo(name) == 0) {
+				nodes.remove(i);
+				break;
+			}
+		}
+	}
+
+	private void updateCursorStr(TreeNode node) {
+		if(null == node) {
+			cursor = "/";
+		} else {
+			cursor = node.getName() ;
+		}
+		cursorStr = "[" +name + " " + cursor + "]";
 	}
 
 	private List<TreeNode> getPrintNodes() {
@@ -278,37 +341,33 @@ public class TreeInputConsole extends InputConsole {
 		return result;
 	}
 
-	public void promptErrorCommand(String pointer) {
-		prompt("[" + pointer + "] can not be recognized");
-	}
-
 	private TreeNode getFatherNode(TreeNode node) {
 		return node.getFather();
 	}
 
-	private ConsoleAction type(String pointer) {
+	private Action type(String pointer) {
 		
 		if(pointer.toLowerCase().startsWith("cd")) {
-			return ConsoleAction.CD ;
+			return Action.CD ;
 		} else if(pointer.toLowerCase().startsWith("ls")) {
-			return ConsoleAction.LS;
+			return Action.LS;
 		} else if(pointer.toLowerCase().startsWith("pwd")) {
-			return ConsoleAction.PWD;
+			return Action.PWD;
 		} else if(pointer.toLowerCase().startsWith("rm")) {
-			return ConsoleAction.RM;
+			return Action.RM;
 		} else if(pointer.toLowerCase().startsWith("add")) {
-			return ConsoleAction.ADD;
+			return Action.ADD;
 		} else if(pointer.toLowerCase().startsWith("help")) {
-			return ConsoleAction.HELP;
+			return Action.HELP;
 		} else if(pointer.equals("")){
-			return ConsoleAction.NULL;
+			return Action.NULL;
 		} else {
-			return ConsoleAction.HELP;
+			return Action.HELP;
 		}
 		
 	}
 	
-	public void addTreeNodeToRootNodeList(TreeNode node) {
+	private void addTreeNodeToRootNodeList(TreeNode node) {
 		
 		if(getRootNodes().size() > 0) {
 			return ;
@@ -320,13 +379,25 @@ public class TreeInputConsole extends InputConsole {
 		}
 	}
 
-	public TreeNode findRootNode(TreeNode node) {
+	private TreeNode findRootNode(TreeNode node) {
 				
 		if(null != node.getFather()) {
 			return findRootNode(node.getFather());
 		} else {
 			return node;
 		}
+	}
+	
+	private enum Action {
+
+		NULL,
+		LS,
+		CD,
+		PWD,
+		RM,
+		ADD,
+		HELP,
+		OTHER,
 	}
 	
 }

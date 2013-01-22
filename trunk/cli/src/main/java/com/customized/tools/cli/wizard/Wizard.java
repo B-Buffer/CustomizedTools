@@ -118,7 +118,7 @@ public abstract class Wizard  {
 	}
 	
 	public boolean doOk(InputConsole console) {
-		if(console.checkFromCli()) {
+		if(console.isSettingComplete()) {
 			rollBackKey();
 			return true ;
 		} else {

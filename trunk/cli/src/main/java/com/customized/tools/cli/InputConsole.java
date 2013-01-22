@@ -26,7 +26,24 @@ public class InputConsole extends Console {
 		}
 	}
 	
-	public boolean checkFromCli() {
+	public boolean isRemoving(String note) {
+		
+		String msg = "Remove " + note + "?\n" +
+				 "  [1]. Yes\n" +
+			     "  [2]. No\n" +
+				 "Default is [1]";
+		int a = '1';
+		int b = '2';
+		int res = readWithDef(msg, a, a, b);
+		
+		if(res == a) {
+			return true ;
+		} else {
+			return false ;
+		}
+	}
+	
+	public boolean isSettingComplete() {
 		
 		String msg = "Setting Complete\n" +
 				 "  [1]. Yes\n" +
