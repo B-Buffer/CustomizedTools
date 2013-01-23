@@ -41,13 +41,13 @@ public class TreeInputConsoleTest {
 		b.addSon(d);
 		d.addSon(e);
 		
-		TreeInputConsole test = new TreeInputConsole("test", a);
-		test.execute();
+		TreeInputConsole test = new TreeInputConsole("test", a, true);
+		test.start();
 	}
 	
 	protected void testTreeNodeNULL() throws IOException {
 		TreeInputConsole test = new TreeInputConsole("test", null);
-		test.execute();
+		test.start();
 	}
 
 	public static void main(String[] args) throws IOException {

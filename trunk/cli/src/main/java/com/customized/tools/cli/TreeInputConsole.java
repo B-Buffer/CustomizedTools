@@ -2,9 +2,13 @@ package com.customized.tools.cli;
 
 import java.io.BufferedReader;
 import java.io.File;
+import java.io.FileWriter;
 import java.io.IOException;
 import java.io.InputStreamReader;
+import java.io.PrintWriter;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 /**
@@ -29,11 +33,19 @@ public class TreeInputConsole extends InputConsole {
 	private String cursorStr ;
 	
 	private BufferedReader in ;
+	
+	private boolean isDebug = false ;
+	
+	public TreeInputConsole(String name, TreeNode currentNode){
+		this(name, currentNode, false);
+	}
 
-	public TreeInputConsole(String name, TreeNode currentNode) {
+
+	public TreeInputConsole(String name, TreeNode currentNode, Boolean isDebug) {
 		super();
 		this.name = name;
 		this.currentNode = currentNode;
+		this.isDebug = isDebug ;
 		
 		// register TreeNode to rootNode, if TreeNode didn't have a parent
 		if(null != currentNode && null == currentNode.getFather()){
@@ -56,6 +68,21 @@ public class TreeInputConsole extends InputConsole {
 		return currentNode;
 	}
 
+	public boolean isDebug() {
+		return isDebug;
+	}
+
+	/**
+	 * Threshold for debug TreeNode information.
+	 *   if isDebug is true, all exist TreeNode will be printed
+	 *   if isDebug is false, debug logic will be ignored
+	 * @param isDebug
+	 */
+	public void setDebug(boolean isDebug) {
+		this.isDebug = isDebug;
+	}
+
+
 	private TreeNode getRootNode() {
 		return rootNode;
 	}
@@ -69,12 +96,17 @@ public class TreeInputConsole extends InputConsole {
 		this.currentNode = currentNode;
 	}
 	
-	public void execute() throws IOException {
+	public void start() throws IOException {
+		
+		isRunning = true;
 		
 		String pointer = "";
 		
-		while (true) {
+		while (isRunning) {
+			
+			printWholeTreeNodes();
 						
+			// always print cursor string, simulate Linux Commands
 			print(cursorStr);
 			
 			pointer = in.readLine();
@@ -109,6 +141,62 @@ public class TreeInputConsole extends InputConsole {
 			updateCursorStr(getCurrentNode());		
 		}
 	}
+	
+	private boolean isRunning;
+	
+	public void stop() {
+		isRunning = false;
+	}
+
+	private PrintWriter out = null ;
+	
+	private void printWholeTreeNodes() {
+
+		if (!isDebug())
+			return;
+		
+		if(null == out) {
+			try {
+				prompt("Debug TreeNode Content is enable");
+				File file = new File(System.currentTimeMillis() + ".log");
+				out = new PrintWriter(new FileWriter(file), true);
+				prompt("TreeNode Content Stack will output to " + file.getName());
+			} catch (IOException e) {
+				throw new TreeInputConsoleException("instantiate PrintWriter error", e);
+			}
+		}
+		
+		StringBuffer sb = new StringBuffer();
+		sb.append(new SimpleDateFormat("[yyyy-MM-dd HH:mm:ss SSS]").format(new Date()) + " TreeNode Content Stack:");
+		sb.append("\n");
+		recursiveOrder(rootNode, sb, 0);
+		
+		out.print(sb.toString());
+		out.flush();
+	}
+	
+	private void recursiveOrder(TreeNode node, StringBuffer sb, int index) {
+		
+		String preBlank = countBlank(index ++);
+		sb.append(preBlank + node.getName() + " - [" + node.getContent() + "]" );
+		sb.append("\n");
+		
+		for(TreeNode son : node.getSons()) {
+			recursiveOrder(son, sb, index);
+		}
+		
+	}
+
+	private String countBlank(int size) {
+
+		String tab = "    ";
+		String sum = "";
+		for(int i = 0 ; i < size ; i ++) {
+			sum += tab ;
+		}
+		return sum;
+	}
+
 
 	protected void handleLS(String pointer) {
 		
@@ -144,20 +232,7 @@ public class TreeInputConsole extends InputConsole {
 	}
 	
 	protected void handlePWD(String pointer) {
-		
-		String tmp = getCurrentNode().getName();
-		
-		TreeNode node = getCurrentNode();
-		while((node = getFatherNode(node)) != null) {
-			String old = tmp;
-			if(node.getName().compareTo("/") == 0){
-				tmp = node.getName() +  old ;
-			} else {
-				tmp = node.getName() + File.separator + old ;
-			}
-		}	
-		
-		println(tmp);
+		println(getAbsolutePath());
 	}
 	
 	protected void handleCD(String pointer) {
@@ -254,16 +329,20 @@ public class TreeInputConsole extends InputConsole {
 	}
 	
 	protected String getAbsolutePath() {
-				
+		
 		String tmp = getCurrentNode().getName();
 		
 		TreeNode node = getCurrentNode();
 		while((node = getFatherNode(node)) != null) {
 			String old = tmp;
-			tmp = node.getName() + File.separator + old ;
-		}			
+			if(node.getName().compareTo("/") == 0){
+				tmp = node.getName() +  old ;
+			} else {
+				tmp = node.getName() + File.separator + old ;
+			}
+		}	
 		
-		return File.separator + tmp; 
+		return tmp; 
 	}
 	
 	protected void addTreeNode(TreeNode treeNode) {
@@ -324,18 +403,18 @@ public class TreeInputConsole extends InputConsole {
 			return Action.CD ;
 		} else if(pointer.toLowerCase().startsWith("ls")) {
 			return Action.LS;
-		} else if(pointer.toLowerCase().startsWith("pwd")) {
+		} else if(pointer.toLowerCase().equals("pwd")) {
 			return Action.PWD;
 		} else if(pointer.toLowerCase().startsWith("rm")) {
 			return Action.RM;
-		} else if(pointer.toLowerCase().startsWith("add")) {
+		} else if(pointer.toLowerCase().equals("add")) {
 			return Action.ADD;
-		} else if(pointer.toLowerCase().startsWith("help")) {
+		} else if(pointer.toLowerCase().equals("help")) {
 			return Action.HELP;
 		} else if(pointer.equals("")){
 			return Action.NULL;
 		} else {
-			return Action.HELP;
+			return Action.OTHER;
 		}
 		
 	}
