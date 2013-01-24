@@ -42,12 +42,14 @@ public class TreeInputConsoleTest {
 		d.addSon(e);
 		
 		TreeInputConsole test = new TreeInputConsole("test", a, true);
-		test.start();
+//		test.start();
+//		TreeNode node = test.getTreeNode("/asd");
+//		System.out.println(node);
 	}
 	
 	protected void testTreeNodeNULL() throws IOException {
 		TreeInputConsole test = new TreeInputConsole("test", null);
-		test.start();
+//		test.start();
 	}
 
 	public static void main(String[] args) throws IOException {

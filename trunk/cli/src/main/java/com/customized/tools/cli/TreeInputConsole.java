@@ -255,7 +255,7 @@ public class TreeInputConsole extends InputConsole {
 				}
 			} else {
 				String name = path[i];
-				TreeNode node = findNode(name);
+				TreeNode node = findNode(getCurrentNode(), name);
 				if(null == node) {
 					prompt("[" + array[1] + "] does not exist");
 					break;
@@ -354,6 +354,64 @@ public class TreeInputConsole extends InputConsole {
 		remove(getCurrentNode().getSons(), name);
 	}
 	
+	protected TreeNode getTreeNode(TreeNode node, String path) {
+		
+		path = trimPath(path);
+		
+		if(path == null || path.equals("")) {
+			return node;
+		}
+		
+		String[] array = path.split("/");
+		for(int i = 0 ; i < array.length ; i ++) {
+			node = findNode(node, array[i]);
+		}
+		
+		if(null == node) {
+			throw new TreeInputConsoleException("can not find TreeNode via " + path);
+		}
+		
+		return node;
+	}
+	
+	protected TreeNode getTreeNode(String path) {
+		
+		path = trimPath(path);
+		
+		if(path == null || path.equals("")) {
+			return getRootNode();
+		}
+		
+		String[] array = path.split("/");
+		
+		TreeNode node = getRootNode();
+		for(int i = 0 ; i < array.length ; i ++) {
+			node = findNode(node, array[i]);
+		}
+		
+		if(null == node) {
+			throw new TreeInputConsoleException("can not find TreeNode via " + path);
+		}
+		
+		return node;
+	}
+	
+	protected String trimPath(String str) {
+		
+		String path = str ;
+
+		if(path.startsWith("/")) {
+			path = path.substring(1);
+		}
+		
+		if(path.endsWith("/")) {
+			path = path.substring(0, path.length() - 1);
+		}
+		
+		return path;
+	}
+
+
 	private void remove(List<TreeNode> nodes, String name) {
 		
 		int size = nodes.size();
@@ -378,14 +436,18 @@ public class TreeInputConsole extends InputConsole {
 	private List<TreeNode> getPrintNodes() {
 		return getCurrentNode().getSons();
 	}
-
-	private TreeNode findNode(String name) {
+	
+	private TreeNode findNode(TreeNode node, String name) {
+		
+		if(null == node) {
+			throw new TreeInputConsoleException("findNode Error, node name: " + name);
+		}
 		
 		TreeNode result = null;
 		
-		for(TreeNode node : getCurrentNode().getSons()) {
-			if(node.getName().compareTo(name) == 0) {
-				result = node ;
+		for(TreeNode n : node.getSons()) {
+			if(n.getName().compareTo(name) == 0) {
+				result = n ;
 				break;
 			}
 		}
