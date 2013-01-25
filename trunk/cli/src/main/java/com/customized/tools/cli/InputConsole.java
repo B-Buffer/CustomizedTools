@@ -28,7 +28,7 @@ public class InputConsole extends Console {
 	
 	public boolean isRemoving(String note) {
 		
-		String msg = "Remove " + note + "?\n" +
+		String msg = "Remove " + note + " ?\n" +
 				 "  [1]. Yes\n" +
 			     "  [2]. No\n" +
 				 "Default is [1]";

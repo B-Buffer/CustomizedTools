@@ -350,8 +350,19 @@ public class TreeInputConsole extends InputConsole {
 	}
 	
 	protected void removeTreeNode(String name) {
+		removeTreeNode(getCurrentNode().getSons(), name);
+	}
+	
+	protected void removeTreeNode(List<TreeNode> nodes, String name) {
 		
-		remove(getCurrentNode().getSons(), name);
+		int size = nodes.size();
+		
+		for(int i = 0 ; i < size ; i ++) {
+			if(nodes.get(i).getName().compareTo(name) == 0) {
+				nodes.remove(i);
+				break;
+			}
+		}
 	}
 	
 	protected TreeNode getTreeNode(TreeNode node, String path) {
@@ -409,19 +420,6 @@ public class TreeInputConsole extends InputConsole {
 		}
 		
 		return path;
-	}
-
-
-	private void remove(List<TreeNode> nodes, String name) {
-		
-		int size = nodes.size();
-		
-		for(int i = 0 ; i < size ; i ++) {
-			if(nodes.get(i).getName().compareTo(name) == 0) {
-				nodes.remove(i);
-				break;
-			}
-		}
 	}
 
 	private void updateCursorStr(TreeNode node) {
