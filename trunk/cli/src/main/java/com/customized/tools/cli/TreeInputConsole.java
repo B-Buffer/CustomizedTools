@@ -83,7 +83,7 @@ public class TreeInputConsole extends InputConsole {
 	}
 
 
-	private TreeNode getRootNode() {
+	protected TreeNode getRootNode() {
 		return rootNode;
 	}
 
@@ -104,12 +104,15 @@ public class TreeInputConsole extends InputConsole {
 		
 		while (isRunning) {
 			
-			printWholeTreeNodes();
+			// for debug TreeNode Content
+			printTreeNodes(pointer);
 						
 			// always print cursor string, simulate Linux Commands
 			print(cursorStr);
 			
 			pointer = in.readLine();
+			
+			updateTreeNodes(pointer);
 			
 			switch (type(pointer)) {
 			
@@ -142,6 +145,13 @@ public class TreeInputConsole extends InputConsole {
 		}
 	}
 	
+	/**
+	 * Override by subclass for initial TreeNodes 
+	 */
+	protected void updateTreeNodes(String prompt) {
+		
+	}
+
 	private boolean isRunning;
 	
 	public void stop() {
@@ -150,7 +160,7 @@ public class TreeInputConsole extends InputConsole {
 
 	private PrintWriter out = null ;
 	
-	private void printWholeTreeNodes() {
+	private void printTreeNodes(String prompt) {
 
 		if (!isDebug())
 			return;
@@ -167,7 +177,7 @@ public class TreeInputConsole extends InputConsole {
 		}
 		
 		StringBuffer sb = new StringBuffer();
-		sb.append(new SimpleDateFormat("[yyyy-MM-dd HH:mm:ss SSS]").format(new Date()) + " TreeNode Content Stack:");
+		sb.append(new SimpleDateFormat("[yyyy-MM-dd HH:mm:ss SSS]").format(new Date()) + " TreeNode Content Stack(" + prompt + "):");
 		sb.append("\n");
 		recursiveOrder(rootNode, sb, 0);
 		
