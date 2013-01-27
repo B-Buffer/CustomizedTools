@@ -5,7 +5,8 @@ import javax.xml.bind.JAXBException;
 import javax.xml.bind.Marshaller;
 import javax.xml.bind.Unmarshaller;
 
-import com.customized.tools.po.ToolsContent;
+import com.customized.tools.po.CustomizedToolsContext;
+import com.customized.tools.po.ToolsSubsystem;
 
 public class JAXBUtil {
 
@@ -33,7 +34,7 @@ public class JAXBUtil {
 	public JAXBContext getContext() throws JAXBException {
 		
 		if(null == context) {
-			context = JAXBContext.newInstance(ToolsContent.class);
+			context = JAXBContext.newInstance(CustomizedToolsContext.class);
 		}
 		
 		return context;

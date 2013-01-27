@@ -10,7 +10,7 @@ import com.customized.tools.po.DBTester;
 import com.customized.tools.po.JMSTester;
 import com.customized.tools.po.Monitor;
 import com.customized.tools.po.Searcher;
-import com.customized.tools.po.ToolsContent;
+import com.customized.tools.po.ToolsSubsystem;
 
 /**
  * Supply public method for other component, If component need underlying configuration
@@ -20,40 +20,40 @@ import com.customized.tools.po.ToolsContent;
  */
 public class Configuration {
 	
-	private ToolsContent toolsContent;
+	private ToolsSubsystem toolsContent;
 	
 	public Configuration (String path) {
 		
 		try {
 			Unmarshaller unmarshaller = JAXBUtil.getInstance().getUnmarshaller();
-			toolsContent = (ToolsContent) unmarshaller.unmarshal(new File(path));
+			toolsContent = (ToolsSubsystem) unmarshaller.unmarshal(new File(path));
 		} catch (Exception e) {
 			throw new ConfigurationLoaderException("load configuration file throw exception", e);
 		}
 	}
 	
-	public Analyser getAnalyser() {
-		return toolsContent.getAnalyser();
-	}
-	
-	public JMSTester getJmsTester() {
-		return toolsContent.getJmsTester();
-	}
-	
-	public DBTester getDbTester() {
-		return toolsContent.getDbTester();
-	}
-	
-	public ClassSearcher getJarClassSearcher() {
-		return toolsContent.getJarClassSearcher();
-	}
-	
-	public Searcher getFileSearcher() {
-		return toolsContent.getFileSearcher();
-	}
-	
-	public Monitor getFileChangeMonitor() {
-		return toolsContent.getFileChangeMonitor();
-	}
+//	public Analyser getAnalyser() {
+//		return toolsContent.getAnalyser();
+//	}
+//	
+//	public JMSTester getJmsTester() {
+//		return toolsContent.getJmsTester();
+//	}
+//	
+//	public DBTester getDbTester() {
+//		return toolsContent.getDbTester();
+//	}
+//	
+//	public ClassSearcher getJarClassSearcher() {
+//		return toolsContent.getJarClassSearcher();
+//	}
+//	
+//	public Searcher getFileSearcher() {
+//		return toolsContent.getFileSearcher();
+//	}
+//	
+//	public Monitor getFileChangeMonitor() {
+//		return toolsContent.getFileChangeMonitor();
+//	}
 
 }

@@ -40,7 +40,7 @@
 
 	<mkdir dir="${build.dir}/configuration" />
 	<copy todir="${build.dir}/configuration" >
-	    <fileset dir="${resource.dir}" includes="toolsContent.xml"/>
+	    <fileset dir="${resource.dir}" includes="CustomizedToolsContext.xml"/>
 	    <fileset dir="${resource.dir}" includes="Tool-log4j.xml"/>
 	</copy>	
 
