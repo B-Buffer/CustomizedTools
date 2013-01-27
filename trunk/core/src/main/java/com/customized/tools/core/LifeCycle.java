@@ -2,11 +2,11 @@ package com.customized.tools.core;
 
 public interface LifeCycle {
 	
-	public abstract void init();
+	public abstract void doInit();
 
-	public abstract void start();
+	public abstract void doStart();
 	
-	public abstract void stop();
+	public abstract void doStop();
 	
 	public abstract void status();
 	

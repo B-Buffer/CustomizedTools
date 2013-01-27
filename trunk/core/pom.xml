@@ -51,6 +51,54 @@
          <version>${project.version}</version>
 	     <scope>provided</scope>
       </dependency>
+      <dependency>
+         <groupId>com.customized.tools</groupId>
+         <artifactId>cst-classsearcher</artifactId>
+         <version>${project.version}</version>
+	     <scope>provided</scope>
+      </dependency>
+      <dependency>
+         <groupId>com.customized.tools</groupId>
+         <artifactId>cst-dbtester</artifactId>
+         <version>${project.version}</version>
+	     <scope>provided</scope>
+      </dependency>
+      <dependency>
+         <groupId>com.customized.tools</groupId>
+         <artifactId>cst-filechangemonitor</artifactId>
+         <version>${project.version}</version>
+	     <scope>provided</scope>
+      </dependency>
+      <dependency>
+         <groupId>com.customized.tools</groupId>
+         <artifactId>cst-gcviewer</artifactId>
+         <version>${project.version}</version>
+	     <scope>provided</scope>
+      </dependency>
+      <dependency>
+         <groupId>com.customized.tools</groupId>
+         <artifactId>cst-jmstester</artifactId>
+         <version>${project.version}</version>
+	     <scope>provided</scope>
+      </dependency>
+      <dependency>
+         <groupId>samurai.wrapper</groupId>
+         <artifactId>cst-samurai</artifactId>
+         <version>${project.version}</version>
+	     <scope>provided</scope>
+      </dependency>
+      <dependency>
+         <groupId>com.customized.tools</groupId>
+         <artifactId>cst-searcher</artifactId>
+         <version>${project.version}</version>
+	     <scope>provided</scope>
+      </dependency>
+      <dependency>
+         <groupId>com.customized.tools</groupId>
+         <artifactId>cst-smartanalyser</artifactId>
+         <version>${project.version}</version>
+	     <scope>provided</scope>
+      </dependency>
     </dependencies>
 
     <build>

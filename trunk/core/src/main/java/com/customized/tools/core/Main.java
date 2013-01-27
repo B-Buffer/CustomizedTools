@@ -17,7 +17,7 @@ public class Main {
 	final static String OUT = "out";
 	
 	final static String TOOLS_LOG4J = "Tools-log4j.xml";
-	final static String CORE_CONF = "toolsContent.xml";
+	final static String CORE_CONF = "CustomizedToolsContext.xml";
 	
 	static String baseDir = null;
 	static String logFile = null;
@@ -112,11 +112,11 @@ public class Main {
 		
 		logger.info(Version.versionString() + " Start");
 		
-		CoreContainer container = new CoreContainer(toolsConf);
+		Container container = new Container(toolsConf);
 		
-		container.init();
+		container.doInit();
 		
-		container.start();
+		container.doStart();
 	}
 
 

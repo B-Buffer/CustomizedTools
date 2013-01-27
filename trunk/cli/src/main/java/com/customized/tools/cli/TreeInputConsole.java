@@ -19,7 +19,9 @@ import java.util.List;
  */
 public class TreeInputConsole extends InputConsole {
 	
-	private final String name;
+	private static final String DEFAULT_NAME = "TreeInputConsole";
+	
+	private String name;
 
 	private TreeNode currentNode;
 	
@@ -36,16 +38,23 @@ public class TreeInputConsole extends InputConsole {
 	
 	private boolean isDebug = false ;
 	
+	public TreeInputConsole(String name){
+		this(name, null);
+	}
+	
 	public TreeInputConsole(String name, TreeNode currentNode){
 		this(name, currentNode, false);
 	}
-
 
 	public TreeInputConsole(String name, TreeNode currentNode, Boolean isDebug) {
 		super();
 		this.name = name;
 		this.currentNode = currentNode;
 		this.isDebug = isDebug ;
+		
+		if(null == name || name.equals("")) {
+			this.name = DEFAULT_NAME ;
+		}
 		
 		// register TreeNode to rootNode, if TreeNode didn't have a parent
 		if(null != currentNode && null == currentNode.getFather()){
@@ -66,6 +75,10 @@ public class TreeInputConsole extends InputConsole {
 		}
 		
 		return currentNode;
+	}
+
+	public String getName() {
+		return name;
 	}
 
 	public boolean isDebug() {
@@ -356,6 +369,9 @@ public class TreeInputConsole extends InputConsole {
 	}
 	
 	protected void addTreeNode(TreeNode treeNode) {
+		if(treeNode.getFather() == null) {
+			treeNode.setFather(getCurrentNode());
+		}
 		getCurrentNode().addSon(treeNode);
 	}
 	
