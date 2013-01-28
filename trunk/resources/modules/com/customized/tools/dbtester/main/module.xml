@@ -1,10 +1,13 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<module xmlns="urn:jboss:module:1.1" name="com.customized.tools.cli">
+<module xmlns="urn:jboss:module:1.1" name="com.customized.tools.dbtester">
 
     <resources>
-        <resource-root path="cst-cli.jar"/>
+        <resource-root path="cst-dbtester.jar"/>
     </resources>
 
     <dependencies>
+    	<module name="com.customized.tools.po" services="import"/>
+    	<module name="com.customized.tools.cli" services="import"/>
+    	<module name="org.apache.log4j" services="import"/>
     </dependencies>
 </module>

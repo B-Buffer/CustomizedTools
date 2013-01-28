@@ -97,6 +97,14 @@ public class Main {
 		logger.debug("  java.vm.name: " + System.getProperty("java.vm.name"));
 		logger.debug("  java.vm.version: " + System.getProperty("java.vm.version"));
 		logger.debug("  java.version: " + System.getProperty("java.version"));
+		logger.debug("  java.home: " + System.getProperty("java.home"));
+
+		logger.debug("Display OS Information");
+		logger.debug("  os.name: " + System.getProperty("os.name"));
+		logger.debug("  os.version: " + System.getProperty("os.version"));
+		logger.debug("  user.name: " + System.getProperty("user.name"));
+		logger.debug("  user.home: " + System.getProperty("user.home"));
+		logger.debug("  user.language: " + System.getProperty("user.language"));
 	}
 	
 
@@ -104,11 +112,10 @@ public class Main {
 
 		argsValidation(args);
 		displayDebugInfo();
-		Main main = new Main();
-		main.start();
+		start();
 	}
 
-	void start() {
+	static void start() {
 		
 		logger.info(Version.versionString() + " Start");
 		

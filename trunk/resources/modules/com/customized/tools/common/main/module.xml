@@ -6,6 +6,7 @@
     </resources>
 
     <dependencies>
-    	
+    	<module name="com.customized.tools.po" services="import"/>
+    	<module name="org.apache.log4j" services="import"/>
     </dependencies>
 </module>

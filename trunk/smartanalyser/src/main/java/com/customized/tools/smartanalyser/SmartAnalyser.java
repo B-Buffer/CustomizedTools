@@ -36,15 +36,16 @@ public class SmartAnalyser {
 	}
 	
 
-	public void execute() throws Throwable {
+	public void execute()  {
 		
 		logger.info("Start SmartAnalyser...");
 		
-		int status = getAnalyerStatus();
-		
-		IAnalyser analyserImpl = null;
-		
 		try {
+			
+			int status = getAnalyerStatus();
+			
+			IAnalyser analyserImpl = null;
+			
 			switch (status) {
 			case 1:
 				analyserImpl = new JBossLogConfAnalyser(1, analyser, console, imgSet);
@@ -75,6 +76,9 @@ public class SmartAnalyser {
 			console.prompt(ex.getMessage());
 			
 			throw ex;
+		} catch (Throwable e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
 		}
 	}
 

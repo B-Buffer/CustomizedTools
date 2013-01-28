@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<module xmlns="urn:jboss:module:1.1" name="bootstrap">
+
+	<main-class name="com.customized.tools.core.Main"/>
+
+    <resources>
+    </resources>
+
+    <dependencies>
+    	<module name="com.customized.tools.core" services="import"/>
+    	<module name="org.apache.log4j" services="import"/>
+    </dependencies>
+</module>

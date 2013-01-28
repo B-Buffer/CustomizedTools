@@ -41,7 +41,7 @@
 	<mkdir dir="${build.dir}/configuration" />
 	<copy todir="${build.dir}/configuration" >
 	    <fileset dir="${resource.dir}" includes="CustomizedToolsContext.xml"/>
-	    <fileset dir="${resource.dir}" includes="Tool-log4j.xml"/>
+	    <fileset dir="${resource.dir}" includes="Tools-log4j.xml"/>
 	</copy>	
 
         
@@ -85,7 +85,7 @@
         </copy>
 
 	<copy todir="${build.dir}/modules/com/customized/tools/filechangemonitor/main" >
-            <fileset dir="${filechangemonitor.target.dir}" includes="cst-filechangemonitor.jar"/>
+            <fileset dir="${filechangemonitor.target.dir}" includes="cst-fileChangeMonitor.jar"/>
         </copy>
 
 	<copy todir="${build.dir}/modules/javax/jms/main" >
@@ -117,6 +117,10 @@
         </copy>
 	
 	<mkdir dir="${build.dir}/bin" />
+	<copy todir="${build.dir}/bin" >
+            <fileset dir="${resource.dir}/bin" includes="**"/>
+        </copy>
+
 
 	<mkdir dir="${build.dir}/lib" />
 	<mkdir dir="${build.dir}/out" />

@@ -6,5 +6,17 @@
     </resources>
 
     <dependencies>
+    	<module name="com.customized.tools.po" services="import"/>
+    	<module name="com.customized.tools.cli" services="import"/>
+    	<module name="org.apache.log4j" services="import"/>
+    	<module name="com.customized.tools.common" services="import"/>
+    	<module name="com.customized.tools.classsearcher" services="import"/>
+    	<module name="com.customized.tools.dbtester" services="import"/>
+    	<module name="com.customized.tools.filechangemonitor" services="import"/>
+    	<module name="com.customized.tools.gcviewer" services="import"/>
+    	<module name="com.customized.tools.jmstester" services="import"/>
+    	<module name="com.customized.tools.searcher" services="import"/>
+    	<module name="com.customized.tools.smartanalyser" services="import"/>
+    	<module name="samurai.wrapper" services="import"/>
     </dependencies>
 </module>

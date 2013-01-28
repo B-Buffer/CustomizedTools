@@ -9,11 +9,20 @@ import java.util.Set;
 
 import org.apache.log4j.Logger;
 
+import samurai.wrapper.SamuraiWrapper;
+
 import com.customized.tools.cli.TreeInputConsole;
 import com.customized.tools.cli.TreeNode;
+import com.customized.tools.cli.WizardConsole;
 import com.customized.tools.common.Configuration;
+import com.customized.tools.dbtester.DBConnectionTester;
+import com.customized.tools.filechangemonitor.FileChangeMonitor;
+import com.customized.tools.gcviewer.GCViewerWrapper;
 import com.customized.tools.jarClassSearcher.JarClassSearcher;
+import com.customized.tools.jmstester.JMSConnectionTester;
 import com.customized.tools.po.ToolsSubsystem;
+import com.customized.tools.searcher.FileSearcher;
+import com.customized.tools.smartanalyser.SmartAnalyser;
 
 
 public class Container extends TreeInputConsole implements LifeCycle {
@@ -50,7 +59,14 @@ public class Container extends TreeInputConsole implements LifeCycle {
 			addTreeNode(node);
 		}
 		
+		loadExternalJar();
+		
 		setStatus(Status.INIT);
+	}
+
+	private void loadExternalJar() {
+
+		logger.info("");
 	}
 
 	public void doStart() {
@@ -157,14 +173,14 @@ public class Container extends TreeInputConsole implements LifeCycle {
 		return list.toString();
 	}
 	
-	String jarClassSearcher = "jarClassSearcher";
-	String fileSearcher = "fileSearcher";
-	String fileChangeMonitor = "fileChangeMonitor";
-	String dbConnectionTester = "dbConnectionTester";
-	String jmsConnectionTester = "jmsConnectionTester";
-	String smartAnalyser = "smartAnalyser";
-	String samurai = "samurai";
-	String GCViewer = "GCViewer";
+	static final String jarClassSearcher = "jarClassSearcher";
+	static final String fileSearcher = "fileSearcher";
+	static final String fileChangeMonitor = "fileChangeMonitor";
+	static final String dbConnectionTester = "dbConnectionTester";
+	static final String jmsConnectionTester = "jmsConnectionTester";
+	static final String smartAnalyser = "smartAnalyser";
+	static final String samurai = "samurai";
+	static final String GCViewer = "GCViewer";
 
 	Map<String, Object> cache = new HashMap<String, Object>();
 	
@@ -177,31 +193,130 @@ public class Container extends TreeInputConsole implements LifeCycle {
 			if(map.get(pointer).equals(jarClassSearcher)){
 				startJarClassSearcher(obj);
 			} else if(map.get(pointer).equals(fileSearcher)){
-				
+				startFileSearcher(obj);
 			} else if(map.get(pointer).equals(fileChangeMonitor)){
-				
+				startFileChangeMonitor(obj);
 			} else if(map.get(pointer).equals(dbConnectionTester)){
-				
+				startDbConnectionTester(obj);
 			} else if(map.get(pointer).equals(jmsConnectionTester)){
-				
+				startJmsConnectionTester(obj);
 			} else if(map.get(pointer).equals(smartAnalyser)){
-				
+				startSmartAnalyser(obj);
 			} else if(map.get(pointer).equals(samurai)){
-				
+				startSamurai(obj);
 			} else if(map.get(pointer).equals(GCViewer)){
-				
+				startGCViewer(obj);
 			} 
 		}
 		
 		handleHELP(pointer);
 	}
 
+	private void startGCViewer(Object obj) {
+
+		GCViewerWrapper tool = null ;
+		
+		if(null == obj) {
+			tool = new GCViewerWrapper(this);
+			cache.put(GCViewer, obj);
+		} else {
+			tool = (GCViewerWrapper) obj ;
+		}
+		
+		tool.execute();
+	}
+
+	private void startSamurai(Object obj) {
+		
+		SamuraiWrapper tool = null;
+		
+		if(null == obj) {
+			tool = new SamuraiWrapper(this);
+			cache.put(samurai, tool);
+		} else {
+			tool = (SamuraiWrapper) obj ;
+		}
+		
+		tool.execute();
+	}
+
+	private void startSmartAnalyser(Object obj) {
+
+		SmartAnalyser tool = null;
+		
+		if(null == obj) {
+			tool = new SmartAnalyser(configuration.getAnalyser(), this);
+			cache.put(smartAnalyser, tool);
+		} else {
+			tool = (SmartAnalyser) obj ;
+		}
+		
+		tool.execute() ;
+	}
+
+	private void startJmsConnectionTester(Object obj) {
+
+		JMSConnectionTester tool = null ;
+		
+		if(null == obj) {
+			tool = new JMSConnectionTester(configuration.getJmsTester(), new WizardConsole());
+			cache.put(jmsConnectionTester, tool);
+		} else {
+			tool = (JMSConnectionTester) obj;
+		}
+		
+		tool.execute();
+	}
+
+	private void startDbConnectionTester(Object obj) {
+
+		DBConnectionTester tool = null ;
+		
+		if(null == obj) {
+			tool = new DBConnectionTester(configuration.getDbTester(), new WizardConsole());
+			cache.put(dbConnectionTester, tool);
+		} else {
+			tool = (DBConnectionTester) obj ;
+		}
+		
+		tool.execute();
+	}
+
+	private void startFileChangeMonitor(Object obj) {
+		
+		FileChangeMonitor tool = null;
+		
+		if(null == obj) {
+			tool = new FileChangeMonitor(configuration.getFileChangeMonitor(), this);
+			cache.put(fileChangeMonitor, tool);
+		} else {
+			tool = (FileChangeMonitor) obj ;
+		}
+		
+		tool.execute();
+	}
+
+	private void startFileSearcher(Object obj) {
+		
+		FileSearcher tool = null;
+		
+		if(null == obj) {
+			tool = new FileSearcher(configuration.getFileSearcher(), this);
+			cache.put(fileSearcher, tool);
+		} else {
+			tool = (FileSearcher) obj;
+		}
+		
+		tool.execute();
+	}
+
 	private void startJarClassSearcher(Object obj) {
 		
 		JarClassSearcher tool = null;
+		
 		if(null == obj) {
 			tool = new JarClassSearcher(configuration.getJarClassSearcher(), this);
-			cache.put("jarClassSearcher", tool);
+			cache.put(jarClassSearcher, tool);
 		}  else {
 			tool = (JarClassSearcher) obj ;
 		}
