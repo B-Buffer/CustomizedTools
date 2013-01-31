@@ -6,7 +6,6 @@ import javax.xml.bind.Marshaller;
 import javax.xml.bind.Unmarshaller;
 
 import com.customized.tools.po.CustomizedToolsContext;
-import com.customized.tools.po.ToolsSubsystem;
 
 public class JAXBUtil {
 

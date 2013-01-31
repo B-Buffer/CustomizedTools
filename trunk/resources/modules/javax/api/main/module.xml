@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<module xmlns="urn:jboss:module:1.1" name="javax.api">
+    <dependencies>
+        <system export="true">
+            <paths>
+            	<path name="javax/naming"/>
+                <path name="javax/naming/directory"/>
+                <path name="javax/naming/event"/>
+                <path name="javax/naming/ldap"/>
+                <path name="javax/naming/spi"/>
+                <path name="javax/xml"/>
+                <path name="javax/xml/bind"/>
+                <path name="javax/xml/bind/annotation"/>
+                <path name="javax/xml/datatype"/>
+                <path name="javax/xml/namespace"/>
+                <path name="javax/xml/parsers"/>
+                <path name="javax/xml/stream"/>
+                <path name="javax/xml/stream/events"/>
+                <path name="javax/xml/stream/util"/>
+                <path name="javax/xml/transform"/>
+                <path name="javax/xml/transform/dom"/>
+                <path name="javax/xml/transform/sax"/>
+                <path name="javax/xml/transform/stax"/>
+                <path name="javax/xml/transform/stream"/>
+                <path name="javax/xml/validation"/>
+                <path name="javax/xml/xpath"/>
+                <path name="org/ietf/jgss"/>
+                <path name="org/w3c/dom"/>
+                <path name="org/w3c/dom/bootstrap"/>
+                <path name="org/w3c/dom/css"/>
+                <path name="org/w3c/dom/events"/>
+                <path name="org/w3c/dom/html"/>
+                <path name="org/w3c/dom/ranges"/>
+                <path name="org/w3c/dom/stylesheets"/>
+                <path name="org/w3c/dom/traversal"/>
+                <path name="org/w3c/dom/ls"/>
+                <path name="org/w3c/dom/views"/>
+                <path name="org/w3c/dom/xpath"/>
+                <path name="org/xml/sax"/>
+                <path name="org/xml/sax/ext"/>
+                <path name="org/xml/sax/helpers"/>
+                <path name="com/sun/xml/internal/bind/v2"/>	
+            </paths>
+        </system>
+    </dependencies>
+</module>

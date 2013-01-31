@@ -7,6 +7,8 @@
 
     <property name="resources.dependency.dir" value="${basedir}/resources/target/dependency" />
     <property name="jmstester.dependency.dir" value="${basedir}/jmstester/target/dependency" />
+    <property name="po.dependency.dir" value="${basedir}/po/target/dependency" />
+    <property name="common.dependency.dir" value="${basedir}/common/target/dependency" />
 
     <property name="common.target.dir" value="${basedir}/common/target" />
     <property name="samurai.target.dir" value="${basedir}/samurai/target" />
@@ -115,6 +117,18 @@
 	<copy todir="${build.dir}/modules/com/customized/tools/core/main" >
             <fileset dir="${core.target.dir}" includes="cst-core.jar"/>
         </copy>
+
+	<!--copy todir="${build.dir}/modules/javax/xml/bind/api/main" >
+            <fileset dir="${po.dependency.dir}" includes="jaxb-api-2.2.6.jar"/>
+        </copy>
+
+	<copy todir="${build.dir}/modules/com/sun/xml/bind/main" >
+            <fileset dir="${common.dependency.dir}" includes="jaxb-impl-2.2.6.jar"/>
+        </copy>
+	
+	<copy todir="${build.dir}/modules/javax/activation/api/main" >
+            <fileset dir="${common.dependency.dir}" includes="activation-1.1.jar"/>
+        </copy-->
 	
 	<mkdir dir="${build.dir}/bin" />
 	<copy todir="${build.dir}/bin" >

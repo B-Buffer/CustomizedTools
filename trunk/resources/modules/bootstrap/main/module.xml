@@ -9,5 +9,6 @@
     <dependencies>
     	<module name="com.customized.tools.core" services="import"/>
     	<module name="org.apache.log4j" services="import"/>
+    	<module name="javax.api"/>
     </dependencies>
 </module>

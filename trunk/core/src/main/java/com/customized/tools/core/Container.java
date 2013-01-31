@@ -21,6 +21,7 @@ import com.customized.tools.gcviewer.GCViewerWrapper;
 import com.customized.tools.jarClassSearcher.JarClassSearcher;
 import com.customized.tools.jmstester.JMSConnectionTester;
 import com.customized.tools.po.ToolsSubsystem;
+import com.customized.tools.po.version.Version;
 import com.customized.tools.searcher.FileSearcher;
 import com.customized.tools.smartanalyser.SmartAnalyser;
 
@@ -66,7 +67,7 @@ public class Container extends TreeInputConsole implements LifeCycle {
 
 	private void loadExternalJar() {
 
-		logger.info("");
+		logger.info("load external Jars");
 	}
 
 	public void doStart() {
@@ -76,6 +77,7 @@ public class Container extends TreeInputConsole implements LifeCycle {
 		}
 
 		try {
+			prompt(Version.VERSION_STRING + " Started");
 			start();
 		} catch (Exception e) {
 			throw new ToolsStartException("", e);

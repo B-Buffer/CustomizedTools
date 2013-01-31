@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
-<ns2:customizedToolsContext xmlns:ns2="https://github.com/kylinsoong/CustomizedTools" version="2.0" name="CustomizedTools">
+<ns2:customizedToolsContext xmlns:ns2="https://github.com/kylinsoong/CustomizedTools" name="CustomizedTools" version="2.0">
     <configuration>
         <analyser>
             <path>/home/kylin/work/test</path>
