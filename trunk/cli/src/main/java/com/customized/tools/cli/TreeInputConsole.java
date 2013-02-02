@@ -149,6 +149,9 @@ public class TreeInputConsole extends InputConsole {
 			case HELP :
 				handleHELP(pointer);
 				break;
+			case TREE :
+				handleTREE(pointer);
+				break;
 			case OTHER :
 				handleOther(pointer);
 				break;
@@ -157,7 +160,7 @@ public class TreeInputConsole extends InputConsole {
 			updateCursorStr(getCurrentNode());		
 		}
 	}
-	
+
 	/**
 	 * Override by subclass for initial TreeNodes 
 	 */
@@ -198,6 +201,37 @@ public class TreeInputConsole extends InputConsole {
 		out.flush();
 	}
 	
+	private void recursivePrint(TreeNode root, int index, boolean isPrintDetails) {
+		
+		if(isPrintDetails) {
+			println(countPrefix(index) + root.getName() + "   [" + root.getContent() + "]");
+		} else {
+			println(countPrefix(index - 1) + root.getName());
+		}
+		
+		if(root.getSons().size() > 0) {
+			print(countPrefix(index) + "|");
+			print(countPrefix(index) + "__");
+		}
+		
+		index ++ ;
+		
+		for(TreeNode son : root.getSons()) {
+			recursivePrint(son, index, isPrintDetails);
+		}
+	}
+	
+	private String countPrefix(int index) {
+		
+		int length = index * 2 ;
+		String prefix = "";
+		for(int i = 0 ; i < length ; i ++){
+			prefix += " ";
+		}
+		
+		return prefix;
+	}
+
 	private void recursiveOrder(TreeNode node, StringBuffer sb, int index) {
 		
 		String preBlank = countBlank(index ++);
@@ -337,10 +371,24 @@ public class TreeInputConsole extends InputConsole {
 	protected void handleHELP(String pointer) {
 		println("[<ls>] list all nodes");
 		println("[<ls> <-l>] list all nodes with contents");
+		println("[<ls> <-list>] list all nodes with contents");
 		println("[<cd> <PATH>] redirect via PATH");
 		println("[<pwd>] show current path");
 		println("[<rm> <NODE_NAME> <*>] delete node, * hints delete all son nodes");
 		println("[<add>] add new node");
+		println("[<tree>] list whole node architecture");
+		println("[<tree> <-l>] list whole node architecture with contents");
+		println("[<tree> <-list>] list whole node architecture with contents");
+	}
+	
+	/**
+	 * Write this code when i was drunk
+	 * @param pointer
+	 */
+	protected void handleTREE(String pointer) {
+		
+		boolean isPrintDetails = pointer.endsWith("-l") || pointer.endsWith("-list"); 
+		recursivePrint(rootNode, 0, isPrintDetails);
 	}
 	
 	protected void handleOther(String pointer) {
@@ -487,7 +535,7 @@ public class TreeInputConsole extends InputConsole {
 		
 		if(pointer.toLowerCase().startsWith("cd")) {
 			return Action.CD ;
-		} else if(pointer.toLowerCase().startsWith("ls")) {
+		} else if(pointer.toLowerCase().equals("ls") || pointer.toLowerCase().equals("ls -l") || pointer.toLowerCase().equals("ls -list")) {
 			return Action.LS;
 		} else if(pointer.toLowerCase().equals("pwd")) {
 			return Action.PWD;
@@ -495,7 +543,9 @@ public class TreeInputConsole extends InputConsole {
 			return Action.RM;
 		} else if(pointer.toLowerCase().equals("add")) {
 			return Action.ADD;
-		} else if(pointer.toLowerCase().equals("help")) {
+		} else if(pointer.toLowerCase().equals("tree") || pointer.toLowerCase().equals("tree -l")  || pointer.toLowerCase().equals("tree -list")) {
+			return Action.TREE;
+		}else if(pointer.toLowerCase().equals("help")) {
 			return Action.HELP;
 		} else if(pointer.equals("")){
 			return Action.NULL;
@@ -514,6 +564,7 @@ public class TreeInputConsole extends InputConsole {
 		RM,
 		ADD,
 		HELP,
+		TREE,
 		OTHER,
 	}
 	
