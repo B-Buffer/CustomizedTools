@@ -9,7 +9,10 @@ import java.io.PrintWriter;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.HashMap;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Map;
 
 /**
  * TreeInputConsole
@@ -37,6 +40,8 @@ public class TreeInputConsole extends InputConsole {
 	private BufferedReader in ;
 	
 	private boolean isDebug = false ;
+	
+	private Validation  addValidation ;
 	
 	public TreeInputConsole(String name){
 		this(name, null);
@@ -66,6 +71,8 @@ public class TreeInputConsole extends InputConsole {
 		
 		InputStreamReader converter = new InputStreamReader(System.in);
 		in = new BufferedReader(converter);
+		
+		addValidation = new AddNodeValidation();
 	}
 
 	public TreeNode getCurrentNode() {
@@ -195,65 +202,136 @@ public class TreeInputConsole extends InputConsole {
 		StringBuffer sb = new StringBuffer();
 		sb.append(new SimpleDateFormat("[yyyy-MM-dd HH:mm:ss SSS]").format(new Date()) + " TreeNode Content Stack(" + prompt + "):");
 		sb.append("\n");
-		recursiveOrder(rootNode, sb, 0);
-		
 		out.print(sb.toString());
+		recursivePrint(rootNode, 0, true, out);
 		out.flush();
 	}
 	
-	private void recursivePrint(TreeNode root, int index, boolean isPrintDetails) {
+	private void recursivePrint(TreeNode root, int index, boolean isPrintDetails, PrintWriter writer) {
 		
+		StringBuffer sb = new StringBuffer();
+		appendPrarentsPrefix(root, sb);
+		sb.append(assemble31Holder(index, root));
 		if(isPrintDetails) {
-			println(countPrefix(index) + root.getName() + "   [" + root.getContent() + "]");
+			sb.append(root.getName() + "  -  " + root.getContent());
 		} else {
-			println(countPrefix(index - 1) + root.getName());
+			sb.append(root.getName()) ;
 		}
-		
-		if(root.getSons().size() > 0) {
-			print(countPrefix(index) + "|");
-			print(countPrefix(index) + "__");
+			
+		if(null != writer) {
+			writer.println(sb.toString());
+		} else {
+			println(sb.toString());
 		}
 		
 		index ++ ;
 		
 		for(TreeNode son : root.getSons()) {
-			recursivePrint(son, index, isPrintDetails);
+			recursivePrint(son, index, isPrintDetails, writer);
 		}
+	}
+
+	String l3holder_1 = "├──", l3holder_2 = "└──", l3holder_3 = "   " ;
+	String l1holder_1 = "│", l1holder_2 = " " ;
+	
+	/**
+	 * String prefix = (index -1) * (l1holder + l3holder) + 1 * (l3holder + l1holder)
+	 * 
+	 * @param root
+	 * @param index
+	 * @param isPrintDetails
+	 */
+	private void recursivePrint(TreeNode root, int index, boolean isPrintDetails) {
+		recursivePrint(root, index, isPrintDetails, null);
 	}
 	
-	private String countPrefix(int index) {
+	private void appendPrarentsPrefix(TreeNode node, StringBuffer sb) {
 		
-		int length = index * 2 ;
-		String prefix = "";
-		for(int i = 0 ; i < length ; i ++){
-			prefix += " ";
+		if(node.getFather() == null) {
+			sb.append("");
+		} else {
+			String prefix = "";
+			TreeNode tnode = node;
+			while((tnode = tnode.getFather()) != null){
+				String holder = assemble13Holder(tnode) ;
+				prefix = holder + prefix;
+			}
+			sb.append(prefix);
+		}
+	}
+		
+	private String assemble13Holder( TreeNode node) {
+		
+		if(node.getFather() == null) {
+			return "";
 		}
 		
-		return prefix;
-	}
-
-	private void recursiveOrder(TreeNode node, StringBuffer sb, int index) {
+		String prefix = "" ;
 		
-		String preBlank = countBlank(index ++);
-		sb.append(preBlank + node.getName() + " - [" + node.getContent() + "]" );
-		sb.append("\n");
-		
-		for(TreeNode son : node.getSons()) {
-			recursiveOrder(son, sb, index);
+		if(existBuddy(node)) {
+			prefix = l1holder_1 + l3holder_3  ;
+		} else {
+			prefix = l1holder_2 + l3holder_3  ;
 		}
 		
+		return prefix ;
 	}
-
-	private String countBlank(int size) {
-
-		String tab = "    ";
-		String sum = "";
-		for(int i = 0 ; i < size ; i ++) {
-			sum += tab ;
+	
+	Map<String, HashSet<String>> map = new HashMap<String, HashSet<String>> ();
+	
+	private String assemble31Holder(int i, TreeNode node) {
+		
+		String prefix = "" ;
+		
+		if(i <= 0 || node.getFather() == null) {
+			return "";
 		}
-		return sum;
+		
+		String key = node.getFather().getName() + i;
+		
+		if(existBuddy(node) && !isLast(node, key)) {
+			HashSet<String> set = map.get(key);
+			if(null == set) {
+				set = new HashSet<String>();
+			}
+			set.add(node.getName());
+			map.put(key, set);
+			prefix = l3holder_1 + l1holder_2 ;
+		} else {
+			prefix = l3holder_2 + l1holder_2 ;
+		}
+		
+		return prefix ;
 	}
 
+
+	/**
+	 * We assume node have buddies
+	 */
+	private boolean isLast(TreeNode node, String key) {
+		
+		HashSet<String> set = map.get(key);
+		if(set == null) {
+			return false ;
+		}
+		
+		//add all buddies name to Set
+		HashSet<String> buddies = new HashSet<String>();
+		for(TreeNode tn : node.getFather().getSons()) {
+			buddies.add(tn.getName());
+		}
+		
+		//recur all current added Set
+		for(String name : set) {
+			buddies.remove(name);
+		}
+		
+		if(buddies.size() == 1 && buddies.contains(node.getName())) {
+			return true ;
+		}
+		
+		return false;
+	}
 
 	protected void handleLS(String pointer) {
 		
@@ -365,7 +443,9 @@ public class TreeInputConsole extends InputConsole {
 		String name = readString("Enter Node Name:", true);
 		String content = readString("Enter Node Content:", false);
 		TreeNode node = new TreeNode(name, content, getCurrentNode(), null);
-		getCurrentNode().getSons().add(node);
+		if(addValidation.validate(node)){
+			getCurrentNode().getSons().add(node);
+		}
 	}
 	
 	protected void handleHELP(String pointer) {
@@ -387,7 +467,8 @@ public class TreeInputConsole extends InputConsole {
 	 */
 	protected void handleTREE(String pointer) {
 		
-		boolean isPrintDetails = pointer.endsWith("-l") || pointer.endsWith("-list"); 
+		boolean isPrintDetails = pointer.equals("tree -l") || pointer.equals("tree -list"); 
+		map.clear();
 		recursivePrint(rootNode, 0, isPrintDetails);
 	}
 	
@@ -495,6 +576,15 @@ public class TreeInputConsole extends InputConsole {
 		
 		return path;
 	}
+	
+	protected boolean existBuddy(TreeNode node) {
+		
+		if(node.getFather() == null){
+			return false ;
+		}
+		
+		return node.getFather().getSons().size() > 1;
+	}
 
 	private void updateCursorStr(TreeNode node) {
 		if(null == node) {
@@ -566,6 +656,23 @@ public class TreeInputConsole extends InputConsole {
 		HELP,
 		TREE,
 		OTHER,
+	}
+	
+	protected class AddNodeValidation extends Validation {
+
+		protected boolean validate(Object obj) throws TreeInputConsoleException {
+			TreeNode node = (TreeNode) obj;
+			if(existBuddy(node)) {
+				for(TreeNode tn : node.getFather().getSons()) {
+					if(tn.getName().compareTo(node.getName()) == 0) {
+						prompt("Illegal TreeNode Name, " + node.getName() + " already exist");
+						return false ;
+					}
+				}
+			}
+			return true;
+		}
+		
 	}
 	
 }

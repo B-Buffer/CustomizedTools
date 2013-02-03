@@ -71,10 +71,83 @@ public class Test extends InputConsole{
 			throw new TreeInputConsoleException("instantiate PrintWriter error", e);
 		}
 	}
+	
+	public void testPrintChar() {
+		
+		String prefix_1 = "├──" ;
+		String prefix_2 = "│";
+		String prefix_3 = "└──" ;
+		
+		String blank_1 = "   ", blank_2 = " " ;	
+		
+		
+		System.out.println(prefix_1.charAt(0) + " " + prefix_1.charAt(1) + " " + prefix_1.charAt(2));
+		System.out.println();
+		System.out.println(prefix_3.charAt(0) + " " + prefix_3.charAt(1) + " " + prefix_3.charAt(2));
+	
+		int a = prefix_1.charAt(0);
+		int b = prefix_1.charAt(1);
+		int c = prefix_1.charAt(2);
+		
+		int d = prefix_3.charAt(0);
+		int e = prefix_3.charAt(1);
+		int f = prefix_3.charAt(2);
+		int g = prefix_2.charAt(0);
+		
+		System.out.println(a + " " + b + " " + c);
+		System.out.println(d + " " + e + " " + f);
+		System.out.println(g);
+		
+		char c1 = '|';
+		char c2 = '-';
+		int i1 = c1 ;
+		int i2 = c2 ;
+		System.out.println(i1 + " " + i2);
+		
+		System.out.println();
+		
+		System.out.println("/");
+		System.out.println(prefix_1 + blank_2 + "a");
+		System.out.println(prefix_2 + blank_1 + prefix_1 + blank_2 + "b");
+		System.out.println(prefix_2 + blank_1 + prefix_2 + blank_1 + prefix_1 + blank_2 + "d");
+		System.out.println(prefix_2 + blank_1 + prefix_2 + blank_1 + prefix_2 + blank_1 + prefix_1 + blank_2 + "e");
+		System.out.println(prefix_2 + blank_1 + prefix_2 + blank_1 + prefix_2 + blank_1 + prefix_2 + blank_1 + prefix_3 + blank_2 + "f");
+		System.out.println(prefix_2 + blank_1 + prefix_2 + blank_1 + prefix_2 + blank_1 + prefix_1 + blank_2 + "i");
+		System.out.println(prefix_2 + blank_1 + prefix_2 + blank_1 + prefix_2 + blank_1 +  prefix_3 + blank_2 + "j");
+		System.out.println(prefix_2 + blank_1 + prefix_2 + blank_1 + prefix_2 + blank_1 + blank_2 + blank_1 + prefix_3 + blank_2 + "k");
+		System.out.println(prefix_2 + blank_1 + prefix_2 + blank_1 + prefix_2 + blank_1 + blank_2 + blank_1 + blank_2 + blank_1 + prefix_3 + blank_2 + "l");
+		System.out.println(prefix_2 + blank_1 + prefix_2 + blank_1 + prefix_2 + blank_1 + blank_2 + blank_1 + blank_2 + blank_1 + blank_2 + blank_1 + prefix_3 + blank_2 + "m");
+		System.out.println(prefix_2 + blank_1 + prefix_2 + blank_1 + prefix_3 + blank_2 + "h");
+		System.out.println(prefix_2 + blank_1 + prefix_3 + blank_2 + "g");
+		System.out.println(prefix_3 + blank_2 + "c");
+	}
 
+	private void testPlaceHolder() {
+
+		String l3holder_1 = "├──", l3holder_2 = "└──", l3holder_3 = "   " ;
+		String l1holder_1 = "│", l1holder_2 = " " ;
+		
+		System.out.println("/");
+		System.out.println(l3holder_1 + l1holder_2 + "a");
+		System.out.println(l1holder_1 + l3holder_3 + l3holder_1 + l1holder_2 + "b");
+		System.out.println(l1holder_1 + l3holder_3 + l1holder_1 + l3holder_3 + l3holder_1 + l1holder_2 + "d");
+		System.out.println(l1holder_1 + l3holder_3 + l1holder_1 + l3holder_3 + l1holder_1 + l3holder_3 + l3holder_1 + l1holder_2 + "e");
+		System.out.println(l1holder_1 + l3holder_3 + l1holder_1 + l3holder_3 + l1holder_1 + l3holder_3 + l1holder_1 + l3holder_3 + l3holder_2 + l1holder_2 + "f");
+		System.out.println(l1holder_1 + l3holder_3 + l1holder_1 + l3holder_3 + l1holder_1 + l3holder_3 + l3holder_1 + l1holder_2 + "i");
+		System.out.println(l1holder_1 + l3holder_3 + l1holder_1 + l3holder_3 + l1holder_1 + l3holder_3 + l3holder_2 + l1holder_2 + "j");
+		System.out.println(l1holder_1 + l3holder_3 + l1holder_1 + l3holder_3 + l1holder_1 + l3holder_3 + l1holder_2 + l3holder_3 + l3holder_2 + l1holder_2 + "k");
+		System.out.println(l1holder_1 + l3holder_3 + l1holder_1 + l3holder_3 + l1holder_1 + l3holder_3 + l1holder_2 + l3holder_3 + l1holder_2 + l3holder_3 + l3holder_2 + l1holder_2 + "l");
+		System.out.println(l1holder_1 + l3holder_3 + l1holder_1 + l3holder_3 + l1holder_1 + l3holder_3 + l1holder_2 + l3holder_3 + l1holder_2 + l3holder_3 + l1holder_2 + l3holder_3 + l3holder_2 + l1holder_2 + "m");
+		System.out.println(l1holder_1 + l3holder_3 + l1holder_1 + l3holder_3 + l3holder_2 + l1holder_2 + "h");
+		System.out.println(l1holder_1 + l3holder_3 + l3holder_2 + l1holder_2 + "g");
+		System.out.println(l3holder_2 + l1holder_2 + "c");
+	}
+	
 	public static void main(String[] args) {
 		
-		new Test().testRecursiveOrder();
+		new Test().testPlaceHolder();
 	}
+
+	
 
 }

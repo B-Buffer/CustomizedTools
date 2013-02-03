@@ -36,4 +36,9 @@ public class Console {
 			throw new RuntimeException("Thread [" + Thread.currentThread().getName() + "] was Interrupted", e);
 		}
 	}
+	
+	protected abstract class Validation {
+		
+		protected abstract boolean validate(Object obj) throws RuntimeException ;
+	}
 }
