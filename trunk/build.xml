@@ -23,6 +23,7 @@
     <property name="cli.target.dir" value="${basedir}/cli/target" />
     <property name="smartanalyser.target.dir" value="${basedir}/smartanalyser/target" />
     <property name="core.target.dir" value="${basedir}/core/target" />
+    <property name="ui.target.dir" value="${basedir}/ui/target" />
 
     <target name="validateproperties" >
         <echo>build parameter output</echo>
@@ -116,6 +117,10 @@
 
 	<copy todir="${build.dir}/modules/com/customized/tools/core/main" >
             <fileset dir="${core.target.dir}" includes="cst-core.jar"/>
+        </copy>
+
+	<copy todir="${build.dir}/modules/com/customized/tools/ui/main" >
+            <fileset dir="${ui.target.dir}" includes="cst-ui.jar"/>
         </copy>
 
 	<!--copy todir="${build.dir}/modules/javax/xml/bind/api/main" >

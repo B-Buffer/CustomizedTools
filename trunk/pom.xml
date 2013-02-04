@@ -19,6 +19,7 @@
     <modules>
 	<module>po</module>
 	<module>cli</module>
+	<module>ui</module>
 	<module>common</module>
 	<module>core</module>
 	<module>resources</module>
