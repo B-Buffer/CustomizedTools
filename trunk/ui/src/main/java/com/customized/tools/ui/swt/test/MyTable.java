@@ -5,6 +5,8 @@ import org.eclipse.swt.layout.GridData;
 import org.eclipse.swt.widgets.Table;
 import org.eclipse.swt.widgets.TableColumn;
 import org.eclipse.swt.widgets.TableItem;
+import org.eclipse.swt.widgets.ToolBar;
+import org.eclipse.swt.widgets.ToolItem;
 
 import com.customized.tools.ui.swt.AbstractTable;
 
@@ -19,12 +21,13 @@ public class MyTable extends AbstractTable{
 		new MyTable("Infinispan Demo", "infinispan_icon_32px.gif").start();
 	}
 
-	protected void customizeTable(Table table ) {
+	protected void fillTableContent(Table table ) {
 		
 		final GridData gd = new GridData(GridData.FILL_BOTH);
 	    gd.horizontalSpan = 2;
 	    table.setLayoutData(gd);
 	    table.setHeaderVisible(true);
+	    table.setLinesVisible(true);
 	    final TableColumn tc1 = new TableColumn(table, SWT.CENTER);
 	    final TableColumn tc2 = new TableColumn(table, SWT.CENTER);
 	    final TableColumn tc3 = new TableColumn(table, SWT.CENTER);
@@ -40,9 +43,26 @@ public class MyTable extends AbstractTable{
 	    tc3.setWidth(100);
 	    tc4.setWidth(100);
 	    tc5.setWidth(100);
-	    final TableItem item = new TableItem(table, SWT.NONE);
-	    item.setText(new String[]{"key", "value", "-1", "-1", "localhost-54200"});
+	    final TableItem item1 = new TableItem(table, SWT.NONE);
+	    item1.setText(new String[]{"key", "value", "-1", "-1", "localhost-54200"});
 	    
+	    final TableItem item2 = new TableItem(table, SWT.NONE);
+	    item2.setText(new String[]{"key", "value", "-1", "-1", "localhost-54200"});
+	    
+	    final TableItem item3 = new TableItem(table, SWT.NONE);
+	    item3.setText(new String[]{"key", "value", "-1", "-1", "localhost-54200"});
+	    
+	}
+
+	protected void fillToolBarItem(ToolBar toolBar) {
+		ToolItem delete = new ToolItem(toolBar, SWT.PUSH);
+		delete.setText("Delete");
+		
+		ToolItem clear = new ToolItem(toolBar, SWT.PUSH);
+		clear.setText(" Clear ");
+		
+		ToolItem refresh = new ToolItem(toolBar, SWT.PUSH);
+		refresh.setText("Refresh");
 	}
 
 }

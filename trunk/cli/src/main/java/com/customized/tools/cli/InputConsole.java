@@ -230,4 +230,27 @@ public class InputConsole extends Console {
 		
 		return result;
 	} 
+	
+	public long readLong(String prompt, long value)  {
+		
+		long result = -1 ;
+		
+		while(true){
+			
+			println(prompt + ", default [" + value + "]");
+			
+			String input = null;
+			try {
+				BufferedReader bufferRead = new BufferedReader(new InputStreamReader(System.in));
+				input = bufferRead.readLine();
+			} catch (IOException e) {
+				throw new RuntimeException("", e);
+			}
+			
+			// TODO
+			break;
+		}
+		
+		return result;
+	} 
 }
