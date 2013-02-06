@@ -29,8 +29,8 @@ public class FirstSWTApplication {
 		text.setForeground(display.getSystemColor(SWT.COLOR_WHITE));
 		
 		// set widgets size to their preferred size
-		text.pack();
-		label.pack(); 
+//		text.pack();
+//		label.pack(); 
 		
 		shell.open();
 		while (!shell.isDisposed()) {
