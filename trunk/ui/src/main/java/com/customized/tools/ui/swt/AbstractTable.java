@@ -4,6 +4,7 @@ import java.io.InputStream;
 
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.graphics.Image;
+import org.eclipse.swt.layout.GridData;
 import org.eclipse.swt.layout.GridLayout;
 import org.eclipse.swt.widgets.Display;
 import org.eclipse.swt.widgets.Shell;
@@ -50,6 +51,11 @@ public abstract class AbstractTable {
 		shell.setLayout(gridLayout);
 		
 		table = new Table(shell, SWT.BORDER | SWT.CHECK | SWT.MULTI | SWT.FULL_SELECTION);
+		GridData gd = new GridData(GridData.FILL_BOTH);
+	    gd.horizontalSpan = 2;
+	    table.setLayoutData(gd);
+	    table.setHeaderVisible(true);
+	    table.setLinesVisible(true);
 		toolBar = new ToolBar(shell, SWT.CHECK | SWT.MULTI | SWT.HORIZONTAL);
 		
 	}

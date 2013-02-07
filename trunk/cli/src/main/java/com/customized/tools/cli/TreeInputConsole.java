@@ -497,13 +497,28 @@ public class TreeInputConsole extends InputConsole {
 		return tmp; 
 	}
 	
+	/**
+	 * add treeNode to current node
+	 * @param treeNode
+	 */
 	protected void addTreeNode(TreeNode treeNode) {
 		if(treeNode.getFather() == null) {
 			treeNode.setFather(getCurrentNode());
 		}
-		getCurrentNode().addSon(treeNode);
+		if(!exist(treeNode)) {
+			getCurrentNode().addSon(treeNode);
+		}
 	}
 	
+	private boolean exist(TreeNode treeNode) {
+		for(TreeNode node : getCurrentNode().getSons()){
+			if(treeNode.getName().compareTo(node.getName()) == 0) {
+				return true ;
+			}
+		}
+		return false;
+	}
+
 	protected void removeTreeNode(String name) {
 		removeTreeNode(getCurrentNode().getSons(), name);
 	}

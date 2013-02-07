@@ -1,7 +1,6 @@
 package com.customized.tools.ui.swt.test;
 
 import org.eclipse.swt.SWT;
-import org.eclipse.swt.layout.GridData;
 import org.eclipse.swt.widgets.Table;
 import org.eclipse.swt.widgets.TableColumn;
 import org.eclipse.swt.widgets.TableItem;
@@ -23,11 +22,6 @@ public class MyTable extends AbstractTable{
 
 	protected void fillTableContent(Table table ) {
 		
-		final GridData gd = new GridData(GridData.FILL_BOTH);
-	    gd.horizontalSpan = 2;
-	    table.setLayoutData(gd);
-	    table.setHeaderVisible(true);
-	    table.setLinesVisible(true);
 	    final TableColumn tc1 = new TableColumn(table, SWT.CENTER);
 	    final TableColumn tc2 = new TableColumn(table, SWT.CENTER);
 	    final TableColumn tc3 = new TableColumn(table, SWT.CENTER);

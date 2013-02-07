@@ -7,7 +7,15 @@ import java.io.InputStreamReader;
 import java.util.HashSet;
 import java.util.Set;
 
+/**
+ * InputConsole
+ * 
+ * @author kylin
+ *
+ */
 public class InputConsole extends Console {
+	
+	BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
 	
 	public boolean readFromCli(String prompt) {
 		
@@ -148,7 +156,13 @@ public class InputConsole extends Console {
         }
     }
 	
-	public String readFolderPath(String prompt, boolean validation) throws IOException {
+	/**
+	 * 
+	 * @param prompt
+	 * @param validation, if true, inputed folder should be existed
+	 * @return
+	 */
+	public String readFolderPath(String prompt, boolean validation) {
 		
 		String result = "" ;
 		
@@ -156,8 +170,12 @@ public class InputConsole extends Console {
 			
 			println(prompt);
 			
-			BufferedReader bufferRead = new BufferedReader(new InputStreamReader(System.in));
-			String input = bufferRead.readLine();
+			String input = "";
+			try {
+				input = br.readLine();
+			} catch (IOException e) {
+				throw new IllegalArgumentException("readFolderPath Error", e);
+			}
 			
 			if(validation && new File(input).exists() && new File(input).isDirectory()) {
 				result = input;
@@ -171,7 +189,13 @@ public class InputConsole extends Console {
 		return result ;
 	}
 	
-	public String readFilePath(String prompt, boolean validation) throws IOException {
+	/**
+	 * 
+	 * @param prompt
+	 * @param validation if true, file should be exist
+	 * @return
+	 */
+	public String readFilePath(String prompt, boolean validation) {
 		
 		String result = "" ;
 		
@@ -179,8 +203,12 @@ public class InputConsole extends Console {
 			
 			println(prompt);
 			
-			BufferedReader bufferRead = new BufferedReader(new InputStreamReader(System.in));
-			String input = bufferRead.readLine();
+			String input = "";
+			try {
+				input = br.readLine();
+			} catch (IOException e) {
+				throw new IllegalArgumentException("readFilePath Error", e);
+			}
 			
 			if(validation && new File(input).exists() && new File(input).isFile()) {
 				result = input;
@@ -197,9 +225,48 @@ public class InputConsole extends Console {
 	/**
 	 * 
 	 * @param prompt
-	 * @param validation if true null value is not allowed
+	 * @param value the default value, press enter will return this value
+	 * @param validation is true, null value is not allowed
 	 * @return
-	 * @throws IOException
+	 */
+	public String readString(String prompt, String value, boolean validation)  {
+		
+		String result = "" ;
+		
+		while(true){
+			
+			println(prompt + " default [" + value + "]");
+			
+			String input = null;
+			try {
+				input = br.readLine();
+			} catch (IOException e) {
+				throw new IllegalArgumentException("readString Error", e);
+			}
+			
+			if(input.equals("") || input.trim().equals("")) {
+				result = value ;
+			} else {
+				result = input;
+			}
+
+			if(validation ){
+				if (result.length() > 0)
+					break;
+			} else {
+				break ;
+			}
+		}
+		
+		return result;
+	} 
+	
+	/**
+	 * 
+	 * @param prompt
+	 * @param value the default value, press enter will return this value
+	 * @param validation is true, null value is not allowed
+	 * @return
 	 */
 	public String readString(String prompt, boolean validation)  {
 		
@@ -211,18 +278,16 @@ public class InputConsole extends Console {
 			
 			String input = null;
 			try {
-				BufferedReader bufferRead = new BufferedReader(new InputStreamReader(System.in));
-				input = bufferRead.readLine();
+				input = br.readLine();
 			} catch (IOException e) {
-				throw new RuntimeException("", e);
+				throw new IllegalArgumentException("readString Error", e);
 			}
 			
 			result = input;
-			
+
 			if(validation ){
-				if(input.length() > 0) {
+				if (result.length() > 0)
 					break;
-				}
 			} else {
 				break ;
 			}
@@ -231,26 +296,111 @@ public class InputConsole extends Console {
 		return result;
 	} 
 	
+	/**
+	 * 
+	 * @param prompt
+	 * @param value default value, press enter will return this value
+	 * @return
+	 */
+	public String readString(String prompt, String value)  {
+		
+		String result = "" ;
+		
+		while(true){
+			
+			println(prompt + " default [" + value + "]");
+			
+			String input = null;
+			try {
+				input = br.readLine();
+			} catch (IOException e) {
+				throw new IllegalArgumentException("readString Error", e);
+			}
+			
+			if(input.equals("") || input.trim().equals("")) {
+				result = value ;
+				break;
+			}
+			
+			result = input ;
+			break;
+		}
+		
+		return result;
+	}
+	
+	/**
+	 * 
+	 * @param prompt
+	 * @param value default value, Press Enter will return default value
+	 * @return
+	 */
+	public int readInteger(String prompt, int value)  {
+		
+		int result = -1 ;
+		
+		while(true){
+			
+			println(prompt + " default [" + value + "]");
+			
+			String input = null;
+			try {
+				input = br.readLine();
+			} catch (IOException e) {
+				throw new IllegalArgumentException("readInteger Error", e);
+			}
+			
+			if(input.equals("") || input.trim().equals("")) {
+				result = value ;
+				break;
+			} 
+
+			try {
+				result = Integer.parseInt(input);
+				break;
+			} catch (NumberFormatException e) {
+				prompt("You should input a int type value");
+			}
+		}
+		
+		return result;
+	}
+	
+	/**
+	 * 
+	 * @param prompt
+	 * @param value default value, Press Enter will return default value
+	 * @return
+	 */
 	public long readLong(String prompt, long value)  {
 		
 		long result = -1 ;
 		
 		while(true){
 			
-			println(prompt + ", default [" + value + "]");
+			println(prompt + " default [" + value + "]");
 			
 			String input = null;
 			try {
-				BufferedReader bufferRead = new BufferedReader(new InputStreamReader(System.in));
-				input = bufferRead.readLine();
+				input = br.readLine();
 			} catch (IOException e) {
-				throw new RuntimeException("", e);
+				throw new IllegalArgumentException("readLong Error", e);
 			}
 			
-			// TODO
-			break;
+			if(input.equals("") || input.trim().equals("")) {
+				result = value ;
+				break;
+			} 
+
+			try {
+				result = Long.parseLong(input);
+				break;
+			} catch (NumberFormatException e) {
+				prompt("You should input a long type value");
+			}
 		}
 		
 		return result;
 	} 
+	
 }

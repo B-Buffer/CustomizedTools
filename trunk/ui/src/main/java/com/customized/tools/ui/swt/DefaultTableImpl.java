@@ -4,7 +4,6 @@ import java.util.ArrayList;
 import java.util.List;
 
 import org.eclipse.swt.SWT;
-import org.eclipse.swt.layout.GridData;
 import org.eclipse.swt.widgets.Table;
 import org.eclipse.swt.widgets.TableColumn;
 import org.eclipse.swt.widgets.TableItem;
@@ -13,16 +12,15 @@ import org.eclipse.swt.widgets.ToolItem;
 
 public class DefaultTableImpl extends AbstractTable {
 	
+	public DefaultTableImpl(String title, String image){
+		super(title, image);
+	}
+	
 	public DefaultTableImpl(int width, int height, String title, String image){
 		super(width, height, title, image);
 	}
 
 	protected void fillTableContent(Table table) {
-		final GridData gd = new GridData(GridData.FILL_BOTH);
-	    gd.horizontalSpan = 2;
-	    table.setLayoutData(gd);
-	    table.setHeaderVisible(true);
-	    table.setLinesVisible(true);
 	    
 	    List<Column> columns = new ArrayList<Column>();
 	    columns.add(new Column("ID", 150));
@@ -39,14 +37,14 @@ public class DefaultTableImpl extends AbstractTable {
 	    fillTableItems(items, table);
 	}
 	
-	private void fillTableItems(List<String[]> items, Table table) {
+	protected void fillTableItems(List<String[]> items, Table table) {
 		for(String[] strs : items) {
 			final TableItem item = new TableItem(table, SWT.NONE);
 		    item.setText(strs);
 		}
 	} 
 
-	private void fillTableColumns(List<Column> columns, Table table) {
+	protected void fillTableColumns(List<Column> columns, Table table) {
 				
 		for(Column c : columns) {
 			final TableColumn tc = new TableColumn(table, SWT.CENTER);

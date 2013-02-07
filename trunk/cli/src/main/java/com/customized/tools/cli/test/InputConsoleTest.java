@@ -13,8 +13,8 @@ public class InputConsoleTest {
 	public static void main(String[] args) {
 
 		InputConsole console = new InputConsole();
-		int res = console.keyPress("Read Enter From Console");
-		console.pauseln(res);
+		long res = console.readLong("Input Value", 100);
+		console.println(res);
 	}
 
 }

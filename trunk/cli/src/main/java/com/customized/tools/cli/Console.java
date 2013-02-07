@@ -15,16 +15,16 @@ public class Console {
 	}
 	
 	public void prompt(Object obj) {
-		System.out.println("\n" + TAB + obj + "\n");
+		println("\n" + TAB + obj + "\n");
 	}
 
 	public void pause(Object obj) {
-		System.out.print(obj);
+		print(obj);
 		sleep(DEFAULT_SLEEP_TIME);
 	}
 
 	public void pauseln(Object obj) {
-		System.out.println(obj);
+		println(obj);
 		sleep(DEFAULT_SLEEP_TIME);
 	}
 
@@ -33,7 +33,7 @@ public class Console {
 		try {
 			Thread.currentThread().sleep(time);
 		} catch (InterruptedException e) {
-			throw new RuntimeException("Thread [" + Thread.currentThread().getName() + "] was Interrupted", e);
+			Thread.currentThread().interrupt();
 		}
 	}
 	
