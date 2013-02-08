@@ -50,7 +50,7 @@ public abstract class AbstractTable {
 		gridLayout.numColumns = 2 ;
 		shell.setLayout(gridLayout);
 		
-		table = new Table(shell, SWT.BORDER | SWT.CHECK | SWT.MULTI | SWT.FULL_SELECTION);
+		table = new Table(shell, SWT.BORDER | SWT.MULTI | SWT.FULL_SELECTION);
 		GridData gd = new GridData(GridData.FILL_BOTH);
 	    gd.horizontalSpan = 2;
 	    table.setLayoutData(gd);
@@ -83,6 +83,14 @@ public abstract class AbstractTable {
 
 	public void stop() {
 		display.dispose();
+	}
+	
+	public Table getTable() {
+		return table ;
+	}
+	
+	public Shell getShell() {
+		return shell ;
 	}
 	
 }

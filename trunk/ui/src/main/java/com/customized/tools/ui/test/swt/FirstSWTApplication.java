@@ -2,9 +2,8 @@ package com.customized.tools.ui.test.swt;
 
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.widgets.Display;
-import org.eclipse.swt.widgets.Label;
+import org.eclipse.swt.widgets.MessageBox;
 import org.eclipse.swt.widgets.Shell;
-import org.eclipse.swt.widgets.Text;
 
 /**
  * 
@@ -12,25 +11,26 @@ import org.eclipse.swt.widgets.Text;
  * 
  */
 public class FirstSWTApplication {
-
-	public static void main(String[] args) {
-
-		Display display = new Display();
-
-		Shell shell = new Shell(display);
+	
+	Display display;
+	Shell shell;
+	
+	public FirstSWTApplication() {
+		display = new Display();
+		shell = new Shell(display);
+	}
+	
+	void testMessageBox() {
+		MessageBox dialog = new MessageBox(shell, SWT.ICON_QUESTION | SWT.OK | SWT.CANCEL);
+		dialog.setText("My info");
+		dialog.setMessage("Do you really want to do this?");
+		int code = dialog.open();
+		System.out.println(code);
+	}
+	
+	public void start() {
 		
-		// Shell can be used as container
-		Label label = new Label(shell, SWT.BORDER);
-		label.setText("This is a label:");
-		label.setToolTipText("This is the tooltip of this label");
-		Text text = new Text(shell, SWT.NONE);
-		text.setText("This is the text in the label");
-		text.setBackground(display.getSystemColor(SWT.COLOR_BLACK));
-		text.setForeground(display.getSystemColor(SWT.COLOR_WHITE));
-		
-		// set widgets size to their preferred size
-//		text.pack();
-//		label.pack(); 
+		testMessageBox();
 		
 		shell.open();
 		while (!shell.isDisposed()) {
@@ -38,7 +38,11 @@ public class FirstSWTApplication {
 				display.sleep();
 		}
 		display.dispose();
+	}
 
+	public static void main(String[] args) {
+			
+		new FirstSWTApplication().start();
 	}
 
 }

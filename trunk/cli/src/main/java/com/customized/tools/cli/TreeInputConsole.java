@@ -101,10 +101,26 @@ public class TreeInputConsole extends InputConsole {
 	public void setDebug(boolean isDebug) {
 		this.isDebug = isDebug;
 	}
-
-
-	protected TreeNode getRootNode() {
-		return rootNode;
+	
+	/**
+	 * add treeNode to current node
+	 * @param treeNode
+	 */
+	public void addTreeNode(TreeNode treeNode) {
+		if(treeNode.getFather() == null) {
+			treeNode.setFather(getCurrentNode());
+		}
+		if(!exist(treeNode)) {
+			getCurrentNode().addSon(treeNode);
+		}
+	}
+	
+	/**
+	 * Remove TreeNode from Current TreeNode
+	 * @param name
+	 */
+	public void removeTreeNode(String name) {
+		removeTreeNode(getCurrentNode().getSons(), name);
 	}
 
 	public void updateCurrentNode(TreeNode currentNode) {
@@ -480,6 +496,10 @@ public class TreeInputConsole extends InputConsole {
 		prompt("[" + pointer + "] can not be recognized");
 	}
 	
+	protected TreeNode getRootNode() {
+		return rootNode;
+	}
+	
 	protected String getAbsolutePath() {
 		
 		String tmp = getCurrentNode().getName();
@@ -495,32 +515,6 @@ public class TreeInputConsole extends InputConsole {
 		}	
 		
 		return tmp; 
-	}
-	
-	/**
-	 * add treeNode to current node
-	 * @param treeNode
-	 */
-	protected void addTreeNode(TreeNode treeNode) {
-		if(treeNode.getFather() == null) {
-			treeNode.setFather(getCurrentNode());
-		}
-		if(!exist(treeNode)) {
-			getCurrentNode().addSon(treeNode);
-		}
-	}
-	
-	private boolean exist(TreeNode treeNode) {
-		for(TreeNode node : getCurrentNode().getSons()){
-			if(treeNode.getName().compareTo(node.getName()) == 0) {
-				return true ;
-			}
-		}
-		return false;
-	}
-
-	protected void removeTreeNode(String name) {
-		removeTreeNode(getCurrentNode().getSons(), name);
 	}
 	
 	protected void removeTreeNode(List<TreeNode> nodes, String name) {
@@ -599,6 +593,15 @@ public class TreeInputConsole extends InputConsole {
 		}
 		
 		return node.getFather().getSons().size() > 1;
+	}
+	
+	private boolean exist(TreeNode treeNode) {
+		for(TreeNode node : getCurrentNode().getSons()){
+			if(treeNode.getName().compareTo(node.getName()) == 0) {
+				return true ;
+			}
+		}
+		return false;
 	}
 
 	private void updateCursorStr(TreeNode node) {
