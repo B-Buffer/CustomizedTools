@@ -68,6 +68,40 @@ public class InputConsole extends Console {
 		}
 	}
 	
+	public boolean isExit() {
+		
+		String msg = "Are you sure to exit ?\n" +
+				 "  [1]. Yes\n" +
+			     "  [2]. No\n" +
+				 "Default is [1]";
+		int a = '1';
+		int b = '2';
+		int res = readWithDef(msg, a, a, b);
+		
+		if(res == a) {
+			return true ;
+		} else {
+			return false ;
+		}
+	}
+	
+	public boolean isQuit() {
+		
+		String msg = "Are you sure to quit ?\n" +
+				 "  [1]. Yes\n" +
+			     "  [2]. No\n" +
+				 "Default is [1]";
+		int a = '1';
+		int b = '2';
+		int res = readWithDef(msg, a, a, b);
+		
+		if(res == a) {
+			return true ;
+		} else {
+			return false ;
+		}
+	}
+	
 	public boolean isSettingComplete() {
 		
 		String msg = "Setting Complete\n" +

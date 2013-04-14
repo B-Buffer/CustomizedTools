@@ -10,6 +10,13 @@ import org.eclipse.swt.widgets.TableItem;
 import org.eclipse.swt.widgets.ToolBar;
 import org.eclipse.swt.widgets.ToolItem;
 
+/**
+ * 
+ * Default inplementation of SWT Table
+ * 
+ * @author kylin
+ *
+ */
 public class DefaultTableImpl extends AbstractTable {
 	
 	public DefaultTableImpl(String title, String image){

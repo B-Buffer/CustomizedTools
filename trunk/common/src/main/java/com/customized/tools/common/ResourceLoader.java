@@ -25,6 +25,14 @@ public class ResourceLoader {
 		return instance;
 	}
 	
+	public static ResourceLoader newInstance() {
+
+		if (null == instance)
+			instance = new ResourceLoader();
+		
+		return instance;
+	}
+	
 	public static void registerBaseDir(String dir) {
 		
 		if(!new File(dir).exists() || !new File(dir).isDirectory()) {
@@ -64,5 +72,24 @@ public class ResourceLoader {
 		}
 		
 		throw new ResourceLoaderException("Can not find " + name);
+	}
+	
+	public void printAllFiles(String ...filters) {
+		
+		Set<String> set = new HashSet<String>();
+		for(String str : filters) {
+			set.add(str);
+		}
+		
+		StringBuffer sb = new StringBuffer();
+		for(File file : baseDir) {
+			for(File f : file.listFiles()) {
+				String str = f.getName();
+				if(str.endsWith(".xml") && !set.contains(str)){
+					sb.append("   " + str + "\n");
+				}
+			}
+		}
+		System.out.println(sb.toString());
 	}
 }
