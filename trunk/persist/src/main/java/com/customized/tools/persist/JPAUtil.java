@@ -6,6 +6,7 @@ import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
 import javax.persistence.Persistence;
 
+@SuppressWarnings("rawtypes")
 public class JPAUtil {
 	
 	private static EntityManagerFactory emf = null;

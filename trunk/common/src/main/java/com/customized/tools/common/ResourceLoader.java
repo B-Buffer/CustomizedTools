@@ -33,6 +33,10 @@ public class ResourceLoader {
 		return instance;
 	}
 	
+	public static void unRegisterDir(String dir) {
+		baseDir.remove(dir);
+	}
+	
 	public static void registerBaseDir(String dir) {
 		
 		if(!new File(dir).exists() || !new File(dir).isDirectory()) {
@@ -74,6 +78,20 @@ public class ResourceLoader {
 		throw new ResourceLoaderException("Can not find " + name);
 	}
 	
+	public boolean isExist(String conf) {
+		
+		boolean isExist = false;
+		
+		for(File file : baseDir){
+			if(new File(file, conf).exists()) {
+				isExist = true ;
+				break;
+			}
+		} 
+		
+		return isExist;
+	}
+	
 	public void printAllFiles(String ...filters) {
 		
 		Set<String> set = new HashSet<String>();
@@ -91,5 +109,37 @@ public class ResourceLoader {
 			}
 		}
 		System.out.println(sb.toString());
+	}
+	
+	public String getAllConfFiles() {
+		StringBuffer sb = new StringBuffer();
+		for(File file : baseDir) {
+			for(File f : file.listFiles()) {
+				String str = f.getName();
+				if(str.endsWith(".xml") ){
+					sb.append("   " + str);
+				}
+			}
+		}
+		return sb.toString();
+	}
+	
+	public String getAllConfFiles(String ...filters) {
+		
+		Set<String> set = new HashSet<String>();
+		for(String str : filters) {
+			set.add(str);
+		}
+		
+		StringBuffer sb = new StringBuffer();
+		for(File file : baseDir) {
+			for(File f : file.listFiles()) {
+				String str = f.getName();
+				if(str.endsWith(".xml") && !set.contains(str)){
+					sb.append("   " + str);
+				}
+			}
+		}
+		return sb.toString();
 	}
 }
