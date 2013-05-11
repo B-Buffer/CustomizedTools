@@ -145,6 +145,7 @@
 	<mkdir dir="${build.dir}/out" />
 	<mkdir dir="${build.dir}/log" />
 
-
+	<echo>chmod 777 *.sh under ${build.dir}/bin</echo>
+	<chmod dir="${build.dir}/bin" perm="ugo+rx" includes="*.sh"/>
     </target>
 </project> 

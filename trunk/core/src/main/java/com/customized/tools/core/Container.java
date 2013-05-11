@@ -1,5 +1,6 @@
 package com.customized.tools.core;
 
+import java.io.File;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.HashMap;
@@ -20,6 +21,7 @@ import com.customized.tools.filechangemonitor.FileChangeMonitor;
 import com.customized.tools.gcviewer.GCViewerWrapper;
 import com.customized.tools.jarClassSearcher.JarClassSearcher;
 import com.customized.tools.jmstester.JMSConnectionTester;
+import com.customized.tools.po.ToolsClassLoader;
 import com.customized.tools.po.ToolsSubsystem;
 import com.customized.tools.po.version.Version;
 import com.customized.tools.searcher.FileSearcher;
@@ -68,6 +70,18 @@ public class Container extends TreeInputConsole implements LifeCycle {
 	private void loadExternalJar() {
 
 		logger.info("load external Jars");
+		
+		ToolsClassLoader loader = configuration.getToolsClassLoader();
+		
+		String libPath = loader.getPath();
+		String libUrl = loader.getUrl();
+		
+		if(libPath.equals("lib")){
+			libPath = System.getProperty("cst.home") + File.separator + libPath;
+		} 
+		
+		ToolsURLClassLoader classLoader = new ToolsURLClassLoader(Container.class.getClassLoader());
+		classLoader.loadDependencyJars(libPath);
 	}
 
 	public void doStart() {

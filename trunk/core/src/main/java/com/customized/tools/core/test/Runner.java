@@ -10,7 +10,10 @@ public class Runner {
 		
 		System.setProperty("CST_HOME", new File("").getAbsolutePath());
 		
-		new Main().main(args);
+		String str = System.getProperty("CST_HOME") + File.separator + "lib";
+		
+		System.out.println(str);
+//		new Main().main(args);
 	}
 
 }
