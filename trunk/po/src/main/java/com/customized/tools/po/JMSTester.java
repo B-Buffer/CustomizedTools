@@ -1,11 +1,12 @@
 package com.customized.tools.po;
 
+import javax.naming.Context;
 import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlRootElement;
 import javax.xml.bind.annotation.XmlType;
 
 @XmlRootElement(name = "jmsTester")
-@XmlType(propOrder = { "factoryJNDIName", "factoryClassName", "url", "pkgs", "principle", "credentials" })
+@XmlType(propOrder = { "factoryJNDIName", "factoryClassName", "url", "pkgs", "principle", "credentials", "deplibraries"})
 public class JMSTester {
 
 	private String factoryJNDIName;
@@ -19,6 +20,8 @@ public class JMSTester {
 	private String principle;
 	
 	private String credentials;
+	
+	private String deplibraries;
 
 	@XmlElement(name = "factoryJNDIName")
 	public String getFactoryJNDIName() {
@@ -74,11 +77,25 @@ public class JMSTester {
 		this.credentials = credentials;
 	}
 
+	@XmlElement(name = "deplibraries")
+	public String getDeplibraries() {
+		return deplibraries;
+	}
+
+	public void setDeplibraries(String deplibraries) {
+		this.deplibraries = deplibraries;
+	}
+
 	@Override
 	public String toString() {
-		return "JMSTester [factoryJNDIName=" + factoryJNDIName
-				+ ", factoryClassName=" + factoryClassName + ", url=" + url
-				+ ", pkgs=" + pkgs + ", principle=" + principle
-				+ ", credentials=" + credentials + "]";
+		
+		StringBuffer sb = new StringBuffer();
+		sb.append("        " + Context.INITIAL_CONTEXT_FACTORY + ": " + factoryClassName + "\n");
+		sb.append("        " + Context.PROVIDER_URL + ": " + url + "\n");
+		sb.append("        " + Context.URL_PKG_PREFIXES + ": " + pkgs + "\n");
+		sb.append("        " + Context.SECURITY_PRINCIPAL + ": " + principle + "\n");
+		sb.append("        " + Context.SECURITY_CREDENTIALS + ": " + credentials);
+		
+		return sb.toString();
 	}
 }

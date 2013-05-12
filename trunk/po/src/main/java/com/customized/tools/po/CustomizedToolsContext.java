@@ -8,7 +8,7 @@ import javax.xml.bind.annotation.XmlType;
 import com.customized.tools.po.version.Version;
 
 @XmlRootElement(namespace = "https://github.com/kylinsoong/CustomizedTools")
-@XmlType(propOrder = { "configuration", "profile", "classloader" })
+@XmlType(propOrder = { "configuration", "profile" })
 public class CustomizedToolsContext {
 	
 	private String version = Version.version();
@@ -19,7 +19,6 @@ public class CustomizedToolsContext {
 	
 	private ToolsProfile profile ;
 	
-	private ToolsClassLoader classloader ;
 	
 	@XmlAttribute(name = "version")
 	public String getVersion() {
@@ -57,13 +56,5 @@ public class CustomizedToolsContext {
 		this.profile = profile;
 	}
 
-	@XmlElement
-	public ToolsClassLoader getClassloader() {
-		return classloader;
-	}
-
-	public void setClassloader(ToolsClassLoader classloader) {
-		this.classloader = classloader;
-	}
 
 }

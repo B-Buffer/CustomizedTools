@@ -1,4 +1,4 @@
-package com.customized.tools.core;
+package com.customized.tools.common;
 
 import java.io.File;
 import java.net.MalformedURLException;
@@ -19,7 +19,7 @@ public class ToolsURLClassLoader extends URLClassLoader {
 	
 	public void loadDependencyJars(String folder) {
 
-        logger.info("Load CustomizedTools dependency jars to classpath");
+        logger.info("Load CustomizedTools dependency jars to classpath from " + folder);
 
         logger.debug("Recursing into " + folder);
 
@@ -39,7 +39,7 @@ public class ToolsURLClassLoader extends URLClassLoader {
 			        }
 			}
 		} catch (MalformedURLException e) {
-			throw new ToolsStartException("load " + folder + " jar error", e);
+			throw new ResourceLoaderException("load " + folder + " jar error", e);
 		}
 
 		addURLs(list);

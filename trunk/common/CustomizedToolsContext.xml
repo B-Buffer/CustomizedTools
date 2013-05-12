@@ -9,6 +9,7 @@
             <url>jdbc:oracle:thin:@//10.66.192.144:1521/JBOSS</url>
             <username>GSSTEST</username>
             <password>redhat</password>
+            <driverlib>lib</driverlib>
         </dbTester>
         <fileChangeMonitor>
             <folderPath>/home/kylin/work/tools/jboss-eap-6.0</folderPath>
@@ -29,6 +30,7 @@
             <pkgs>org.jboss.naming:org.jnp.interfaces</pkgs>
             <principle>admin</principle>
             <credentials>admin</credentials>
+            <deplibraries>lib</deplibraries>
         </jmsTester>
     </configuration>
     <profile>
@@ -57,8 +59,4 @@
             <prompt>Thread dump analyser</prompt>
         </subsystem>
     </profile>
-    <classloader>
-        <classloader.path>lib</classloader.path>
-        <classloader.url>http://localhost:8080/lib</classloader.url>
-    </classloader>
 </ns2:customizedToolsContext>

@@ -64,10 +64,6 @@ public class Configuration {
 		return context.getConfiguration().getFileChangeMonitor();
 	}
 	
-	public ToolsClassLoader getToolsClassLoader() {
-		return context.getClassloader();
-	}
-	
 	public List<ToolsSubsystem> getSubsystem() {
 		return context.getProfile().getSubsystem();
 	}

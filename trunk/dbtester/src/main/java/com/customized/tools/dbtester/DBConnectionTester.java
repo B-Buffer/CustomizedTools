@@ -1,5 +1,6 @@
 package com.customized.tools.dbtester;
 
+import java.io.File;
 import java.sql.Connection;
 import java.sql.DatabaseMetaData;
 import java.sql.Driver;
@@ -11,6 +12,7 @@ import java.sql.Statement;
 import org.apache.log4j.Logger;
 
 import com.customized.tools.cli.WizardConsole;
+import com.customized.tools.common.ToolsURLClassLoader;
 import com.customized.tools.po.DBTester;
 
 public class DBConnectionTester {
@@ -45,6 +47,8 @@ public class DBConnectionTester {
 			}
 			
 			console.prompt("DBConnectionTester Properties: " +  dbTester);
+			
+			loadDriverLib();
 			
 			conn = getConnection();
 			
@@ -81,8 +85,19 @@ public class DBConnectionTester {
 			}
 		}
 	}
-	
 
+	private void loadDriverLib() {
+		
+		String libPath = dbTester.getDriverlib();
+		
+		if(libPath.equals("lib")){
+			libPath = System.getProperty("cst.home") + File.separator + libPath;
+		} 
+		
+		ToolsURLClassLoader classLoader = new ToolsURLClassLoader(Thread.currentThread().getContextClassLoader());
+		classLoader.loadDependencyJars(libPath);
+		Thread.currentThread().setContextClassLoader(classLoader);
+	}
 
 	private void promptConnectionResult(Connection conn) throws SQLException {
 

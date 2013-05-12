@@ -1,5 +1,6 @@
 package com.customized.tools.jmstester;
 
+import java.io.File;
 import java.util.Properties;
 
 import javax.jms.Connection;
@@ -16,6 +17,7 @@ import javax.naming.NamingException;
 import org.apache.log4j.Logger;
 
 import com.customized.tools.cli.WizardConsole;
+import com.customized.tools.common.ToolsURLClassLoader;
 import com.customized.tools.po.JMSTester;
 
 public class JMSConnectionTester {
@@ -42,7 +44,9 @@ public class JMSConnectionTester {
 				jmsTester = wizard.getJMSTester();
 			}
 			
-			console.prompt("JMSConnectionTester JNDI Content: " + jmsTester);
+			console.prompt("JMSConnectionTester JNDI Context: \n" + jmsTester);
+			
+			loadJNDIClient();
 			
 			Context ctx = initialContext();
 			
@@ -53,6 +57,19 @@ public class JMSConnectionTester {
 			logger.error("", ex);
 			throw ex;
 		}
+	}
+
+	private void loadJNDIClient() {
+
+		String libPath = jmsTester.getDeplibraries();
+		
+		if(libPath.equals("lib")){
+			libPath = System.getProperty("cst.home") + File.separator + libPath;
+		} 
+		
+		ToolsURLClassLoader classLoader = new ToolsURLClassLoader(Thread.currentThread().getContextClassLoader());
+		classLoader.loadDependencyJars(libPath);
+		Thread.currentThread().setContextClassLoader(classLoader);
 	}
 
 	private void testConnection(Context ctx) throws Exception{

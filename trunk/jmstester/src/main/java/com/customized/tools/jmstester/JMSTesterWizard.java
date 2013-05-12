@@ -21,6 +21,7 @@ public class JMSTesterWizard extends Wizard {
 	String pkgs = "Pkgs";
 	String principle = "Principle" ;
 	String credentials = "Credentials";
+	String depLibraries = "DepLibraries";
 	
 	public void doInit() {
 		
@@ -49,6 +50,10 @@ public class JMSTesterWizard extends Wizard {
 		list.add(key);
 		update(key, jmsTester.getCredentials());
 		
+		key = depLibraries;
+		list.add(key);
+		update(key, jmsTester.getDeplibraries());
+		
 		updateKeyLength();
 	}
 	
@@ -60,6 +65,7 @@ public class JMSTesterWizard extends Wizard {
 		tester.setPkgs(getContent().get(pkgs));
 		tester.setPrinciple(getContent().get(principle));
 		tester.setCredentials(getContent().get(credentials));
+		tester.setDeplibraries(getContent().get(depLibraries));
 		return tester;   
 	}
 

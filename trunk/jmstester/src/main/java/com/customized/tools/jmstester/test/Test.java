@@ -15,6 +15,7 @@ public class Test {
 		jmsTester.setPkgs("org.jboss.naming:org.jnp.interfaces");
 		jmsTester.setPrinciple("admin");
 		jmsTester.setCredentials("admin");
+		jmsTester.setDeplibraries("lib");
 		
 		new JMSConnectionTester(jmsTester, new WizardConsole()).execute();
 	}
