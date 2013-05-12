@@ -33,6 +33,7 @@
 	<module>dbtester</module>
 	<module>smartanalyser</module>
 	<module>persist</module>
+	<module>test</module>
     </modules>
 
 </project>

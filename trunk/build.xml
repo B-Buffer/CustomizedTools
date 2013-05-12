@@ -24,6 +24,7 @@
     <property name="smartanalyser.target.dir" value="${basedir}/smartanalyser/target" />
     <property name="core.target.dir" value="${basedir}/core/target" />
     <property name="ui.target.dir" value="${basedir}/ui/target" />
+    <property name="test.target.dir" value="${basedir}/test/target" />
 
     <target name="validateproperties" >
         <echo>build parameter output</echo>
@@ -148,4 +149,14 @@
 	<echo>chmod 777 *.sh under ${build.dir}/bin</echo>
 	<chmod dir="${build.dir}/bin" perm="ugo+rx" includes="*.sh"/>
     </target>
+    <target name="test" depends="deploy">
+	<copy todir="${build.dir}/modules/com/customized/tools/test/main" >
+            <fileset dir="${test.target.dir}" includes="cst-test.jar"/>
+        </copy>
+        <copy todir="${build.dir}/bin" >
+            <fileset dir="${resource.dir}/test" includes="**"/>
+        </copy>
+	<echo>chmod 777 *.sh under ${build.dir}/bin</echo>
+        <chmod dir="${build.dir}/bin" perm="ugo+rx" includes="*.sh"/>
+    </target>	
 </project> 
