@@ -12,12 +12,27 @@ import javax.jms.TextMessage;
 import javax.naming.Context;
 import javax.naming.InitialContext;
 
+import org.jboss.modules.Module;
+import org.jboss.modules.ModuleClassLoader;
+
+
 public class CST06Reproduction {
 
 	public static void main(String[] args) throws Exception {
+				
+//		reproduction(args[0]);
 		
-		String libPath = args[0];
+		ClassLoader classLoader = CST06Reproduction.class.getClassLoader();
 		
+//		org.jboss.modules.ModuleClassLoader mclassloader = (ModuleClassLoader) classLoader;
+		
+//		ModuleClassLoader classloader = (ModuleClassLoader) CST06Reproduction.class.getClassLoader();
+//		Module module = (Module) CST06Reproduction.class.getClassLoader().getClass().getMethod("getModule").invoke(classLoader);
+		System.out.println(CST06Reproduction.class.getClassLoader().getClass().getMethod("getModule").invoke(classLoader));
+	}
+	
+	private static void reproduction(String libPath) throws Exception {
+
 		System.out.println("Before Load JNDI Client libraries: " + Thread.currentThread().getContextClassLoader());
 		
 		MyURLClassLoader classLoader = new MyURLClassLoader(Thread.currentThread().getContextClassLoader());

@@ -60,6 +60,10 @@
             <fileset dir="${resource.dir}/modules" includes="**"/>
         </copy>
 
+        <copy todir="${build.dir}/modules/org/jboss/modules/main" >
+        	<fileset dir="${resources.dependency.dir}" includes="jboss-modules-1.1.2.GA.jar"/>
+	</copy>
+
 	<copy todir="${build.dir}/modules/com/customized/tools/common/main" >
             <fileset dir="${common.target.dir}" includes="cst-common.jar"/>
         </copy>	

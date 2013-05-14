@@ -8,5 +8,6 @@
     <dependencies>
     	<module name="javax.api"/>
     	<module name="javax.jms" services="import"/>
+    	<module name="org.jboss.modules" services="import"/>
     </dependencies>
 </module>
