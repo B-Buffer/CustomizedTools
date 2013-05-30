@@ -223,6 +223,38 @@ public class InputConsole extends Console {
 		return result ;
 	}
 	
+	public String readFolderPath(String prompt, String defaultPath, boolean validation) {
+		
+		String result = "" ;
+		
+		while(true) {
+			
+			println(prompt + " default [" + defaultPath + "]");
+			
+			String input = "";
+			try {
+				input = br.readLine();
+			} catch (IOException e) {
+				throw new IllegalArgumentException("readFolderPath Error", e);
+			}
+			
+			if(input.equals("") || input.trim().equals("")) {
+				result = defaultPath ;
+				break;
+			}
+			
+			if(validation && new File(input).exists() && new File(input).isDirectory()) {
+				result = input;
+				break;
+			} else if (input.length() > 0) {
+				result = input;
+				break;
+			}
+		}
+		
+		return result ;
+	}
+	
 	/**
 	 * 
 	 * @param prompt

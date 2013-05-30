@@ -25,6 +25,7 @@
     <property name="core.target.dir" value="${basedir}/core/target" />
     <property name="ui.target.dir" value="${basedir}/ui/target" />
     <property name="test.target.dir" value="${basedir}/test/target" />
+	<property name="install.target.dir" value="${basedir}/install/target" />
 
     <target name="validateproperties" >
         <echo>build parameter output</echo>
@@ -46,6 +47,11 @@
 	<copy todir="${build.dir}/configuration" >
 	    <fileset dir="${resource.dir}" includes="CustomizedToolsContext.xml"/>
 	    <fileset dir="${resource.dir}" includes="Tools-log4j.xml"/>
+	</copy>	
+    	
+	<mkdir dir="${build.dir}/configuration/install" />
+	<copy todir="${build.dir}/configuration/install" >
+		<fileset dir="${resource.dir}/install" includes="**"/>
 	</copy>	
 
         
@@ -115,6 +121,10 @@
 	<copy todir="${build.dir}/modules/com/customized/tools/cli/main" >
             <fileset dir="${cli.target.dir}" includes="cst-cli.jar"/>
         </copy>
+    	
+	<copy todir="${build.dir}/modules/com/customized/tools/install/main" >
+		<fileset dir="${install.target.dir}" includes="cst-install.jar"/>
+	</copy>
 
 	<copy todir="${build.dir}/modules/com/customized/tools/smartanalyser/main" >
             <fileset dir="${smartanalyser.target.dir}" includes="cst-smartanalyser.jar"/>
@@ -160,7 +170,11 @@
         <copy todir="${build.dir}/bin" >
             <fileset dir="${resource.dir}/test" includes="**"/>
         </copy>
-	<echo>chmod 777 *.sh under ${build.dir}/bin</echo>
+	    <echo>chmod 777 *.sh under ${build.dir}/bin</echo>
         <chmod dir="${build.dir}/bin" perm="ugo+rx" includes="*.sh"/>
+    	<echo>chmod 777 *.sh under ${build.dir}/modules/db-driver/main/module.xml</echo>
+    	<chmod dir="${build.dir}/modules/db-driver/main" perm="ugo+rx" includes="*.xml"/>
+    	<echo>chmod 777 *.sh under ${build.dir}/modules/jms-client/main/module.xml</echo>
+    	<chmod dir="${build.dir}/modules/jms-client/main" perm="ugo+rx" includes="*.xml"/>
     </target>	
 </project> 
