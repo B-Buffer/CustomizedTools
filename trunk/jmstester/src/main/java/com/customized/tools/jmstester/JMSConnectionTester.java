@@ -1,6 +1,5 @@
 package com.customized.tools.jmstester;
 
-import java.io.File;
 import java.util.Properties;
 
 import javax.jms.Connection;
@@ -17,7 +16,6 @@ import javax.naming.NamingException;
 import org.apache.log4j.Logger;
 
 import com.customized.tools.cli.WizardConsole;
-import com.customized.tools.common.ToolsURLClassLoader;
 import com.customized.tools.po.JMSTester;
 
 public class JMSConnectionTester {

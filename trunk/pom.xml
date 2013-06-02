@@ -35,6 +35,7 @@
 	<module>persist</module>
 	<module>test</module>
 	<module>install</module>
+	<module>bootstrap</module>
     </modules>
 
 </project>

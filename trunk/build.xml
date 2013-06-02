@@ -26,6 +26,7 @@
     <property name="ui.target.dir" value="${basedir}/ui/target" />
     <property name="test.target.dir" value="${basedir}/test/target" />
 	<property name="install.target.dir" value="${basedir}/install/target" />
+	<property name="bootstrap.target.dir" value="${basedir}/bootstrap/target" />
 
     <target name="validateproperties" >
         <echo>build parameter output</echo>
@@ -124,6 +125,10 @@
     	
 	<copy todir="${build.dir}/modules/com/customized/tools/install/main" >
 		<fileset dir="${install.target.dir}" includes="cst-install.jar"/>
+	</copy>
+    	
+	<copy todir="${build.dir}/modules/bootstrap/main" >
+		<fileset dir="${bootstrap.target.dir}" includes="cst-bootstrap.jar"/>
 	</copy>
 
 	<copy todir="${build.dir}/modules/com/customized/tools/smartanalyser/main" >
