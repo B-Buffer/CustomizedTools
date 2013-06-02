@@ -19,7 +19,6 @@ public class DBTesterWizard extends Wizard {
 	String url = "Url";
 	String username = "Username";
 	String password = "Password";
-	String driverlib = "Driverlib";
 
 	public void doInit() {
 
@@ -40,10 +39,6 @@ public class DBTesterWizard extends Wizard {
 		list.add(key);
 		update(key, dbTester.getPassword());
 		
-		key = driverlib ;
-		list.add(key);
-		update(key, dbTester.getDriverlib());
-		
 		updateKeyLength();
 	}
 	
@@ -53,7 +48,6 @@ public class DBTesterWizard extends Wizard {
 		tester.setUrl(getContent().get(url));
 		tester.setUsername(getContent().get(username));
 		tester.setPassword(getContent().get(password));
-		tester.setDriverlib(getContent().get(driverlib));
 		return tester ;
 	}
 

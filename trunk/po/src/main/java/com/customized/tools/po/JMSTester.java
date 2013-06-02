@@ -6,7 +6,7 @@ import javax.xml.bind.annotation.XmlRootElement;
 import javax.xml.bind.annotation.XmlType;
 
 @XmlRootElement(name = "jmsTester")
-@XmlType(propOrder = { "factoryJNDIName", "factoryClassName", "url", "pkgs", "principle", "credentials", "deplibraries"})
+@XmlType(propOrder = { "factoryJNDIName", "factoryClassName", "url", "pkgs", "principle", "credentials"})
 public class JMSTester {
 
 	private String factoryJNDIName;
@@ -21,8 +21,6 @@ public class JMSTester {
 	
 	private String credentials;
 	
-	private String deplibraries;
-
 	@XmlElement(name = "factoryJNDIName")
 	public String getFactoryJNDIName() {
 		return factoryJNDIName;
@@ -75,15 +73,6 @@ public class JMSTester {
 
 	public void setCredentials(String credentials) {
 		this.credentials = credentials;
-	}
-
-	@XmlElement(name = "deplibraries")
-	public String getDeplibraries() {
-		return deplibraries;
-	}
-
-	public void setDeplibraries(String deplibraries) {
-		this.deplibraries = deplibraries;
 	}
 
 	@Override

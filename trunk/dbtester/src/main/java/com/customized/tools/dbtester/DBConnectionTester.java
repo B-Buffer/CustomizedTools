@@ -47,9 +47,7 @@ public class DBConnectionTester {
 			}
 			
 			console.prompt("DBConnectionTester Properties: " +  dbTester);
-			
-			loadDriverLib();
-			
+						
 			conn = getConnection();
 			
 			promptConnectionResult(conn);
@@ -84,19 +82,6 @@ public class DBConnectionTester {
 				throw new DBConnectionTesterException("close DB Connection session Error", e);
 			}
 		}
-	}
-
-	private void loadDriverLib() {
-		
-		String libPath = dbTester.getDriverlib();
-		
-		if(libPath.equals("lib")){
-			libPath = System.getProperty("cst.home") + File.separator + libPath;
-		} 
-		
-		ToolsURLClassLoader classLoader = new ToolsURLClassLoader(Thread.currentThread().getContextClassLoader());
-		classLoader.loadDependencyJars(libPath);
-		Thread.currentThread().setContextClassLoader(classLoader);
 	}
 
 	private void promptConnectionResult(Connection conn) throws SQLException {

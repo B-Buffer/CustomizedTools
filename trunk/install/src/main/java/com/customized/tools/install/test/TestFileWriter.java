@@ -11,6 +11,10 @@ public class TestFileWriter {
 	final static String STR_SIGN = "<$#%&54#%%^&>";
 
 	public static void main(String[] args) throws IOException {
+		
+		String teststr = "asds  \n12313131<$#%&54#%%^&>";
+		
+//		System.out.println(teststr.replaceAll(, replacement)(STR_SIGN, "1111111111"));
 
 		String path = "/home/kylin/work/project/CustomizedTools/trunk/build/CustomizedTools/modules/db-driver/main/module.xml";
 		

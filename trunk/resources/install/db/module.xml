@@ -4,5 +4,6 @@
     <$#%&54#%%^&>
 
     <dependencies>
+    	<module name="javax.api"/>
     </dependencies>
 </module>

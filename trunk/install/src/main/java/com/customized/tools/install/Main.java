@@ -100,7 +100,7 @@ public class Main {
 		StringBuffer sb = new StringBuffer();
 		sb.append("<resources>\n");
 		for(File file : jarSet) {
-			sb.append("    <resource-root path=" + file.getName() + "/>\n");
+			sb.append("    <resource-root path=\"" + file.getName() + "\"/>\n");
 		}
 		sb.append("</resources>");
 		
@@ -108,24 +108,21 @@ public class Main {
 			StringBuffer buffer = new StringBuffer();
 			File file = new File(module);
 			BufferedReader reader = new BufferedReader(new FileReader(file));
-			String line = "", oldtext = "";
+			String line = "";
 			while ((line = reader.readLine()) != null) {
 				if(line.contains(STR_SIGN)) {
-					line = line.replaceAll(STR_SIGN, sb.toString());
+					line = line.replace(STR_SIGN, sb.toString());
 				}
+				buffer.append(line + "\n");
 			}
 			reader.close();
 
-			// To replace a line in a file
-			String newtext = oldtext.replaceAll(STR_SIGN, sb.toString());
-			
-			oldtext.contains(STR_SIGN);
-
 			FileWriter writer = new FileWriter(module);
-			writer.write(newtext);
+			writer.write(buffer.toString());
 			writer.close();
-		} catch (IOException ioe) {
-			ioe.printStackTrace();
+		} catch (IOException e) {
+			console.prompt("install error, " + e.getMessage());
+			console.prompt("please install again");
 		}
 	}
 

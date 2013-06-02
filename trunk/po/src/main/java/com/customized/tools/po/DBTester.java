@@ -5,7 +5,7 @@ import javax.xml.bind.annotation.XmlRootElement;
 import javax.xml.bind.annotation.XmlType;
 
 @XmlRootElement(name = "dbTester")
-@XmlType(propOrder = { "driver", "url", "username", "password", "driverlib"})
+@XmlType(propOrder = { "driver", "url", "username", "password"})
 public class DBTester {
 
 	private String driver;
@@ -16,8 +16,6 @@ public class DBTester {
 	
 	private String password;
 	
-	private String driverlib;
-
 	@XmlElement(name = "driver")
 	public String getDriver() {
 		return driver;
@@ -52,15 +50,6 @@ public class DBTester {
 
 	public void setPassword(String password) {
 		this.password = password;
-	}
-
-	@XmlElement(name = "driverlib")
-	public String getDriverlib() {
-		return driverlib;
-	}
-
-	public void setDriverlib(String driverlib) {
-		this.driverlib = driverlib;
 	}
 
 	@Override

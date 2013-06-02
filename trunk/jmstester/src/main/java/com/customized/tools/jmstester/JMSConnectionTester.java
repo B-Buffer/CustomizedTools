@@ -45,9 +45,7 @@ public class JMSConnectionTester {
 			}
 			
 			console.prompt("JMSConnectionTester JNDI Context: \n" + jmsTester);
-			
-			loadJNDIClient();
-			
+						
 			Context ctx = initialContext();
 			
 			testConnection(ctx);
@@ -59,18 +57,6 @@ public class JMSConnectionTester {
 		}
 	}
 
-	private void loadJNDIClient() {
-
-		String libPath = jmsTester.getDeplibraries();
-		
-		if(libPath.equals("lib")){
-			libPath = System.getProperty("cst.home") + File.separator + libPath;
-		} 
-		
-		ToolsURLClassLoader classLoader = new ToolsURLClassLoader(Thread.currentThread().getContextClassLoader());
-		classLoader.loadDependencyJars(libPath);
-		Thread.currentThread().setContextClassLoader(classLoader);
-	}
 
 	private void testConnection(Context ctx) throws Exception{
 

@@ -47,7 +47,6 @@ public class ToolsContentGenerater {
 		jmsTester.setPkgs("org.jboss.naming:org.jnp.interfaces");
 		jmsTester.setPrinciple("admin");
 		jmsTester.setCredentials("admin");
-		jmsTester.setDeplibraries("lib");
 		configuration.setJmsTester(jmsTester);
 		
 		DBTester dbTester = new DBTester();
@@ -55,7 +54,6 @@ public class ToolsContentGenerater {
 		dbTester.setUrl("jdbc:oracle:thin:@//10.66.192.144:1521/JBOSS");
 		dbTester.setUsername("GSSTEST");
 		dbTester.setPassword("redhat");
-		dbTester.setDriverlib("lib");
 		configuration.setDbTester(dbTester);
 		
 		ClassSearcher jarClassSearcher = new ClassSearcher();
