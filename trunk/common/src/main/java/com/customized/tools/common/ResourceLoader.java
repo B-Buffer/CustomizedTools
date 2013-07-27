@@ -50,9 +50,19 @@ public class ResourceLoader {
 		
 		InputStream in = null ;
 		
+		//if relative configuration file path passed
 		for(File file : baseDir) {
 			try {
 				in = new FileInputStream(new File(file, name));
+				return in ;
+			} catch (FileNotFoundException e) {
+			}
+		}
+		
+		// if absolute configuration file path passed
+		if(null == in && new File(name).exists()){
+			try {
+				in = new FileInputStream(new File(name));
 				return in ;
 			} catch (FileNotFoundException e) {
 			}

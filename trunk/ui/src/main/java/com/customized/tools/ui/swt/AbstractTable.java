@@ -11,6 +11,7 @@ import org.eclipse.swt.widgets.Shell;
 import org.eclipse.swt.widgets.Table;
 import org.eclipse.swt.widgets.ToolBar;
 
+import com.customized.tools.common.IOUtil;
 import com.customized.tools.common.ResourceLoader;
 
 public abstract class AbstractTable {
@@ -23,15 +24,23 @@ public abstract class AbstractTable {
 	Table table = null;
 	ToolBar toolBar = null;
 	
-	public AbstractTable() {
-		this("", null);
-	}
+//	public AbstractTable() {
+//		this("", "");
+//	}
 	
 	public AbstractTable(String title, String image) {
 		this(WIDTH, HEIGHT, title, image) ;
 	}
 	
-	public AbstractTable(int width, int height, String title, String image) {
+	public AbstractTable(String title, InputStream in) {
+		this(WIDTH, HEIGHT, title, in) ;
+	}
+	
+	public AbstractTable(int width, int height, String title, String image){
+		this(WIDTH, HEIGHT, title, ResourceLoader.getInstance().getResourceAsStream(image)) ;
+	}
+	
+	public AbstractTable(int width, int height, String title, InputStream in) {
 		
 		if (width == 0)
 			width = WIDTH;
@@ -44,7 +53,8 @@ public abstract class AbstractTable {
 		
 		shell.setSize(width, height);
 		shell.setText(title);
-		shell.setImage(new Image(display, getResourceAsStream(image)));
+		shell.setImage(new Image(display, in));
+		IOUtil.closeStream(in);
 	
 		GridLayout gridLayout = new GridLayout();
 		gridLayout.numColumns = 2 ;
@@ -58,10 +68,6 @@ public abstract class AbstractTable {
 	    table.setLinesVisible(true);
 		toolBar = new ToolBar(shell, SWT.CHECK | SWT.MULTI | SWT.HORIZONTAL);
 		
-	}
-	
-	private InputStream getResourceAsStream(String name) {
-		return ResourceLoader.getInstance().getResourceAsStream(name);
 	}
 
 	protected abstract void fillTableContent(Table table );

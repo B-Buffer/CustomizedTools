@@ -1,5 +1,6 @@
 package com.customized.tools.ui.swt;
 
+import java.io.InputStream;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -20,6 +21,10 @@ import org.eclipse.swt.widgets.ToolItem;
 public class DefaultTableImpl extends AbstractTable {
 	
 	public DefaultTableImpl(String title, String image){
+		super(title, image);
+	}
+	
+	public DefaultTableImpl(String title, InputStream image){
 		super(title, image);
 	}
 	
