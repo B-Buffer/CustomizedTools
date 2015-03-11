@@ -1,0 +1,138 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
+    <modelVersion>4.0.0</modelVersion>
+
+    <groupId>com.customized.tools</groupId>
+    <artifactId>cst-parent</artifactId>
+    <version>3.0-SNAPSHOT</version>
+    <packaging>pom</packaging>
+    <name>Customized Tools</name>
+    <description>Customized Tools</description>
+
+    <properties>
+	<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+		
+	<version.jboss-modules>1.4.1.Final</version.jboss-modules>	
+	<version.gcviewer>1.32-rc-1</version.gcviewer>
+	<version.log4j>1.2.16</version.log4j>
+	<version.jaxb.api>2.2.6</version.jaxb.api>
+	
+	<version.jar.plugin>2.2</version.jar.plugin>
+	<version.assembly.plugin>2.4</version.assembly.plugin>
+	<version.compiler.plugin>3.1</version.compiler.plugin>
+		
+	<maven.compiler.target>1.7</maven.compiler.target>
+        <maven.compiler.source>1.7</maven.compiler.source>
+    </properties>
+
+    <profiles>
+		<profile>
+	 	    <id>release</id>
+		    <properties>
+	                <maven.javadoc.skip>true</maven.javadoc.skip>
+	            </properties>
+		    <modules>
+	                <module>build</module>
+	            </modules>
+		    <build>
+	                <plugins>
+	       		</plugins>
+	            </build>
+		</profile>
+    </profiles>
+    
+    <build>
+    	<pluginManagement>
+    		<plugins>
+    			<plugin>
+    				<groupId>org.apache.maven.plugins</groupId>
+    				<artifactId>maven-jar-plugin</artifactId>
+    				<version>${version.jar.plugin}</version>
+    			</plugin>
+    			<plugin>
+    				<groupId>org.apache.maven.plugins</groupId>
+    				<artifactId>maven-assembly-plugin</artifactId>
+    				<version>${version.assembly.plugin}</version>
+    			</plugin>
+    		</plugins>
+    	</pluginManagement>
+    	<plugins>
+    		<plugin>
+    			<groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-compiler-plugin</artifactId>
+                <version>${version.compiler.plugin}</version>
+                <configuration>
+                    <source>${maven.compiler.source}</source>
+                    <target>${maven.compiler.target}</target>
+                    <showDeprecation>false</showDeprecation>
+                    <showWarnings>false</showWarnings>
+                 </configuration>
+    		</plugin>
+    		<plugin>
+    			<artifactId>maven-release-plugin</artifactId>
+    			<configuration>
+    				<releaseProfiles>release</releaseProfiles>
+    			</configuration>
+    		</plugin>
+    	</plugins>
+    </build>
+    
+    <dependencyManagement>
+    	<dependencies>
+	<dependency>
+            <groupId>org.jboss.modules</groupId>
+            <artifactId>jboss-modules</artifactId>
+            <version>${version.jboss-modules}</version>
+        </dependency>
+    	<dependency>
+    	    <groupId>com.mgmtp.gcviewer</groupId>
+    	    <artifactId>gcviewer</artifactId>
+    	    <version>${version.gcviewer}</version>
+    	</dependency>
+    	<dependency>
+           <groupId>log4j</groupId>
+           <artifactId>log4j</artifactId>
+           <version>${version.log4j}</version>
+       </dependency>
+	<dependency>
+            <groupId>com.customized.tools</groupId>
+            <artifactId>cst-model</artifactId>
+	    <version>${project.version}</version>
+	</dependency>
+	<dependency>
+            <groupId>com.customized.tools</groupId>
+            <artifactId>cst-core</artifactId>
+            <version>${project.version}</version>
+        </dependency>
+	<dependency>
+            <groupId>com.customized.tools</groupId>
+            <artifactId>cst-cli</artifactId>
+            <version>${project.version}</version>
+        </dependency>
+    	<dependency>
+	    <groupId>javax.xml.bind</groupId>
+	    <artifactId>jaxb-api</artifactId>
+	    <version>${version.jaxb.api}</version>
+	    <exclusions>
+	        <exclusion>
+	            <groupId>javax.xml.stream</groupId>
+		    <artifactId>stax-api</artifactId>
+		</exclusion>
+		<exclusion>
+		    <groupId>javax.activation</groupId>
+		    <artifactId>activation</artifactId>
+		</exclusion>
+	    </exclusions>
+	</dependency>
+
+    </dependencies>
+    </dependencyManagement>
+    
+    <modules>
+	<module>cli</module>
+        <module>model</module>
+	<module>core</module>
+    </modules>
+
+</project>

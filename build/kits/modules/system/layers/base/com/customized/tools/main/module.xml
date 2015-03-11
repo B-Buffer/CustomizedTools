@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<module xmlns="urn:jboss:module:1.1" name="com.customized.tools">
+
+    <resources>
+        <resource-root path="cst-core-${project.version}.jar"/>
+    </resources>
+
+    <dependencies>
+    	<module name="javax.api"/>
+    	<module name="com.customized.tools.model" services="import"/>
+    	<module name="com.customized.tools.cli" services="import"/>
+    	<module name="org.apache.log4j" services="import"/>
+    	<module name="com.mgmtp.gcviewer" services="import"/>
+    </dependencies>
+</module>
