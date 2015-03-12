@@ -12,8 +12,9 @@ import java.util.jar.JarFile;
 
 import org.apache.log4j.Logger;
 
+import com.customized.tools.ITool;
 import com.customized.tools.cli.InputConsole;
-import com.customized.tools.po.ClassSearcher;
+import com.customized.tools.model.ClassSearcher;
 
 
 /**
@@ -22,7 +23,7 @@ import com.customized.tools.po.ClassSearcher;
  * @author kylin
  *
  */
-public class JarClassSearcher  {
+public class JarClassSearcher implements ITool {
 
 	private static final Logger logger = Logger.getLogger(JarClassSearcher.class);
 	
@@ -41,14 +42,14 @@ public class JarClassSearcher  {
 		logger.info("JarClassSearcher Start");
 		
 		try {
-			if(console.readFromCli("JarClassSearcher")) {
-				String folder = console.readFolderPath("Input jarClassSearcher folder path [</home/kylin/work/eap/jboss-eap-6.0>]", true);
+			if(console.readFromCli(jarClassSearcher.getId())) {
+				String folder = console.readFolderPath("Input jarClassSearcher folder path", jarClassSearcher.getFolderPath(), true);
 				jarClassSearcher.setFolderPath(folder);
-				String className = console.readFilePath("Input jarClassSearcher class name [<org.jboss.modules.Main>]", false);
+				String className = console.readString("Input jarClassSearcher class name", jarClassSearcher.getClassName(), false);
 				jarClassSearcher.setClassName(className);
 			}
 			
-			String prompt = "\nSearching '" + jarClassSearcher.getClassName() + "' Under Directory " + jarClassSearcher.getFolderPath() + "\n";
+			String prompt = "Searching '" + jarClassSearcher.getClassName() + "' Under Directory " + jarClassSearcher.getFolderPath() ;
 			
 			console.prompt(prompt);
 			
@@ -69,9 +70,9 @@ public class JarClassSearcher  {
 	private void printToConsole(List<String> result) {
 
 		StringBuffer sb = new StringBuffer();
-		sb.append(jarClassSearcher.getClassName() + " has been found " + result.size() + " times.\n");
+		sb.append(jarClassSearcher.getClassName() + " has been found " + result.size() + " times." + console.ln());
 		for (String str : result) {
-			sb.append("    " + str + "\n");
+			sb.append(console.twoTab() + str + console.ln());
 		}
 		
 		console.prompt(sb.toString());

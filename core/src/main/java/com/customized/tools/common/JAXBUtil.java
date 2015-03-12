@@ -5,7 +5,7 @@ import javax.xml.bind.JAXBException;
 import javax.xml.bind.Marshaller;
 import javax.xml.bind.Unmarshaller;
 
-import com.customized.tools.po.CustomizedToolsContext;
+import com.customized.tools.model.CustomizedToolsContext;
 
 public class JAXBUtil {
 

@@ -32,6 +32,10 @@
            <groupId>com.customized.tools</groupId>
            <artifactId>cst-model</artifactId>
         </dependency>
+        <dependency>
+           <groupId>com.customized.tools</groupId>
+           <artifactId>cst-tda</artifactId>
+        </dependency>
 	    <dependency>
 	       <groupId>com.mgmtp.gcviewer</groupId>
 	       <artifactId>gcviewer</artifactId>

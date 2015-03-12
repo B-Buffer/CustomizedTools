@@ -5,14 +5,14 @@ import java.io.File;
 import org.apache.log4j.Logger;
 import org.apache.log4j.xml.DOMConfigurator;
 
-import com.customized.tools.po.version.Version;
+import com.customized.tools.model.version.Version;
 
 public class Main {
 	
 	private static final Logger logger = Logger.getLogger(Main.class);
 	
 	final static String CONFIGURATION = "configuration";
-	final static String LIB = "lib";
+	final static String INPUT = "input";
 	final static String LOG = "log";
 	final static String OUT = "out";
 	
@@ -22,12 +22,12 @@ public class Main {
 	static String baseDir = null;
 	static String logFile = null;
 	static String toolsConf = null;
-	static String libDir = null;
+	static String inputDir = null;
 	static String outDir = null;
 	static String logDir = null;
 	
 	static String baseDirProps = "cst.home";
-	static String libDirProps = "cst.lib.dir";
+	static String inputDirProps = "cst.linput.dir";
 	static String outDirProps = "cst.out.dir";
 	static String logDirProps = "cst.log.dir";
 	
@@ -54,12 +54,12 @@ public class Main {
 		
 		outDir = baseDir + File.separator + OUT;
 		if (!(new File(outDir).exists())) {
-			throw new ToolsStartException(outDir + " doesn't exists");
+			new File(outDir).mkdir();
 		}
 		
-		libDir = baseDir + File.separator + LIB;
-		if (!(new File(libDir).exists())) {
-			throw new ToolsStartException(libDir + " doesn't exists");
+		inputDir = baseDir + File.separator + INPUT;
+		if (!(new File(inputDir).exists())) {
+			throw new ToolsStartException(inputDir + " doesn't exists");
 		}
 		
 		logDir = baseDir + File.separator + LOG;
@@ -68,7 +68,7 @@ public class Main {
 		}
 		
 		System.setProperty(baseDirProps, baseDir);
-		System.setProperty(libDirProps, libDir);
+		System.setProperty(inputDirProps, inputDir);
 		System.setProperty(outDirProps, outDir);
 		System.setProperty(logDirProps, logDir);
 		
@@ -90,7 +90,7 @@ public class Main {
 		logger.debug("  Customized Tools main configuration file: " + toolsConf);
 		logger.debug("  Customized Tools log folder: " + logDir);
 		logger.debug("  Customized Tools out folder: " + outDir);
-		logger.debug("  Customized Tools lib folder: " + libDir);
+		logger.debug("  Customized Tools input folder: " + inputDir);
 		
 		logger.debug("Display Java Information");
 		logger.debug("  java.vendor: " + System.getProperty("java.vendor"));

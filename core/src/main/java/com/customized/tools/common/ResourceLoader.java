@@ -72,7 +72,7 @@ public class ResourceLoader {
 			in = Thread.currentThread().getContextClassLoader().getResourceAsStream(name);
 		
 		if(null == in)
-			throw new ResourceLoaderException("can not load " + name + " as stream");
+			throw new ToolsCommonException("can not load " + name + " as stream");
 		
 		return in ;
 	}
@@ -85,7 +85,7 @@ public class ResourceLoader {
 			}
 		}
 		
-		throw new ResourceLoaderException("Can not find " + name);
+		throw new ToolsCommonException("Can not find " + name);
 	}
 	
 	public boolean isExist(String conf) {

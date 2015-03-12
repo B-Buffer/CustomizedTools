@@ -10,10 +10,11 @@ import java.sql.Statement;
 
 import org.apache.log4j.Logger;
 
+import com.customized.tools.ITool;
 import com.customized.tools.cli.WizardConsole;
-import com.customized.tools.po.DBTester;
+import com.customized.tools.model.DBTester;
 
-public class DBConnectionTester {
+public class DBConnectionTester implements ITool {
 	
 	private static final Logger logger = Logger.getLogger(DBConnectionTester.class);
 
@@ -100,7 +101,7 @@ public class DBConnectionTester {
 	private Connection getConnection() throws Exception {
 
 		try {
-			Class c = Class.forName(dbTester.getDriver());
+			Class<?> c = Class.forName(dbTester.getDriver());
 			Driver d = (Driver) c.newInstance();
 			DriverManager.registerDriver(d);
 			Connection conn = DriverManager.getConnection(dbTester.getUrl(), dbTester.getUsername(), dbTester.getPassword());

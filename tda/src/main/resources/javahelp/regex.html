@@ -1,0 +1,15 @@
+<html><head>
+      <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
+   <title>1.3.&nbsp;Regular Expression For Time Stamps</title><link rel="stylesheet" href="style.css" type="text/css"><meta name="generator" content="DocBook XSL Stylesheets V1.72.0"><link rel="start" href="index.html" title="TDA - Thread Dump Analyzer"><link rel="up" href="general.html" title="Chapter&nbsp;1.&nbsp;General"><link rel="prev" href="parsing.html" title="1.2.&nbsp;Thread Dump Parsing"><link rel="next" href="filters.html" title="1.4.&nbsp;Using Filters"></head><body bgcolor="white" text="black" link="#0000FF" vlink="#840084" alink="#0000FF"><div class="sect1" lang="en"><div class="titlepage"><div><div><h2 class="title" style="clear: both"><a name="regex"></a>1.3.&nbsp;Regular Expression For Time Stamps</h2></div></div></div><p>
+                Because the Sun JDK (&lt;=1.5.x) doesn't provide any time information when dumping threads, a regular expression time stamp parsing for each line in the log file is included. TDA matches every line to the regular expression given in the preferences and stores the first matching group if the regular expression matches the line. It then takes the last match found as time stamp for the next thread dump to get a time stamp nearest to the thread dump. An example for such a regular expression is   
+                </p><pre class="programlisting">
+                    (\d\d\/\d\d\/\d\d\s\d\d:\d\d:\d\d).*
+                </pre><p>
+                This expression matches lines like 
+                </p><pre class="programlisting">
+                    06/02/14 14:54:04       at java.lang.Thread.run(Thread.java:534)
+                </pre><p> 
+                TDA takes the first capturing group of the expression as time stamp. In this example the \d is for digits and the capturing group is included in the brackets and matches <font color="red">&lt;i&gt;06/02/14 14:54:04&lt;/i&gt;</font>. This is stored as timestamp for the next thread dump. Starting with JDK 1.6 the SUN JDKs print out a time stamp in the line before the dump. There is a default regular expression which recognizes this time stamp.
+            </p><p>
+                If the timestamp is stored in milliseconds since 1970 there is a checkbox in the preferences <span class="emphasis"><em>Parsed timestamp is a long representing msecs since 1970</em></span> to tell TDA to convert the parsed time stamp from milliseconds into a human readable time stamp. See <a href="references.html" title="Appendix&nbsp;A.&nbsp;References">References</a> for detailed information about the regular expressions in java.
+            </p></div></body></html>

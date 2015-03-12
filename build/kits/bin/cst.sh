@@ -55,7 +55,7 @@ if [ "x$LAUNCH_CST_IN_BACKGROUND" = "x" ]; then
         -Dcst.home=\"$CST_HOME\" \
         -jar \"$CST_HOME/jboss-modules-${version.jboss-modules}.jar\" \
         -mp \"$CST_HOME/modules\" \
-        bootstrap \
+        com.customized.tools \
         "$@"
     CST_STATUS=$?
     echo "CustomizedTools Status: $CST_STATUS"
@@ -65,7 +65,7 @@ else
         -DCST.home.dir=\"$CST_HOME\" \
         -jar \"$CST_HOME/${version.jboss-modules}.jar\" \
         -mp \"$CST_HOME/modules\" \
-        bootstrap \
+        com.customized.tools \
         "$@" "&"
     CST_PID=$!
     echo "CustomizedTools PID: $CST_PID"

@@ -1,6 +1,6 @@
 package com.customized.tools.dbtester;
 
-import com.customized.tools.po.exception.ToolsException;
+import com.customized.tools.model.exception.ToolsException;
 
 public class DBConnectionTesterException extends ToolsException {
 
@@ -8,7 +8,7 @@ public class DBConnectionTesterException extends ToolsException {
 	
 	
 	public DBConnectionTesterException(String msg, Throwable t){
-		super("CTS-DCT",msg, t);
+		super("CST-DCT",msg, t);
 	}
 
 }

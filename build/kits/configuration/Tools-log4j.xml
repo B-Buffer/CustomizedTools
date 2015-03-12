@@ -77,10 +77,9 @@
    </category>
    	
    
-   	 <category name="com.kylin.tool" additivity="false">
+   	 <category name="com.customized.tools" additivity="false">
    		<priority value="DEBUG"/>
    		<appender-ref ref="FILE"/>
-   		<appender-ref ref="CONSOLE"/>
    	</category>
    	
   

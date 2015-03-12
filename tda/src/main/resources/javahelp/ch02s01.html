@@ -1,0 +1,21 @@
+<html><head>
+      <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
+   <title>2.1.&nbsp;Dumping Information about running threads</title><link rel="stylesheet" href="style.css" type="text/css"><meta name="generator" content="DocBook XSL Stylesheets V1.72.0"><link rel="start" href="index.html" title="TDA - Thread Dump Analyzer"><link rel="up" href="appserver.html" title="Chapter&nbsp;2.&nbsp;Analyzing production environments"><link rel="prev" href="appserver.html" title="Chapter&nbsp;2.&nbsp;Analyzing production environments"><link rel="next" href="ch02s02.html" title="2.2.&nbsp;Long running thread detection on Solaris"></head><body bgcolor="white" text="black" link="#0000FF" vlink="#840084" alink="#0000FF"><div class="sect1" lang="en"><div class="titlepage"><div><div><h2 class="title" style="clear: both"><a name="d0e265"></a>2.1.&nbsp;Dumping Information about running threads</h2></div></div></div><p>
+                First of all you can fetch several thread dumps either using jstack or using kill -QUIT if you're using an older VM than 1.5. Using these dumps you can easily detect long running (looping?) threads which might cause the load. You should fetch about five dumps and wait several seconds between fetching, lets say 20 seconds. The command line with jstack then looks something like this 
+                </p><pre class="programlisting">
+                    jstack &lt;pid&gt; &gt; dump.log 
+                </pre><p>
+                for the first dump and
+                </p><pre class="programlisting">
+                    jstack  &gt;&gt; dump.log 
+                </pre><p>
+                for the additional dumps. You then can use the TDA - Thread Dump Analyzer to analyze the thread dumps to get an idea what is currently happening in your application. TDA will try to give you some hints about what might be wrong in the dumps (e.g. a lot of threads are waiting for the garbage collector) like in the screenshot below.
+                
+                </p><div class="figure"><a name="d0e276"></a><p class="title"><b>Figure&nbsp;2.1.&nbsp;TDA giving hints about selected dump</b></p><div class="figure-contents"><img src="info.png" alt="TDA giving hints about selected dump"></div></div><p><br class="figure-break"> 
+                
+                High load without anybody accessing the application usually either means the garbage collector is running endlessly because the application is very low on memory and the garbage collector is unable to free enough memory (TDA will give you a hint on this) or there are some threads (or just one) looping and running endlessly. TDA tries to filter out all idle threads to make it easier for you to find really running threads which are either running or are waiting for some external resources (it will give you a hint regarding the last issue). You need to enable these filters in the filter settings. You might also have a look at the TDA help for additional information.
+            </p><p>
+                For letting TDA search for long running threads mark the threads dumps you want to analyze and choose the "Find long running" threads option. TDA will then search for threads it finds in the dumps at least n-times, whereas you define n in the setting dialog for the detection. It will then present the result added to the dump tree. You should enable the idle-threads filter to filter out unimportant threads. In the screenshot below you can see a long running thread which is running in an endless loop.
+                </p><div class="figure"><a name="d0e284"></a><p class="title"><b>Figure&nbsp;2.2.&nbsp;Long running threads detection</b></p><div class="figure-contents"><img src="longrunning.png" alt="Long running threads detection"></div></div><p><br class="figure-break"> 
+            
+         </p></div></body></html>

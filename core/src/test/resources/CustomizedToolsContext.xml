@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<customizedToolsContext xmlns="urn:cst:1.0" name="CustomizedTools" version="3.0">
+    <configuration>
+        <dbTester id="dbConnectionTester">
+            <driver>com.mysql.jdbc.Driver</driver>
+            <url>jdbc:mysql://localhost:3306/test</url>
+            <username>test_user</username>
+            <password>test_pass</password>
+        </dbTester>
+        <fileChangeMonitor id="fileChangeMonitor">
+            <folderPath>/home/kylin/server/jboss-eap-6.3</folderPath>
+            <resultFile>TeiidInstall.out</resultFile>
+        </fileChangeMonitor>
+        <fileSearcher id="fileSearcher">
+            <fileName>Main</fileName>
+            <folderPath>/home/kylin/server/jboss-eap-6.3</folderPath>
+        </fileSearcher>
+        <gcViewer id="GCViewer">
+            <exportFileName>export.csv</exportFileName>
+            <gcLogPath>/home/kylin/tmp/gc.log</gcLogPath>
+        </gcViewer>
+        <jarClassSearcher id="jarClassSearcher">
+            <className>org.jboss.modules.Main</className>
+            <folderPath>/home/kylin/server/jboss-eap-6.3</folderPath>
+        </jarClassSearcher>
+        <tda id="TDA">
+            <tdumpPath>/home/kylin/tmp/tdump.out</tdumpPath>
+        </tda>
+    </configuration>
+    <profile>
+        <subsystem name="jarClassSearcher">
+            <prompt>Search class from jar file</prompt>
+        </subsystem>
+        <subsystem name="fileSearcher">
+            <prompt>Search file from a folder, even this file exist in jar, zip, war, ear, esb</prompt>
+        </subsystem>
+        <subsystem name="fileChangeMonitor">
+            <prompt>Monitor defined folder</prompt>
+        </subsystem>
+        <subsystem name="GCViewer">
+            <prompt>JVM Garbage Collection Log Analyzer</prompt>
+        </subsystem>
+        <subsystem name="dbConnectionTester">
+            <prompt>Test Database Connection</prompt>
+        </subsystem>
+        <subsystem name="TDA">
+            <prompt>Java Thread Dump Analyzer</prompt>
+        </subsystem>
+    </profile>
+</customizedToolsContext>

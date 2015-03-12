@@ -1,6 +1,6 @@
 package com.customized.tools;
 
-import com.customized.tools.po.exception.ToolsException;
+import com.customized.tools.model.exception.ToolsException;
 
 public class ToolsStartException extends ToolsException {
 

@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="ISO-8859-1" standalone="no"?>
+
+<!DOCTYPE map
+  PUBLIC "-//Sun Microsystems Inc.//DTD JavaHelp Map Version 1.0//EN" "http://java.sun.com/products/javahelp/map_1_0.dtd">
+<map version="1.0">
+   <mapID target="d0e1" url="index.html"/>
+   <mapID target="general" url="general.html"/>
+   <mapID target="runtime" url="runtime.html"/>
+   <mapID target="parsing" url="parsing.html"/>
+   <mapID target="regex" url="regex.html"/>
+   <mapID target="filters" url="filters.html"/>
+   <mapID target="categories" url="categories.html"/>
+   <mapID target="deadlocks" url="deadlocks.html"/>
+   <mapID target="sessions" url="sessions.html"/>
+   <mapID target="longrunning" url="longrunning.html"/>
+   <mapID target="heavyload" url="heavyload.html"/>
+   <mapID target="jconsole" url="jconsole.html"/>
+   <mapID target="visualvm" url="visualvm.html"/>
+   <mapID target="appserver" url="appserver.html"/>
+   <mapID target="d0e265" url="ch02s01.html"/>
+   <mapID target="d0e290" url="ch02s02.html"/>
+   <mapID target="d0e295" url="ch02s03.html"/>
+   <mapID target="analjconsole" url="analjconsole.html"/>
+   <mapID target="d0e307" url="ch03s01.html"/>
+   <mapID target="d0e315" url="ch03s02.html"/>
+   <mapID target="d0e320" url="ch03s03.html"/>
+   <mapID target="references" url="references.html"/>
+</map>

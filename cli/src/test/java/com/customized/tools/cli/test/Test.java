@@ -33,8 +33,6 @@ public class Test extends InputConsole{
 		test();
 		
 		System.out.println(sb.toString());
-//		out.print(sb.toString());
-//		out.flush();
 		
 	}
 	

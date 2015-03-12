@@ -1,0 +1,8 @@
+<html><head>
+      <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
+   <title>1.6.&nbsp;Deadlocks</title><link rel="stylesheet" href="style.css" type="text/css"><meta name="generator" content="DocBook XSL Stylesheets V1.72.0"><link rel="start" href="index.html" title="TDA - Thread Dump Analyzer"><link rel="up" href="general.html" title="Chapter&nbsp;1.&nbsp;General"><link rel="prev" href="categories.html" title="1.5.&nbsp;Using Categories"><link rel="next" href="sessions.html" title="1.7.&nbsp;Sessions"></head><body bgcolor="white" text="black" link="#0000FF" vlink="#840084" alink="#0000FF"><div class="sect1" lang="en"><div class="titlepage"><div><div><h2 class="title" style="clear: both"><a name="deadlocks"></a>1.6.&nbsp;Deadlocks</h2></div></div></div><p>
+                If the JVM finds a java level deadlock in your application it logs this into the thread dump. This information will be displayed in the deadlock node of the dump. There is also a hint concerning the found deadlock(s) in the dump summary. Note though, it doesn't have any deadlock
+                detection for java level deadlocks itself, it relies on the deadlock detection of the VM.
+            </p><p>
+                TDA also tries to find deadlocks which might be caused by some external resources or some remote communication and can't be found by the Java VM. If there are indication for such a deadlock, TDA will display information concerning this in the dump summury and gives you hints what to do next.
+            </p></div></body></html>

@@ -6,10 +6,11 @@ import java.io.PrintWriter;
 
 import org.apache.log4j.Logger;
 
+import com.customized.tools.ITool;
 import com.customized.tools.cli.InputConsole;
-import com.customized.tools.po.Monitor;
+import com.customized.tools.model.Monitor;
 
-public class FileChangeMonitor {
+public class FileChangeMonitor implements ITool {
 	
 	private static final Logger logger = Logger.getLogger(FileChangeMonitor.class);
 	
@@ -32,21 +33,23 @@ public class FileChangeMonitor {
 		logger.info("FileChangeMonitor Start");
 		
 		try {
-			if(console.readFromCli("FileChangeMonitor")) {
-				String folder = console.readFolderPath("Input FileChangeMonitor folder path [</home/kylin/work/eap/jboss-eap-6.0>]", true);
+			if(console.readFromCli(fileChangeMonitor.getId())) {
+				String folder = console.readFolderPath("Input FileChangeMonitor folder path", fileChangeMonitor.getFolderPath(), true);
 				fileChangeMonitor.setFolderPath(folder);
-				String file = console.readFilePath("Input FileChangeMonitor result file name [<result.log>]", false);
+				String file = console.readString("Input FileChangeMonitor result file name", fileChangeMonitor.getResultFile(), false);
 				fileChangeMonitor.setResultFile(file);
 			}
 			
 			final String monitorFolder = fileChangeMonitor.getFolderPath();
 			
 			if( !new File(monitorFolder).exists()) {
-				throw new Exception("'" + monitorFolder + "' does not exist");
+				console.prompt(new FichangeMonitorException("'" + monitorFolder + "' does not exist").getMessage());
+				return;
 			}
 			
 			if(!new File(monitorFolder).isDirectory()) {
-				throw new Exception("'" + monitorFolder + "' is not a directory");
+				console.prompt(new FichangeMonitorException("'" + monitorFolder + "' is not a directory").getMessage());
+				return;
 			}
 						
 			String prompt = "FileChangeMonitor monitor on " + monitorFolder + ", Monitor result will persist to " + getPersistFile();

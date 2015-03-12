@@ -1,0 +1,11 @@
+<html><head>
+      <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
+   <title>1.4.&nbsp;Using Filters</title><link rel="stylesheet" href="style.css" type="text/css"><meta name="generator" content="DocBook XSL Stylesheets V1.72.0"><link rel="start" href="index.html" title="TDA - Thread Dump Analyzer"><link rel="up" href="general.html" title="Chapter&nbsp;1.&nbsp;General"><link rel="prev" href="regex.html" title="1.3.&nbsp;Regular Expression For Time Stamps"><link rel="next" href="categories.html" title="1.5.&nbsp;Using Categories"></head><body bgcolor="white" text="black" link="#0000FF" vlink="#840084" alink="#0000FF"><div class="sect1" lang="en"><div class="titlepage"><div><div><h2 class="title" style="clear: both"><a name="filters"></a>1.4.&nbsp;Using Filters</h2></div></div></div><p>
+                To filter out sleeping and uninteresting threads in your view you can use filters to just ignore these threads. For example if you use jgroups in your application and don't want to see als the STACKs and QUEUEs of jgroups you can specify something like that seen in the next screenshot. 
+                </p><div class="figure"><a name="d0e159"></a><p class="title"><b>Figure&nbsp;1.6.&nbsp;A filter filtering jgroups threads</b></p><div class="figure-contents"><img src="filters.png" alt="A filter filtering jgroups threads"></div></div><p><br class="figure-break"> 
+                The status bar will provide information about the number of filtered threads and how many are remaining. Note that changes to the filters only apply after you changed a view. The filter changes will not be applied to the currently displayed thread view.
+            </p><p>
+                Filters can be used to match different parts of the thread information. You can match or search in stack, title and you can check for the thread state the thread is in. Filters can be including or excluding. The example above is a excluding filter which checks if org.jgroups is in the stack information of a thread.
+            </p><p>
+                If a specified filter should be applied to all displayed categories, the Default checkbox needs to be checked. Filters which aren't applied to all categories can be used in custom <a href="categories.html" title="1.5.&nbsp;Using Categories">categories</a>.
+            </p></div></body></html>

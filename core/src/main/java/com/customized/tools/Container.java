@@ -17,9 +17,10 @@ import com.customized.tools.dbtester.DBConnectionTester;
 import com.customized.tools.filechangemonitor.FileChangeMonitor;
 import com.customized.tools.gcviewer.GCViewerWrapper;
 import com.customized.tools.jarClassSearcher.JarClassSearcher;
-import com.customized.tools.po.ToolsSubsystem;
-import com.customized.tools.po.version.Version;
+import com.customized.tools.model.ToolsSubsystem;
+import com.customized.tools.model.version.Version;
 import com.customized.tools.searcher.FileSearcher;
+import com.customized.tools.tda.TDAWrapper;
 
 
 public class Container extends TreeInputConsole implements LifeCycle {
@@ -52,32 +53,11 @@ public class Container extends TreeInputConsole implements LifeCycle {
 		logger.info("Initialized Configuration, name = " + configuration.getContext().getName() + ", version = " + configuration.getContext().getVersion());
 	
 		for(ToolsSubsystem system : configuration.getSubsystem()) {
-			TreeNode node = new TreeNode(system.getName(), "<" + system.getPrompt() + ">", null, null);
+			TreeNode node = new TreeNode(system.getName(), "'" + system.getPrompt() + "'", null, null);
 			addTreeNode(node);
 		}
 		
-		loadExternalJar();
-		
 		setStatus(Status.INIT);
-	}
-
-	private void loadExternalJar() {
-
-		/*
-		logger.info("load external Jars");
-		
-		ToolsClassLoader loader = configuration.getToolsClassLoader();
-		
-		String libPath = loader.getPath();
-		String libUrl = loader.getUrl();
-		
-		if(libPath.equals("lib")){
-			libPath = System.getProperty("cst.home") + File.separator + libPath;
-		} 
-		
-		ToolsURLClassLoader classLoader = new ToolsURLClassLoader(Container.class.getClassLoader());
-		classLoader.loadDependencyJars(libPath);
-		*/
 	}
 
 	public void doStart() {
@@ -189,16 +169,14 @@ public class Container extends TreeInputConsole implements LifeCycle {
 	static final String fileSearcher = "fileSearcher";
 	static final String fileChangeMonitor = "fileChangeMonitor";
 	static final String dbConnectionTester = "dbConnectionTester";
-	static final String jmsConnectionTester = "jmsConnectionTester";
-	static final String smartAnalyser = "smartAnalyser";
-	static final String samurai = "samurai";
+	static final String tda = "TDA";
 	static final String GCViewer = "GCViewer";
 
 	Map<String, Object> cache = new HashMap<String, Object>();
 	
 	protected void handleOther(String pointer) {
 		
-		if(map.keySet().contains(pointer) && isSelecting(pointer)) {
+		if(map.keySet().contains(pointer)) {
 			
 			Object obj = cache.get(map.get(pointer));
 			
@@ -210,18 +188,28 @@ public class Container extends TreeInputConsole implements LifeCycle {
 				startFileChangeMonitor(obj);
 			} else if(map.get(pointer).equals(dbConnectionTester)){
 				startDbConnectionTester(obj);
-			} else if(map.get(pointer).equals(jmsConnectionTester)){
-				startJmsConnectionTester(obj);
-			} else if(map.get(pointer).equals(smartAnalyser)){
-				startSmartAnalyser(obj);
-			} else if(map.get(pointer).equals(samurai)){
-				startSamurai(obj);
+			}  else if(map.get(pointer).equals(tda)){
+				startTDA(obj);
 			} else if(map.get(pointer).equals(GCViewer)){
 				startGCViewer(obj);
 			} 
 		}
 		
-		handleHELP(pointer);
+//		handleHELP(pointer);
+	}
+
+	private void startTDA(Object obj) {
+		
+		TDAWrapper tool = null;
+		
+		if(null == obj){
+			tool = new TDAWrapper(this, configuration.getTda());
+			cache.put(tda, tool);
+		} else {
+			tool = (TDAWrapper) obj;
+		}
+		
+		tool.execute();
 	}
 
 	private void startGCViewer(Object obj) {
@@ -229,8 +217,8 @@ public class Container extends TreeInputConsole implements LifeCycle {
 		GCViewerWrapper tool = null ;
 		
 		if(null == obj) {
-			tool = new GCViewerWrapper(this);
-			cache.put(GCViewer, obj);
+			tool = new GCViewerWrapper(this, configuration.getGcViewer());
+			cache.put(GCViewer, tool);
 		} else {
 			tool = (GCViewerWrapper) obj ;
 		}
@@ -238,47 +226,6 @@ public class Container extends TreeInputConsole implements LifeCycle {
 		tool.execute();
 	}
 
-	private void startSamurai(Object obj) {
-		
-//		SamuraiWrapper tool = null;
-//		
-//		if(null == obj) {
-//			tool = new SamuraiWrapper(this);
-//			cache.put(samurai, tool);
-//		} else {
-//			tool = (SamuraiWrapper) obj ;
-//		}
-//		
-//		tool.execute();
-	}
-
-	private void startSmartAnalyser(Object obj) {
-
-//		SmartAnalyser tool = null;
-//		
-//		if(null == obj) {
-//			tool = new SmartAnalyser(configuration.getAnalyser(), this);
-//			cache.put(smartAnalyser, tool);
-//		} else {
-//			tool = (SmartAnalyser) obj ;
-//		}
-//		
-//		tool.execute() ;
-	}
-
-	private void startJmsConnectionTester(Object obj) {
-
-//		JMSConnectionTester tool = null ;
-//		
-//		if(null == obj) {
-//			tool = new JMSConnectionTester(configuration.getJmsTester(), new WizardConsole());
-//			cache.put(jmsConnectionTester, tool);
-//		} else {
-//			tool = (JMSConnectionTester) obj;
-//		}
-//		
-//		tool.execute();
-	}
 
 	private void startDbConnectionTester(Object obj) {
 

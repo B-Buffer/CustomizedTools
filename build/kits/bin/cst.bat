@@ -61,7 +61,7 @@ echo.
  "-Ddemo.home.dir=%DEMO_HOME%" ^
     -jar "%DEMO_HOME%\jboss-modules-${version.jboss-modules}.jar" ^
     -mp "%DEMO_HOME%\modules" ^
-     org.jgroups.demo.chat ^
+     com.customized.tools ^
      %*
 
 if ERRORLEVEL 10 goto RESTART

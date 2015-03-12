@@ -65,9 +65,25 @@
 		
 		<dependencySet>
 		  <includes>
+	        <include>com.customized.tools:cst-tda:jar</include>
+	      </includes>
+		  <outputDirectory>modules/system/layers/base/com/customized/tools/tda/main</outputDirectory>
+	      <unpack>false</unpack>
+		</dependencySet>
+		
+		<dependencySet>
+		  <includes>
 	        <include>com.mgmtp.gcviewer:gcviewer:jar</include>
 	      </includes>
 		  <outputDirectory>modules/system/layers/base/com/mgmtp/gcviewer/main</outputDirectory>
+	      <unpack>false</unpack>
+		</dependencySet>
+		
+		<dependencySet>
+		  <includes>
+	        <include>javax.help:javahelp:jar</include>
+	      </includes>
+		  <outputDirectory>modules/system/layers/base/javax/help/main</outputDirectory>
 	      <unpack>false</unpack>
 		</dependencySet>
 		

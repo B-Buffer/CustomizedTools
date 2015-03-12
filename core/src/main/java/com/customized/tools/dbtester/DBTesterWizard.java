@@ -3,7 +3,7 @@ package com.customized.tools.dbtester;
 import java.util.List;
 
 import com.customized.tools.cli.wizard.Wizard;
-import com.customized.tools.po.DBTester;
+import com.customized.tools.model.DBTester;
 
 public class DBTesterWizard extends Wizard {
 	

@@ -291,6 +291,44 @@ public class InputConsole extends Console {
 	/**
 	 * 
 	 * @param prompt
+	 * @param validation if true, file should be exist
+	 * @return
+	 */
+	public String readFilePath(String prompt, String value, boolean validation) {
+		
+		String result = "" ;
+		
+		while(true){
+			
+			println(prompt);
+			
+			String input = "";
+			try {
+				input = br.readLine();
+			} catch (IOException e) {
+				throw new IllegalArgumentException("readFilePath Error", e);
+			}
+			
+			if(input.equals("") || input.trim().equals("")) {
+				result = value ;
+				break;
+			} 
+			
+			if(validation && new File(input).exists() && new File(input).isFile()) {
+				result = input;
+				break;
+			} else if(input.length() > 0){
+				result = input;
+				break;
+			}
+		}
+		
+		return result;
+	} 
+	
+	/**
+	 * 
+	 * @param prompt
 	 * @param value the default value, press enter will return this value
 	 * @param validation is true, null value is not allowed
 	 * @return

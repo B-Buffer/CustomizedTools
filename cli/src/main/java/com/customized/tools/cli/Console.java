@@ -6,6 +6,8 @@ public class Console {
 	
 	protected static final String TAB = "    ";
 	
+	protected static final String LN = "\n";
+	
 	public void print(Object obj) {
 		System.out.print(obj);
 	}
@@ -15,8 +17,21 @@ public class Console {
 	}
 	
 	public void prompt(Object obj) {
-		println("\n" + TAB + obj + "\n");
+		println(LN + TAB + obj + LN);
 	}
+	
+	public String twoTab() {
+		return TAB + TAB ;
+	}
+	
+	public String ln(){
+		return LN;
+	}
+	
+	public String tab(){
+		return TAB;
+	}
+	
 
 	public void pause(Object obj) {
 		print(obj);

@@ -17,7 +17,10 @@
 	<version.gcviewer>1.32-rc-1</version.gcviewer>
 	<version.log4j>1.2.16</version.log4j>
 	<version.jaxb.api>2.2.6</version.jaxb.api>
-	
+	<version.junit>4.11</version.junit>
+	<version.org.mockito>1.9.5</version.org.mockito>
+	<version.javahelp>2.0.05</version.javahelp>
+
 	<version.jar.plugin>2.2</version.jar.plugin>
 	<version.assembly.plugin>2.4</version.assembly.plugin>
 	<version.compiler.plugin>3.1</version.compiler.plugin>
@@ -44,18 +47,22 @@
     
     <build>
     	<pluginManagement>
-    		<plugins>
-    			<plugin>
-    				<groupId>org.apache.maven.plugins</groupId>
-    				<artifactId>maven-jar-plugin</artifactId>
-    				<version>${version.jar.plugin}</version>
-    			</plugin>
-    			<plugin>
-    				<groupId>org.apache.maven.plugins</groupId>
-    				<artifactId>maven-assembly-plugin</artifactId>
-    				<version>${version.assembly.plugin}</version>
-    			</plugin>
-    		</plugins>
+    	    <plugins>
+    		<plugin>
+    		    <groupId>org.apache.maven.plugins</groupId>
+    		    <artifactId>maven-jar-plugin</artifactId>
+    		    <version>${version.jar.plugin}</version>
+    		</plugin>
+    		<plugin>
+    		    <groupId>org.apache.maven.plugins</groupId>
+    		    <artifactId>maven-assembly-plugin</artifactId>
+    		    <version>${version.assembly.plugin}</version>
+    		</plugin>
+		<plugin>
+                    <groupId>org.apache.maven.plugins</groupId>
+                    <artifactId>maven-jar-plugin</artifactId>
+                </plugin>
+    	    </plugins>
     	</pluginManagement>
     	<plugins>
     		<plugin>
@@ -80,6 +87,16 @@
     
     <dependencyManagement>
     	<dependencies>
+	<dependency>
+            <groupId>junit</groupId>
+            <artifactId>junit</artifactId>
+            <version>${version.junit}</version>
+        </dependency>
+	<dependency>
+            <groupId>org.mockito</groupId>
+            <artifactId>mockito-all</artifactId>
+            <version>${version.org.mockito}</version>
+        </dependency>
 	<dependency>
             <groupId>org.jboss.modules</groupId>
             <artifactId>jboss-modules</artifactId>
@@ -110,6 +127,11 @@
             <artifactId>cst-cli</artifactId>
             <version>${project.version}</version>
         </dependency>
+	<dependency>
+            <groupId>com.customized.tools</groupId>
+            <artifactId>cst-tda</artifactId>
+            <version>${project.version}</version>
+        </dependency>
     	<dependency>
 	    <groupId>javax.xml.bind</groupId>
 	    <artifactId>jaxb-api</artifactId>
@@ -125,13 +147,33 @@
 		</exclusion>
 	    </exclusions>
 	</dependency>
+	<dependency>
+	    <groupId>javax.help</groupId>
+ 	    <artifactId>javahelp</artifactId>
+	    <version>${version.javahelp}</version>
+	</dependency>
+
 
     </dependencies>
     </dependencyManagement>
+
+    <dependencies>
+        <dependency>
+            <groupId>junit</groupId>
+            <artifactId>junit</artifactId>
+            <scope>test</scope>
+	</dependency>
+        <dependency>
+            <groupId>org.mockito</groupId>
+            <artifactId>mockito-all</artifactId>
+            <scope>test</scope>
+        </dependency>
+    </dependencies>
     
     <modules>
 	<module>cli</module>
         <module>model</module>
+	<module>tda</module>
 	<module>core</module>
     </modules>
 

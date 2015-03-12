@@ -5,16 +5,15 @@ import java.util.List;
 
 import javax.xml.bind.Unmarshaller;
 
-import com.customized.tools.po.Analyser;
-import com.customized.tools.po.ClassSearcher;
-import com.customized.tools.po.CustomizedToolsContext;
-import com.customized.tools.po.DBTester;
-import com.customized.tools.po.JMSTester;
-import com.customized.tools.po.Monitor;
-import com.customized.tools.po.Searcher;
-import com.customized.tools.po.ToolsClassLoader;
-import com.customized.tools.po.ToolsProfile;
-import com.customized.tools.po.ToolsSubsystem;
+import com.customized.tools.model.ClassSearcher;
+import com.customized.tools.model.CustomizedToolsContext;
+import com.customized.tools.model.DBTester;
+import com.customized.tools.model.GCViewerEntity;
+import com.customized.tools.model.Monitor;
+import com.customized.tools.model.Searcher;
+import com.customized.tools.model.TDAEntity;
+import com.customized.tools.model.ToolsProfile;
+import com.customized.tools.model.ToolsSubsystem;
 
 /**
  * Supply public method for other component, If component need underlying configuration
@@ -32,7 +31,7 @@ public class Configuration {
 			Unmarshaller unmarshaller = JAXBUtil.getInstance().getUnmarshaller();
 			context = (CustomizedToolsContext) unmarshaller.unmarshal(new File(path));
 		} catch (Exception e) {
-			throw new ConfigurationLoaderException("load configuration file throw exception", e);
+			throw new ToolsCommonException("load configuration file throw exception", e);
 		}
 	}
 	
@@ -40,12 +39,12 @@ public class Configuration {
 		return context ;
 	}
 	
-	public Analyser getAnalyser() {
-		return context.getConfiguration().getAnalyser();
+	public GCViewerEntity getGcViewer() {
+		return context.getConfiguration().getGcViewer();
 	}
 	
-	public JMSTester getJmsTester() {
-		return context.getConfiguration().getJmsTester();
+	public TDAEntity getTda() {
+		return context.getConfiguration().getTda();
 	}
 	
 	public DBTester getDbTester() {

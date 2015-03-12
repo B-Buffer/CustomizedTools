@@ -1,0 +1,11 @@
+<html><head>
+      <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
+   <title>1.10.&nbsp;JConsole Plugin</title><link rel="stylesheet" href="style.css" type="text/css"><meta name="generator" content="DocBook XSL Stylesheets V1.72.0"><link rel="start" href="index.html" title="TDA - Thread Dump Analyzer"><link rel="up" href="general.html" title="Chapter&nbsp;1.&nbsp;General"><link rel="prev" href="heavyload.html" title="1.9.&nbsp;Heavy Load Analysis"><link rel="next" href="visualvm.html" title="1.11.&nbsp;VisualVM Plugin"></head><body bgcolor="white" text="black" link="#0000FF" vlink="#840084" alink="#0000FF"><div class="sect1" lang="en"><div class="titlepage"><div><div><h2 class="title" style="clear: both"><a name="jconsole"></a>1.10.&nbsp;JConsole Plugin</h2></div></div></div><p>
+                TDA can be used as plugin in the JVM utility JConsole. Use the following to start JConsole with TDA as plugin: 
+                </p><pre class="programlisting">
+                    jconsole -pluginpath ./tda.jar
+                </pre><p>
+                The javahelp jar <span class="emphasis"><em>jhall.jar</em></span> needs to be in the same directory as the tda.jar or in the subdirectory <span class="emphasis"><em>lib</em></span>, otherwise clicking the help button would lead to an exception. The Plugin offers requesting thread dumps from a remote Virtual Machine through JMX. The Dumps areparsed and can be analyzed just like running as standalone-application. The upper-right-frame showing the dump tree has a popup menu offering the plugin features. 
+                </p><div class="figure"><a name="d0e233"></a><p class="title"><b>Figure&nbsp;1.9.&nbsp;TDA JConsole Plugin</b></p><div class="figure-contents"><img src="jconsole.png" alt="TDA JConsole Plugin"></div></div><p><br class="figure-break"> 
+                The toolbar is also available for convenience, it can be switched off using the popup menu. The requested Thread Dumps can also be stored as Logfile for later offline analysis. The plugin supports requesting thread dumps from 1.5 and 1.6 VMs. The extended informations from 1.6 are not parsed yet though (e.g. informations about locked synchronizers). But they are saved to the logfile also.
+            </p></div></body></html>

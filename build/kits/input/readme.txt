@@ -1,0 +1,1 @@
+This folder used to put the JVM log file, JVM thread dump file, etc.
