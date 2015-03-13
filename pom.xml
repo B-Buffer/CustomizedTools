@@ -20,6 +20,7 @@
 	<version.junit>4.11</version.junit>
 	<version.org.mockito>1.9.5</version.org.mockito>
 	<version.javahelp>2.0.05</version.javahelp>
+	<version.mysql>5.1.30</version.mysql>
 
 	<version.jar.plugin>2.2</version.jar.plugin>
 	<version.assembly.plugin>2.4</version.assembly.plugin>
@@ -152,6 +153,13 @@
  	    <artifactId>javahelp</artifactId>
 	    <version>${version.javahelp}</version>
 	</dependency>
+
+	<dependency>
+	    <groupId>mysql</groupId>
+	    <artifactId>mysql-connector-java</artifactId>
+	    <version>${version.mysql}</version>
+        </dependency>
+
 
 
     </dependencies>

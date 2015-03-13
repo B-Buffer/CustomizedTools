@@ -87,6 +87,14 @@
 	      <unpack>false</unpack>
 		</dependencySet>
 		
+		<dependencySet>
+		  <includes>
+	        <include>mysql:mysql-connector-java:jar</include>
+	      </includes>
+		  <outputDirectory>modules/system/layers/base/com/mysql/main</outputDirectory>
+	      <unpack>false</unpack>
+		</dependencySet>
+		
 	</dependencySets>
 
 </assembly>

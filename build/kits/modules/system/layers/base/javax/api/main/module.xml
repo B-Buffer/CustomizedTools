@@ -10,6 +10,12 @@
                 <path name="javax/naming/spi"/>
                 <path name="javax/net"/>
                 <path name="javax/net/ssl"/>
+                <path name="javax/swing"/>
+                <path name="javax/swing/event"/>
+                <path name="javax/swing/tree"/>
+                <path name="javax/swing/filechooser"/>
+                <path name="javax/swing/table"/>
+                <path name="javax/swing/plaf"/>
                 <path name="javax/xml"/>
                 <path name="javax/xml/bind"/>
                 <path name="javax/xml/bind/annotation"/>

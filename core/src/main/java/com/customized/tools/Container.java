@@ -119,7 +119,7 @@ public class Container extends TreeInputConsole implements LifeCycle {
 		StringBuffer sb = new StringBuffer();
 		
 		for(int i = 0 ; i < getCurrentNode().getSons().size() ; i ++) {
-			sb.append(TAB);
+			sb.append(twoTab());
 			String key = String.valueOf(i + 1);
 			map.put(key, getCurrentNode().getSons().get(i).getName());
 			String pre = key + ". ";
@@ -128,7 +128,7 @@ public class Container extends TreeInputConsole implements LifeCycle {
 			} else {
 				sb.append(pre + getCurrentNode().getSons().get(i).getName());
 			}
-			sb.append("\n");
+			sb.append(ln());
 		}
 		
 		return sb.toString();
@@ -151,12 +151,13 @@ public class Container extends TreeInputConsole implements LifeCycle {
 	}
 
 	protected void handleHELP(String pointer) {
-		println("[ls] list all tools");
-		println("[ls -l] list all tools with functionality description");
-		println("Choose " + order(map.keySet()) +"\n" + getPrintContent(false) + "to execute");
+		println("");
+		println(tab() + "[ls] list all tools");
+		println(tab() + "[ls -l] list all tools with functionality description");
+		println(tab() + "Choose digit 1 - " + configuration.getSubsystem().size() + ln() + getPrintContent(false) + tab() + "to start" + ln());
 	}
 
-	private String order(Set<String> keySet) {
+	protected String order(Set<String> keySet) {
 		List<String> list = new ArrayList<String>();
 		for(String key : keySet) {
 			list.add(key);
@@ -193,6 +194,8 @@ public class Container extends TreeInputConsole implements LifeCycle {
 			} else if(map.get(pointer).equals(GCViewer)){
 				startGCViewer(obj);
 			} 
+		} else {
+			handleHELP(pointer);
 		}
 		
 //		handleHELP(pointer);

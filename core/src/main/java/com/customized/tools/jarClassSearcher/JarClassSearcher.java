@@ -63,7 +63,7 @@ public class JarClassSearcher implements ITool {
 			JarClassSearcherException ex = new JarClassSearcherException("JarClassSearcher return a Error", e);
 			console.prompt(ex.getMessage());
 			logger.error("", ex);
-			throw ex;
+//			throw ex;
 		}
 	}
 

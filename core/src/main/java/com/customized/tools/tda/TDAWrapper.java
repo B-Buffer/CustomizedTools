@@ -32,7 +32,7 @@ public class TDAWrapper implements ITool {
 		try {
 			if(console.readFromCli("TDA")) {
 				String[] args = new String[1];
-				args[0] = console.readFilePath("Input thread dump file path [tdump.out]", tda.getPath(), true);
+				args[0] = console.readFilePath("Input thread dump file path", tda.getPath(), true);
 				TDA.main(args);
 			} else {
 				TDA.main(new String[0]);
@@ -41,7 +41,7 @@ public class TDAWrapper implements ITool {
 			TDAException ex = new TDAException("TDA run return a exception", e);
 			console.prompt("TDA Return a Error, " + ex.getMessage());
 			logger.error("", ex);
-			throw ex;
+//			throw ex;
 		}
 		
 	}

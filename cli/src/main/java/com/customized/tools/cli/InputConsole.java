@@ -300,7 +300,7 @@ public class InputConsole extends Console {
 		
 		while(true){
 			
-			println(prompt);
+			println(prompt + " default [" + value + "]");
 			
 			String input = "";
 			try {
@@ -428,6 +428,19 @@ public class InputConsole extends Console {
 			
 			result = input ;
 			break;
+		}
+		
+		return result;
+	}
+	
+	public String readStringSlient()  {
+		
+		String result = "" ;
+
+		try {
+			result = br.readLine();
+		} catch (IOException e) {
+			throw new IllegalArgumentException("readString Error", e);
 		}
 		
 		return result;

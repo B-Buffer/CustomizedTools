@@ -17,7 +17,7 @@
         </fileSearcher>
         <gcViewer id="GCViewer">
             <exportFileName>export.csv</exportFileName>
-            <gcLogPath>/home/kylin/tmp/gc.log</gcLogPath>
+            <gcLogPath>gc.log</gcLogPath>
         </gcViewer>
         <jarClassSearcher id="jarClassSearcher">
             <className>org.jboss.modules.Main</className>

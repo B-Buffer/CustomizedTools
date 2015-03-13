@@ -1,5 +1,7 @@
 package com.customized.tools.gcviewer;
 
+import java.io.File;
+
 import org.apache.log4j.Logger;
 
 import com.customized.tools.ITool;
@@ -30,8 +32,21 @@ public class GCViewerWrapper implements ITool {
 		try {
 			if(console.readFromCli("GCViewer")) {
 				String[] args = new String[2];
-				args[0] = console.readFilePath("Input gc log path [<gc-log-file>]", gcViwer.getPath(), true);
-				args[1] = console.readString("Input result save file [<export.csv>]", gcViwer.getName(), false);
+				args[0] = console.readFilePath("Input gc log file path", gcViwer.getPath(), true);
+				args[1] = System.getProperty("cst.out.dir") + File.separator + console.readString("Input result save file", gcViwer.getName(), false);
+				
+				if( !new File(args[0]).exists()) {
+					
+					File inputFile = new File(System.getProperty("cst.linput.dir") + File.separator + args[0]);
+					if(inputFile.exists()) {
+						args[0] = inputFile.getAbsolutePath();
+					} else {
+						console.prompt(new GCViewerException("'" + args[0] + "' does not exist").getMessage());
+						return;
+					}
+					
+				}
+				
 				GCViewer.main(args);
 				console.prompt("Please check result from " + args[1]);
 			} else {
@@ -41,7 +56,7 @@ public class GCViewerWrapper implements ITool {
 			GCViewerException ex = new GCViewerException("", e);
 			console.prompt("GCViewer Return a Error, " + ex.getMessage());
 			logger.error("", ex);
-			throw ex;
+//			throw ex;
 		}
 	}
 

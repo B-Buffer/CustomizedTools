@@ -19,7 +19,7 @@ public class FileChangeMonitor implements ITool {
 	private Monitor fileChangeMonitor;
 
 	public String getPersistFile() {
-		return fileChangeMonitor.getResultFile();
+		return System.getProperty("cst.out.dir") + File.separator + fileChangeMonitor.getResultFile();
 	}
 
 	public FileChangeMonitor(Monitor fileChangeMonitor, InputConsole console) {
@@ -52,7 +52,7 @@ public class FileChangeMonitor implements ITool {
 				return;
 			}
 						
-			String prompt = "FileChangeMonitor monitor on " + monitorFolder + ", Monitor result will persist to " + getPersistFile();
+			String prompt = "FileChangeMonitor monitor on " + monitorFolder + ", Monitor result will persist to " + getPersistFile() + ", enter 'exit' to stop";
 						
 			console.prompt(prompt);
 			
@@ -63,28 +63,65 @@ public class FileChangeMonitor implements ITool {
 			new File(getPersistFile()).createNewFile();
 			
 			final PrintWriter pw = new PrintWriter(new FileOutputStream(new File(getPersistFile())), true);
-			
-			new Thread(new Runnable(){
 
-				public void run() {
-					IFileChangeListener listener = new FileChangeListener(console, pw);
-					IFileChangeHandler handler = new FileChangeHandler();
-					while(true){
-						listener.addListener(handler, new File(monitorFolder));
-						try {
-							Thread.sleep(50);
-						} catch (InterruptedException e) {
-							logger.error("", e);
-						}
-					}
+			FileChangeMonitorRunner runner = new FileChangeMonitorRunner(pw, true, monitorFolder);
+			new Thread(runner).start();
+			
+			while(true){
+				Thread.sleep(1000);
+				String exitStr = console.readStringSlient();
+				if(exitStr.equals("exit") || exitStr.equals("quit") || exitStr.equals("-q")){
+					runner.shutdown();
+					break;
 				}
-			}).start();
+			}
 		} catch (Exception e) {
 			FichangeMonitorException ex = new FichangeMonitorException("FichangeMonitor Error", e);
 			console.prompt(ex.getMessage());
 			logger.error("", ex);
-			throw ex;
+//			throw ex;
 		}
+	}
+	
+	private class FileChangeMonitorRunner implements Runnable {
+		
+		private PrintWriter pw;
+		
+		private boolean live;
+		
+		private String monitorFolder;
+
+		public FileChangeMonitorRunner(PrintWriter pw, boolean live, String monitorFolder) {
+			super();
+			this.pw = pw;
+			this.live = live;
+			this.monitorFolder = monitorFolder;
+		}
+
+		@Override
+		public void run() {
+			
+			logger.info("FileChangeMonitor Start");
+			
+			IFileChangeListener listener = new FileChangeListener(console, pw);
+			IFileChangeHandler handler = new FileChangeHandler();
+			while(live){
+				listener.addListener(handler, new File(monitorFolder));
+				try {
+					Thread.sleep(50);
+				} catch (InterruptedException e) {
+					logger.error("", e);
+				}
+			}
+			
+			console.prompt("FileChangeMonitor stop");
+			
+		}
+
+		public void shutdown() {
+			this.live = false;
+		}
+		
 	}
 
 }

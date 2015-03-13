@@ -65,7 +65,7 @@ public class DBConnectionTester implements ITool {
 			DBConnectionTesterException ex = new DBConnectionTesterException("DBConnectionTester met exception", e);
 			console.prompt("Test Failed, due to " + ex.getMessage());
 			logger.error("", ex);
-			throw ex;
+//			throw ex;
 		}finally {
 			try {
 				if(rs != null) {
@@ -88,9 +88,9 @@ public class DBConnectionTester implements ITool {
 		DatabaseMetaData meta = conn.getMetaData();
 		
 		StringBuffer sb = new StringBuffer();
-		sb.append("Create Databse Connection [" + dbTester.getUrl() + " - " + dbTester.getUsername() + "/******]\n\n");
-		sb.append("Databse Connection Test Success\n\n");
-		sb.append(meta.getDatabaseProductVersion());
+		sb.append("Create Databse Connection [" + dbTester.getUrl() + " - " + dbTester.getUsername() + "/******]" + console.ln(2));
+		sb.append(console.tab() + "Databse Connection Test Success" + console.ln(2));
+		sb.append(console.tab() + meta.getDatabaseProductVersion());
 		
 		console.prompt(sb.toString());
 		

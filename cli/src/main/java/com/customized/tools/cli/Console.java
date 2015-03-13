@@ -28,6 +28,14 @@ public class Console {
 		return LN;
 	}
 	
+	public String ln(int num){
+		String result = "";
+		for(int i = 0 ; i < num ; i ++){
+			result += LN;
+		}
+		return result;
+	}
+	
 	public String tab(){
 		return TAB;
 	}

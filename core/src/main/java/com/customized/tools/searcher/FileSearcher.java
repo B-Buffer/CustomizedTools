@@ -66,7 +66,7 @@ public class FileSearcher implements ITool {
 			FileSearcherException ex = new FileSearcherException("File Searcher return a Exception" ,e);
 			console.prompt(ex.getMessage());
 			logger.error("", ex);
-			throw ex ;
+//			throw ex ;
 		}
 	}
 
