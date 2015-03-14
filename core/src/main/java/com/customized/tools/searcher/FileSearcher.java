@@ -62,7 +62,7 @@ public class FileSearcher implements ITool {
 			}
 			
 			//TODO-- add dump propmtStr, result to file
-		} catch (Exception e) {
+		} catch (Throwable e) {
 			FileSearcherException ex = new FileSearcherException("File Searcher return a Exception" ,e);
 			console.prompt(ex.getMessage());
 			logger.error("", ex);

@@ -3,6 +3,7 @@
     <dependencies>
         <system export="true">
             <paths>
+            	<path name="javax/accessibility"/>
             	<path name="javax/naming"/>
                 <path name="javax/naming/directory"/>
                 <path name="javax/naming/event"/>
@@ -16,6 +17,7 @@
                 <path name="javax/swing/filechooser"/>
                 <path name="javax/swing/table"/>
                 <path name="javax/swing/plaf"/>
+                <path name="javax/swing/border"/>
                 <path name="javax/xml"/>
                 <path name="javax/xml/bind"/>
                 <path name="javax/xml/bind/annotation"/>

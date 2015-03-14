@@ -61,7 +61,7 @@ public class DBConnectionTester implements ITool {
 			stmt.execute(TABLE_DROP);
 			console.prompt("Drop Table Success");
 			
-		} catch (Exception e) {
+		} catch (Throwable e) {
 			DBConnectionTesterException ex = new DBConnectionTesterException("DBConnectionTester met exception", e);
 			console.prompt("Test Failed, due to " + ex.getMessage());
 			logger.error("", ex);

@@ -52,7 +52,7 @@ public class GCViewerWrapper implements ITool {
 			} else {
 				GCViewer.main(new String[0]);
 			}
-		} catch (Exception e) {
+		} catch (Throwable e) {
 			GCViewerException ex = new GCViewerException("", e);
 			console.prompt("GCViewer Return a Error, " + ex.getMessage());
 			logger.error("", ex);

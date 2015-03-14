@@ -59,7 +59,7 @@ public class JarClassSearcher implements ITool {
 			List<String> result = getResultJars(jarFileSet, jarClassSearcher.getClassName());
 			
 			printToConsole(result);
-		} catch (Exception e) {
+		} catch (Throwable e) {
 			JarClassSearcherException ex = new JarClassSearcherException("JarClassSearcher return a Error", e);
 			console.prompt(ex.getMessage());
 			logger.error("", ex);

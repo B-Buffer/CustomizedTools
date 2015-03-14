@@ -37,7 +37,7 @@ public class TDAWrapper implements ITool {
 			} else {
 				TDA.main(new String[0]);
 			}
-		} catch (Exception e) {
+		} catch (Throwable e) {
 			TDAException ex = new TDAException("TDA run return a exception", e);
 			console.prompt("TDA Return a Error, " + ex.getMessage());
 			logger.error("", ex);

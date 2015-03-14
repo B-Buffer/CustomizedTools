@@ -10,7 +10,7 @@ public class JarClassSearcherException extends ToolsException {
 		super("CST-JCS", msg);
 	}
 	
-	public JarClassSearcherException(String msg, Exception e) {
+	public JarClassSearcherException(String msg, Throwable e) {
 		super("CST-JCS", msg, e);
 	}
 }
