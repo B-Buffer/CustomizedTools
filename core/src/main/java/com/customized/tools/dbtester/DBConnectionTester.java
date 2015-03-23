@@ -10,11 +10,12 @@ import java.sql.Statement;
 
 import org.apache.log4j.Logger;
 
-import com.customized.tools.ITool;
+import com.customized.tools.AbstractTools;
 import com.customized.tools.cli.WizardConsole;
 import com.customized.tools.model.DBTester;
+import com.customized.tools.model.Entity;
 
-public class DBConnectionTester implements ITool {
+public class DBConnectionTester extends AbstractTools {
 	
 	private static final Logger logger = Logger.getLogger(DBConnectionTester.class);
 
@@ -26,12 +27,13 @@ public class DBConnectionTester implements ITool {
 	
 	private WizardConsole console;
 	
-	public DBConnectionTester(DBTester dbTester, WizardConsole console) {
-		this.dbTester = dbTester;
-		this.console = console;
+	public DBConnectionTester(Entity entity, WizardConsole console) {
+		super(entity, console);
 	}
 
 	public void execute() {
+		
+		dbTester = (DBTester) entity;
 		
 		logger.info("DB Connection Test Start");
 

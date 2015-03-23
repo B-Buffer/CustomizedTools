@@ -6,29 +6,28 @@ import java.io.PrintWriter;
 
 import org.apache.log4j.Logger;
 
-import com.customized.tools.ITool;
+import com.customized.tools.AbstractTools;
 import com.customized.tools.cli.InputConsole;
+import com.customized.tools.model.Entity;
 import com.customized.tools.model.Monitor;
 
-public class FileChangeMonitor implements ITool {
+public class FileChangeMonitor extends AbstractTools {
 	
 	private static final Logger logger = Logger.getLogger(FileChangeMonitor.class);
-	
-	private InputConsole console;
-	
+		
 	private Monitor fileChangeMonitor;
 
 	public String getPersistFile() {
 		return System.getProperty("cst.out.dir") + File.separator + fileChangeMonitor.getResultFile();
 	}
 
-	public FileChangeMonitor(Monitor fileChangeMonitor, InputConsole console) {
-		
-		this.fileChangeMonitor = fileChangeMonitor;
-		this.console = console ;
+	public FileChangeMonitor(Entity entity,  InputConsole console) {
+		super(entity, console);
 	}
 
 	public void execute() {
+		
+		fileChangeMonitor = (Monitor) entity;
 		
 		logger.info("FileChangeMonitor Start");
 		

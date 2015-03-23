@@ -4,26 +4,26 @@ import java.io.File;
 
 import org.apache.log4j.Logger;
 
-import com.customized.tools.ITool;
+import com.customized.tools.AbstractTools;
 import com.customized.tools.cli.InputConsole;
 import com.customized.tools.gcviewer.GCViewerException;
 import com.customized.tools.model.Entity;
 import com.customized.tools.model.GCViewerEntity;
 import com.tagtraum.perf.gcviewer.GCViewer;
 
-public class GCViewerWrapper implements ITool {
+public class GCViewerWrapper extends AbstractTools {
 	
 	private static final Logger logger = Logger.getLogger(GCViewerWrapper.class);
 	
-	private InputConsole console;
 	private GCViewerEntity gcViwer;
 
-	public GCViewerWrapper(InputConsole console, Entity entity) {
-		this.console = console ;
-		this.gcViwer = (GCViewerEntity) entity;
+	public GCViewerWrapper(Entity entity, InputConsole console) {
+		super(entity, console);
 	}
-
+		
 	public void execute() {
+		
+		gcViwer = (GCViewerEntity) entity;
 		
 		logger.info("GCViewWrapper start GCViewer");
 		

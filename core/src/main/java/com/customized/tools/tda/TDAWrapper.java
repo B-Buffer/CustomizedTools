@@ -2,28 +2,26 @@ package com.customized.tools.tda;
 
 import org.apache.log4j.Logger;
 
-import com.customized.tools.ITool;
+import com.customized.tools.AbstractTools;
 import com.customized.tools.cli.InputConsole;
 import com.customized.tools.model.Entity;
 import com.customized.tools.model.TDAEntity;
 import com.pironet.tda.TDA;
 
-public class TDAWrapper implements ITool {
+public class TDAWrapper extends AbstractTools {
 	
 	private static final Logger logger = Logger.getLogger(TDAWrapper.class);
-	
-	private InputConsole console;
-	
+		
 	private TDAEntity tda;
 	
-	
-	public TDAWrapper(InputConsole console, Entity entity) {
-		this.console = console;
-		this.tda = (TDAEntity) entity;
+	public TDAWrapper(Entity entity, InputConsole console) {
+		super(entity, console);
 	}
 
 	@Override
 	public void execute() {
+		
+		tda = (TDAEntity) entity;
 		
 		logger.info("TDAWrapper start TDA");
 		

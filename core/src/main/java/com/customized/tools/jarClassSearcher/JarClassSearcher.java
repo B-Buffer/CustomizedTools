@@ -12,9 +12,10 @@ import java.util.jar.JarFile;
 
 import org.apache.log4j.Logger;
 
-import com.customized.tools.ITool;
+import com.customized.tools.AbstractTools;
 import com.customized.tools.cli.InputConsole;
 import com.customized.tools.model.ClassSearcher;
+import com.customized.tools.model.Entity;
 
 
 /**
@@ -23,21 +24,19 @@ import com.customized.tools.model.ClassSearcher;
  * @author kylin
  *
  */
-public class JarClassSearcher implements ITool {
+public class JarClassSearcher extends AbstractTools {
 
 	private static final Logger logger = Logger.getLogger(JarClassSearcher.class);
 	
 	private ClassSearcher jarClassSearcher;
 	
-	private InputConsole console;
-	
-	public JarClassSearcher(ClassSearcher jarClassSearcher, InputConsole console) {
-
-		this.jarClassSearcher = jarClassSearcher ;
-		this.console = console ;
+	public JarClassSearcher(Entity entity, InputConsole console) {
+		super(entity, console);
 	}
 
 	public void execute() {
+		
+		jarClassSearcher = (ClassSearcher) entity;
 		
 		logger.info("JarClassSearcher Start");
 		

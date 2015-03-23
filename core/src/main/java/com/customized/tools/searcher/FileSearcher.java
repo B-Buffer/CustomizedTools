@@ -5,25 +5,24 @@ import java.util.List;
 
 import org.apache.log4j.Logger;
 
-import com.customized.tools.ITool;
+import com.customized.tools.AbstractTools;
 import com.customized.tools.cli.InputConsole;
+import com.customized.tools.model.Entity;
 import com.customized.tools.model.Searcher;
 
-public class FileSearcher implements ITool {
+public class FileSearcher extends AbstractTools {
 	
 	private final static Logger logger = Logger.getLogger(FileSearcher.class);
-
-	private InputConsole console;
 	
 	private Searcher fileSearcher ;
 	
-	public FileSearcher(Searcher fileSearcher, InputConsole console) {
-		
-		this.fileSearcher = fileSearcher ;
-		this.console = console ;
+	public FileSearcher(Entity entity, InputConsole console) {
+		super(entity, console);
 	}
 
 	public void execute() {
+		
+		fileSearcher = (Searcher) entity;
 		
 		logger.info("FileSearcher Start");
 		

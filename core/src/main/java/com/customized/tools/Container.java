@@ -9,18 +9,13 @@ import java.util.Set;
 
 import org.apache.log4j.Logger;
 
+import com.customized.tools.cli.InputConsole;
 import com.customized.tools.cli.TreeInputConsole;
 import com.customized.tools.cli.TreeNode;
-import com.customized.tools.cli.WizardConsole;
 import com.customized.tools.common.Configuration;
-import com.customized.tools.dbtester.DBConnectionTester;
-import com.customized.tools.filechangemonitor.FileChangeMonitor;
-import com.customized.tools.gcviewer.GCViewerWrapper;
-import com.customized.tools.jarClassSearcher.JarClassSearcher;
+import com.customized.tools.model.Entity;
 import com.customized.tools.model.ToolsSubsystem;
 import com.customized.tools.model.version.Version;
-import com.customized.tools.searcher.FileSearcher;
-import com.customized.tools.tda.TDAWrapper;
 
 
 public class Container extends TreeInputConsole implements LifeCycle {
@@ -172,118 +167,63 @@ public class Container extends TreeInputConsole implements LifeCycle {
 	static final String dbConnectionTester = "dbConnectionTester";
 	static final String tda = "TDA";
 	static final String GCViewer = "GCViewer";
-
-	Map<String, Object> cache = new HashMap<String, Object>();
+	
+	Map<String, AbstractTools> objCache = new HashMap<>();
 	
 	protected void handleOther(String pointer) {
 		
 		if(map.keySet().contains(pointer)) {
 			
-			Object obj = cache.get(map.get(pointer));
+			AbstractTools tool = null;
+
 			
-			if(map.get(pointer).equals(jarClassSearcher)){
-				startJarClassSearcher(obj);
-			} else if(map.get(pointer).equals(fileSearcher)){
-				startFileSearcher(obj);
-			} else if(map.get(pointer).equals(fileChangeMonitor)){
-				startFileChangeMonitor(obj);
-			} else if(map.get(pointer).equals(dbConnectionTester)){
-				startDbConnectionTester(obj);
-			}  else if(map.get(pointer).equals(tda)){
-				startTDA(obj);
-			} else if(map.get(pointer).equals(GCViewer)){
-				startGCViewer(obj);
-			} 
+			switch(map.get(pointer)){
+			case jarClassSearcher:
+				tool = initTools(configuration.getJarClassSearcher(), "com.customized.tools.jarClassSearcher.JarClassSearcher", jarClassSearcher);
+				break;
+			case fileSearcher:
+				tool = initTools(configuration.getFileSearcher(), "com.customized.tools.searcher.FileSearcher", fileSearcher);
+				break;
+			case fileChangeMonitor:
+				tool = initTools(configuration.getFileChangeMonitor(), "com.customized.tools.filechangemonitor.FileChangeMonitor", fileChangeMonitor);
+				break;
+			case dbConnectionTester:
+				tool = initTools(configuration.getDbTester(), "com.customized.tools.dbtester.DBConnectionTester", dbConnectionTester);
+				break;
+			case tda:
+				tool = initTools(configuration.getTda(), "com.customized.tools.tda.TDAWrapper", tda);
+				break;
+			case GCViewer:
+				tool = initTools(configuration.getGcViewer(), "com.customized.tools.gcviewer.GCViewerWrapper", GCViewer);
+				break;
+			default:
+				break;
+			}
+			
+			tool.execute();
 		} else {
 			handleHELP(pointer);
 		}
 		
-//		handleHELP(pointer);
 	}
 
-	private void startTDA(Object obj) {
+	private AbstractTools initTools(Entity entity, String className, String key) {
 		
-		TDAWrapper tool = null;
+		AbstractTools tool = objCache.get(key);
 		
-		if(null == obj){
-			tool = new TDAWrapper(this, configuration.getTda());
-			cache.put(tda, tool);
-		} else {
-			tool = (TDAWrapper) obj;
+		if(null != tool){
+			return tool;
 		}
 		
-		tool.execute();
-	}
-
-	private void startGCViewer(Object obj) {
-
-		GCViewerWrapper tool = null ;
-		
-		if(null == obj) {
-			tool = new GCViewerWrapper(this, configuration.getGcViewer());
-			cache.put(GCViewer, tool);
-		} else {
-			tool = (GCViewerWrapper) obj ;
+		try {
+			Class<?> classDefinition = this.getClass().getClassLoader().loadClass(className);
+			tool = (AbstractTools) classDefinition.getConstructor(new Class[]{Entity.class, InputConsole.class}).newInstance(new Object[]{entity, this});
+			objCache.put(key, tool);
+			return tool;
+		} catch (Exception e) {
+			throw new ToolsStartException("Init tools failed", e);
 		}
-		
-		tool.execute();
 	}
 
-
-	private void startDbConnectionTester(Object obj) {
-
-		DBConnectionTester tool = null ;
-		
-		if(null == obj) {
-			tool = new DBConnectionTester(configuration.getDbTester(), new WizardConsole());
-			cache.put(dbConnectionTester, tool);
-		} else {
-			tool = (DBConnectionTester) obj ;
-		}
-		
-		tool.execute();
-	}
-
-	private void startFileChangeMonitor(Object obj) {
-		
-		FileChangeMonitor tool = null;
-		
-		if(null == obj) {
-			tool = new FileChangeMonitor(configuration.getFileChangeMonitor(), this);
-			cache.put(fileChangeMonitor, tool);
-		} else {
-			tool = (FileChangeMonitor) obj ;
-		}
-		
-		tool.execute();
-	}
-
-	private void startFileSearcher(Object obj) {
-		
-		FileSearcher tool = null;
-		
-		if(null == obj) {
-			tool = new FileSearcher(configuration.getFileSearcher(), this);
-			cache.put(fileSearcher, tool);
-		} else {
-			tool = (FileSearcher) obj;
-		}
-		
-		tool.execute();
-	}
-
-	private void startJarClassSearcher(Object obj) {
-		
-		JarClassSearcher tool = null;
-		
-		if(null == obj) {
-			tool = new JarClassSearcher(configuration.getJarClassSearcher(), this);
-			cache.put(jarClassSearcher, tool);
-		}  else {
-			tool = (JarClassSearcher) obj ;
-		}
-		
-		tool.execute();
-	}
 
 }
