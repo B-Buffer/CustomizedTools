@@ -30,7 +30,7 @@ public class TDAWrapper implements ITool {
 		console.prompt("TDAWrapper start TDA");
 		
 		try {
-			if(console.readFromCli("TDA")) {
+			if(console.readNotFromCli("TDA")) {
 				String[] args = new String[1];
 				args[0] = console.readFilePath("Input thread dump file path", tda.getPath(), true);
 				TDA.main(args);

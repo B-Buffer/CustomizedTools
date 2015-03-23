@@ -30,7 +30,7 @@ public class GCViewerWrapper implements ITool {
 		console.prompt("GCViewWrapper start GCViewer");
 			
 		try {
-			if(console.readFromCli("GCViewer")) {
+			if(console.readNotFromCli("GCViewer")) {
 				String[] args = new String[2];
 				args[0] = console.readFilePath("Input gc log file path", gcViwer.getPath(), true);
 				args[1] = System.getProperty("cst.out.dir") + File.separator + console.readString("Input result save file", gcViwer.getName(), false);

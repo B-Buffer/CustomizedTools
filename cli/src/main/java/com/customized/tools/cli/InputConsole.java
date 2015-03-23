@@ -34,6 +34,23 @@ public class InputConsole extends Console {
 		}
 	}
 	
+	public boolean readNotFromCli(String prompt) {
+		
+		String msg = "Run " + prompt + " From Command Line\n" +
+				 "  [1]. Yes\n" +
+			     "  [2]. No\n" +
+				 "Default is [2]";
+		int a = '1';
+		int b = '2';
+		int res = readWithDef(msg, a, a, b);
+		
+		if(res == b) {
+			return true ;
+		} else {
+			return false ;
+		}
+	}
+	
 	public boolean isRemoving(String note) {
 		
 		String msg = "Remove " + note + " ?\n" +
