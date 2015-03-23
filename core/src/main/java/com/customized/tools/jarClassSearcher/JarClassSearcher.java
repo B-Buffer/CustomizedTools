@@ -66,6 +66,8 @@ public class JarClassSearcher implements ITool {
 //			throw ex;
 		}
 	}
+	
+
 
 	private void printToConsole(List<String> result) {
 
@@ -82,7 +84,7 @@ public class JarClassSearcher implements ITool {
 		}
 	}
 
-	private void JarFileCollection(File jarDirs, Set<JarFile> jarFileSet) throws IOException {
+	protected void JarFileCollection(File jarDirs, Set<JarFile> jarFileSet) throws IOException {
 		
 		if (!jarDirs.isDirectory()) {
 			throw new JarClassSearcherException("Incorrect directory name has passed: " + jarDirs.getAbsolutePath());
@@ -91,7 +93,7 @@ public class JarClassSearcher implements ITool {
 		for (File file : jarDirs.listFiles()) {
 			if (file.isDirectory()) {
 				JarFileCollection(file, jarFileSet);
-			} else if (file.getName().endsWith(".jar")) {
+			} else if (file.getName().endsWith(".jar") || file.getName().endsWith(".war")) {
 				JarFile jarFile;
 				try {
 					jarFile = new JarFile(file);
@@ -106,24 +108,30 @@ public class JarClassSearcher implements ITool {
 		}
 	}
 
-	private List<String> getResultJars(Set<JarFile> jarFileSet, String className) throws IOException {
+	protected List<String> getResultJars(Set<JarFile> jarFileSet, String className) throws IOException {
 		
 		List<String> results = new ArrayList<String>();
 		className = buildClassName(className);
 		for (JarFile jarFile : jarFileSet) {
-			Enumeration<JarEntry> entrys = jarFile.entries();
-			while (entrys.hasMoreElements()) {
-				JarEntry jar = entrys.nextElement();
-				if (jar.getName().endsWith(className)) {
-					results.add(jarFile.getName());
-				}
-			}
+			traverseJarFile(results, jarFile, className);
 			jarFile.close();
 		}
 		return results;
 	}
 
-	private String buildClassName(String className) {
+	private void traverseJarFile(List<String> results, JarFile jarFile, String className) {
+		Enumeration<JarEntry> entrys = jarFile.entries();
+		while (entrys.hasMoreElements()) {
+			JarEntry jar = entrys.nextElement();
+			if (jar.getName().endsWith(className)) {
+				results.add(jarFile.getName() + " $ " + jar.getName());
+			} else if(jar.getName().endsWith(".jar")) {
+				//TODO
+			}
+		}
+	}
+
+	protected String buildClassName(String className) {
 		if (className.endsWith(".java")) {
 			className = className.substring(0, className.length() - 5);
 		} else if (className.endsWith(".class") || className.endsWith(".Class")) {
