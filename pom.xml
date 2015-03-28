@@ -13,7 +13,9 @@
     <properties>
 	<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
 		
-	<version.jboss-modules>1.4.1.Final</version.jboss-modules>	
+	<version.jboss-modules>1.4.1.Final</version.jboss-modules>
+	<version.jboss.cli>7.4.0.Final-redhat-4</version.jboss.cli>	
+
 	<version.gcviewer>1.32-rc-1</version.gcviewer>
 	<version.log4j>1.2.16</version.log4j>
 	<version.jaxb.api>2.2.6</version.jaxb.api>
@@ -103,6 +105,12 @@
             <artifactId>jboss-modules</artifactId>
             <version>${version.jboss-modules}</version>
         </dependency>
+	<dependency>
+            <groupId>org.jboss.as</groupId>
+            <artifactId>jboss-as-cli</artifactId>
+            <version>${version.jboss.cli}</version>
+        </dependency>
+
     	<dependency>
     	    <groupId>com.mgmtp.gcviewer</groupId>
     	    <artifactId>gcviewer</artifactId>

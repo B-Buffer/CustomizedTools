@@ -8,7 +8,7 @@ An intelligent troubleshooting tool.
 Install Maven 3.x and Java 1.7 or higher, enter the following commands:
 
 ~~~
-$ git@github.com:kylinsoong/CustomizedTools.git
+$ git clone git@github.com:kylinsoong/CustomizedTools.git
 $ cd CustomizedTools
 $ mvn clean install -P release
 ~~~
