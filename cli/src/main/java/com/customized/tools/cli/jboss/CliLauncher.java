@@ -16,6 +16,8 @@ public class CliLauncher {
 		int exitCode = 0;
         CommandContext cmdCtx = null;
         
+//        args = new String[]{"--version"};
+        
         try {
 			List<String> commands = null;
 			boolean version = false;

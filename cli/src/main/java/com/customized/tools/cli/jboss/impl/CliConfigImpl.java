@@ -7,10 +7,16 @@ import org.jboss.as.cli.SSLConfig;
 
 public class CliConfigImpl implements CliConfig {
 	
+	private boolean validateOperationRequests;
+	
+	private boolean resolveParameterValues;
+	
 	private boolean historyEnabled;
     private String historyFileName;
     private String historyFileDir;
     private int historyMaxSize;
+    
+    private boolean silent;
 	
 	static CliConfig load(final CommandContext ctx) throws CliInitializationException {
 		//TODO-- add init from parse config file
@@ -18,10 +24,17 @@ public class CliConfigImpl implements CliConfig {
 	}
 	
 	private CliConfigImpl() {
+		
+		validateOperationRequests = true;
+		
+		resolveParameterValues = false;
+		
 		historyEnabled = true;
         historyFileName = ".cst-cli-history";
         historyFileDir = System.getProperty("user.home");
         historyMaxSize = 500;
+        
+        silent = false;
 	}
 
 	@Override
@@ -66,17 +79,17 @@ public class CliConfigImpl implements CliConfig {
 
 	@Override
 	public boolean isValidateOperationRequests() {
-		return false;
+		return validateOperationRequests;
 	}
 
 	@Override
 	public boolean isResolveParameterValues() {
-		return false;
+		return resolveParameterValues;
 	}
 
 	@Override
 	public boolean isSilent() {
-		return false;
+		return silent;
 	}
 
 }

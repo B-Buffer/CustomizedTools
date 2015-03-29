@@ -24,9 +24,10 @@ import org.jboss.as.cli.CommandLineException;
 import org.jboss.as.cli.CommandRegistry;
 import org.jboss.as.cli.batch.BatchManager;
 import org.jboss.as.cli.batch.BatchedCommand;
+import org.jboss.as.cli.handlers.ClearScreenHandler;
 import org.jboss.as.cli.handlers.HelpHandler;
 import org.jboss.as.cli.handlers.HistoryHandler;
-import org.jboss.as.cli.handlers.LsHandler;
+import org.jboss.as.cli.handlers.PrintWorkingNodeHandler;
 import org.jboss.as.cli.impl.Console;
 import org.jboss.as.cli.operation.CommandLineParser;
 import org.jboss.as.cli.operation.NodePathFormatter;
@@ -36,17 +37,21 @@ import org.jboss.as.cli.operation.ParsedCommandLine;
 import org.jboss.as.cli.operation.impl.DefaultCallbackHandler;
 import org.jboss.as.cli.operation.impl.DefaultOperationCandidatesProvider;
 import org.jboss.as.cli.operation.impl.DefaultOperationRequestAddress;
+import org.jboss.as.cli.operation.impl.DefaultPrefixFormatter;
 import org.jboss.as.cli.parsing.operation.OperationFormat;
 import org.jboss.as.controller.client.ModelControllerClient;
 import org.jboss.dmr.ModelNode;
 import org.jboss.logging.Logger;
 
+import com.customized.tools.cli.jboss.handlers.LsHandler;
 import com.customized.tools.cli.jboss.handlers.VersionHandler;
 import com.customized.tools.model.version.Version;
 
 public class CSTCommandContextImpl implements CommandContext {
 	
 	private static final Logger log = Logger.getLogger(CommandContext.class);
+	
+	private static final String CLI_SERVICE_IMPL = "com.customized.tools.cli.jboss.CLIServiceImpl";
 
     /** the cli configuration */
     private final CliConfig config;
@@ -59,13 +64,19 @@ public class CSTCommandContextImpl implements CommandContext {
     
     private DefaultCallbackHandler parsedCmd = new DefaultCallbackHandler(true);
     
+    private ModelControllerClient client;
+    
     private Map<String, Object> map = new HashMap<String, Object>();
     
     private final OperationRequestAddress prefix = new DefaultOperationRequestAddress();
     
+    private final NodePathFormatter prefixFormatter = new DefaultPrefixFormatter();
+    
     private BufferedWriter outputTarget;
     
     private int exitCode;
+    
+    private boolean silent;
     
     private final OperationCandidatesProvider operationCandidatesProvider;
     
@@ -94,6 +105,12 @@ public class CSTCommandContextImpl implements CommandContext {
 			operationCandidatesProvider = null;
 		}
 		
+		try {
+			connectController(null, -1);
+		} catch (CommandLineException e) {
+			throw new CliInitializationException("Init Controller Faild", e);
+		}
+		
 	}
 
 	private void initBasicConsole(InputStream consoleInput, OutputStream consoleOutput) throws CliInitializationException {
@@ -119,12 +136,12 @@ public class CSTCommandContextImpl implements CommandContext {
 
 	private void initCommands() {
 //		cmdRegistry.registerHandler(new PrefixHandler(), "cd", "cn");
-//        cmdRegistry.registerHandler(new ClearScreenHandler(), "clear", "cls");
+        cmdRegistry.registerHandler(new ClearScreenHandler(), "clear", "cls");
 //        cmdRegistry.registerHandler(new CommandCommandHandler(cmdRegistry), "command");
         cmdRegistry.registerHandler(new HelpHandler(cmdRegistry), "help", "h");
         cmdRegistry.registerHandler(new HistoryHandler(), "history");
         cmdRegistry.registerHandler(new LsHandler(), "ls");
-//        cmdRegistry.registerHandler(new PrintWorkingNodeHandler(), "pwd", "pwn");
+        cmdRegistry.registerHandler(new PrintWorkingNodeHandler(), "pwd", "pwn");
 //        cmdRegistry.registerHandler(new QuitHandler(), "quit", "q", "exit");
 //        cmdRegistry.registerHandler(new ReadAttributeHandler(this), "read-attribute");
 //        cmdRegistry.registerHandler(new ReadOperationHandler(this), "read-operation");
@@ -144,20 +161,57 @@ public class CSTCommandContextImpl implements CommandContext {
 
 	@Override
 	public ParsedCommandLine getParsedCommandLine() {
-		// TODO Auto-generated method stub
-		return null;
+		return parsedCmd;
 	}
 
 	@Override
 	public void printLine(String message) {
-		// TODO Auto-generated method stub
 
+        if (outputTarget != null) {
+            try {
+                outputTarget.append(message);
+                outputTarget.newLine();
+                outputTarget.flush();
+            } catch (IOException e) {
+                System.err.println("Failed to print '" + message + "' to the output target: " + e.getLocalizedMessage());
+            }
+            return;
+        }
+        
+        if(!silent) {
+            if (console != null) {
+                console.print(message);
+                console.printNewLine();
+            } else { // non-interactive mode
+                System.out.println(message);
+            }
+        }
 	}
 
 	@Override
 	public void printColumns(Collection<String> col) {
-		// TODO Auto-generated method stub
+		
+		if (outputTarget != null) {
+            try {
+                for (String item : col) {
+                    outputTarget.append(item);
+                    outputTarget.newLine();
+                }
+            } catch (IOException e) {
+                System.err.println("Failed to print columns '" + col + "' to the console: " + e.getLocalizedMessage());
+            }
+            return;
+        }
 
+        if(!silent) {
+            if (console != null) {
+                console.printColumns(col);
+            } else { // non interactive mode
+                for (String item : col) {
+                    System.out.println(item);
+                }
+            }
+        }
 	}
 
 	@Override
@@ -196,15 +250,17 @@ public class CSTCommandContextImpl implements CommandContext {
 
 	@Override
 	public ModelControllerClient getModelControllerClient() {
-		// TODO Auto-generated method stub
-		return null;
+		return client;
 	}
 
 	@Override
-	public void connectController(String host, int port)
-			throws CommandLineException {
-		// TODO Auto-generated method stub
+	public void connectController(String host, int port) throws CommandLineException {
 
+		if (this.client != null) {
+            disconnectController();
+        }
+		
+		this.client = new CTSModelControllerClient(CLI_SERVICE_IMPL);
 	}
 
 	@Override
@@ -221,8 +277,7 @@ public class CSTCommandContextImpl implements CommandContext {
 
 	@Override
 	public void disconnectController() {
-		// TODO Auto-generated method stub
-
+		client = null;		
 	}
 
 	@Override
@@ -257,14 +312,12 @@ public class CSTCommandContextImpl implements CommandContext {
 
 	@Override
 	public OperationRequestAddress getCurrentNodePath() {
-		// TODO Auto-generated method stub
-		return null;
+		return prefix;
 	}
 
 	@Override
 	public NodePathFormatter getNodePathFormatter() {
-		// TODO Auto-generated method stub
-		return null;
+		return prefixFormatter;
 	}
 
 	@Override
