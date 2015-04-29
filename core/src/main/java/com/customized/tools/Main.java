@@ -119,8 +119,8 @@ public class Main {
 		
 		logger.info(Version.versionString() + " Start");
 		
-		Container container = new Container(toolsConf);
-		
+		AeshContainer container = new AeshContainer();
+
 		container.doInit();
 		
 		container.doStart();

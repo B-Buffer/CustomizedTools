@@ -11,7 +11,7 @@ import java.sql.Statement;
 import org.apache.log4j.Logger;
 
 import com.customized.tools.AbstractTools;
-import com.customized.tools.cli.WizardConsole;
+import com.customized.tools.cli.InputConsole;
 import com.customized.tools.model.DBTester;
 import com.customized.tools.model.Entity;
 
@@ -25,9 +25,7 @@ public class DBConnectionTester extends AbstractTools {
 	
 	private DBTester dbTester;
 	
-	private WizardConsole console;
-	
-	public DBConnectionTester(Entity entity, WizardConsole console) {
+	public DBConnectionTester(Entity entity, InputConsole console) {
 		super(entity, console);
 	}
 
@@ -42,11 +40,6 @@ public class DBConnectionTester extends AbstractTools {
 		ResultSet rs = null;
 		
 		try {	
-			if(console.readFromCli("DBConnectionTester")) {
-				DBTesterWizard wizard = (DBTesterWizard) console.popWizard(new DBTesterWizard(dbTester));
-				dbTester = wizard.getDBTester();
-			}
-			
 			console.prompt("DBConnectionTester Properties: " +  dbTester);
 						
 			conn = getConnection();

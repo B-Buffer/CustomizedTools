@@ -51,6 +51,11 @@
             <groupId>mysql</groupId>
             <artifactId>mysql-connector-java</artifactId>
         </dependency>
+        
+        <dependency>
+			<groupId>org.jboss.aesh</groupId>
+			<artifactId>aesh</artifactId>
+		</dependency>
 		
 
     </dependencies>

@@ -14,6 +14,7 @@
     	<module name="com.customized.tools.tda" services="import"/>
     	<module name="org.apache.log4j" services="import"/>
     	<module name="com.mgmtp.gcviewer" services="import"/>
+    	<module name="org.jboss.aesh" services="import"/>
     	<module name="com.mysql" services="import"/>
     </dependencies>
 </module>
