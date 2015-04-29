@@ -19,6 +19,10 @@ public class FileSearcher extends AbstractTools {
 	public FileSearcher(Entity entity, InputConsole console) {
 		super(entity, console);
 	}
+	
+	public FileSearcher(InputConsole console, boolean isAesh) {
+		super(null, console, isAesh);
+	}
 
 	public void execute() {
 		
@@ -27,13 +31,15 @@ public class FileSearcher extends AbstractTools {
 		logger.info("FileSearcher Start");
 		
 		try {
-			if(console.readFromCli(fileSearcher.getId())) {
-				String folder = console.readFolderPath("Input FileSearcher folder path", fileSearcher.getFolderPath(), true);
-				fileSearcher.setFolderPath(folder);
-				String fileName = console.readString("Input FileSearcher file name", fileSearcher.getFileName(), false);
-				fileSearcher.setFileName(fileName);
+			if(!isAesh) {
+				if(console.readFromCli(fileSearcher.getId())) {
+					String folder = console.readFolderPath("Input FileSearcher folder path", fileSearcher.getFolderPath(), true);
+					fileSearcher.setFolderPath(folder);
+					String fileName = console.readString("Input FileSearcher file name", fileSearcher.getFileName(), false);
+					fileSearcher.setFileName(fileName);
+				}
 			}
-			
+
 			String searchName = fileSearcher.getFileName();
 			String searchFolder = fileSearcher.getFolderPath();
 			

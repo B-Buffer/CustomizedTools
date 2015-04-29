@@ -17,6 +17,10 @@ public class TDAWrapper extends AbstractTools {
 	public TDAWrapper(Entity entity, InputConsole console) {
 		super(entity, console);
 	}
+	
+	public TDAWrapper(InputConsole console, boolean isAesh) {
+		super(null, console, isAesh);
+	}
 
 	@Override
 	public void execute() {
@@ -28,7 +32,11 @@ public class TDAWrapper extends AbstractTools {
 		console.prompt("TDAWrapper start TDA");
 		
 		try {
-			if(console.readNotFromCli("TDA")) {
+			if(isAesh) {
+				String[] args = new String[1];
+				args[0] = tda.getPath();
+				TDA.main(args);
+			} else if(console.readNotFromCli("TDA")) {
 				String[] args = new String[1];
 				args[0] = console.readFilePath("Input thread dump file path", tda.getPath(), true);
 				TDA.main(args);

@@ -15,10 +15,6 @@
     <description>Customized Tools Command Line</description>
     
     <dependencies>
-    	<dependency>
-            <groupId>org.jboss.as</groupId>
-            <artifactId>jboss-as-cli</artifactId>
-        </dependency>
         <dependency>
            <groupId>com.customized.tools</groupId>
            <artifactId>cst-model</artifactId>

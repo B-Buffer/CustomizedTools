@@ -20,6 +20,10 @@ public class GCViewerWrapper extends AbstractTools {
 	public GCViewerWrapper(Entity entity, InputConsole console) {
 		super(entity, console);
 	}
+	
+	public GCViewerWrapper(InputConsole console, boolean isAesh) {
+		super(null, console, isAesh);
+	}
 		
 	public void execute() {
 		
@@ -30,7 +34,13 @@ public class GCViewerWrapper extends AbstractTools {
 		console.prompt("GCViewWrapper start GCViewer");
 			
 		try {
-			if(console.readNotFromCli("GCViewer")) {
+			if(isAesh){
+				String[] args = new String[2];
+				args[0] = gcViwer.getPath();
+				args[1] = System.getProperty("cst.out.dir") == null ? gcViwer.getName() : System.getProperty("cst.out.dir") + File.separator + gcViwer.getName();
+				GCViewer.main(args);
+				console.prompt("Please check result from " + args[1]);
+			}else if(console.readNotFromCli("GCViewer")) {
 				String[] args = new String[2];
 				args[0] = console.readFilePath("Input gc log file path", gcViwer.getPath(), true);
 				args[1] = System.getProperty("cst.out.dir") + File.separator + console.readString("Input result save file", gcViwer.getName(), false);

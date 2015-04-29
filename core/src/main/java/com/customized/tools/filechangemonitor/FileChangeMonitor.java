@@ -18,11 +18,19 @@ public class FileChangeMonitor extends AbstractTools {
 	private Monitor fileChangeMonitor;
 
 	public String getPersistFile() {
-		return System.getProperty("cst.out.dir") + File.separator + fileChangeMonitor.getResultFile();
+		if(System.getProperty("cst.out.dir") == null) {
+			return fileChangeMonitor.getResultFile();
+		}else {
+			return System.getProperty("cst.out.dir") + File.separator + fileChangeMonitor.getResultFile();
+		}
 	}
 
 	public FileChangeMonitor(Entity entity,  InputConsole console) {
 		super(entity, console);
+	}
+	
+	public FileChangeMonitor(InputConsole console, boolean isAesh) {
+		super(null, console, isAesh);
 	}
 
 	public void execute() {
@@ -32,11 +40,13 @@ public class FileChangeMonitor extends AbstractTools {
 		logger.info("FileChangeMonitor Start");
 		
 		try {
-			if(console.readFromCli(fileChangeMonitor.getId())) {
-				String folder = console.readFolderPath("Input FileChangeMonitor folder path", fileChangeMonitor.getFolderPath(), true);
-				fileChangeMonitor.setFolderPath(folder);
-				String file = console.readString("Input FileChangeMonitor result file name", fileChangeMonitor.getResultFile(), false);
-				fileChangeMonitor.setResultFile(file);
+			if(!isAesh){
+				if(console.readFromCli(fileChangeMonitor.getId())) {
+					String folder = console.readFolderPath("Input FileChangeMonitor folder path", fileChangeMonitor.getFolderPath(), true);
+					fileChangeMonitor.setFolderPath(folder);
+					String file = console.readString("Input FileChangeMonitor result file name", fileChangeMonitor.getResultFile(), false);
+					fileChangeMonitor.setResultFile(file);
+				}
 			}
 			
 			final String monitorFolder = fileChangeMonitor.getFolderPath();

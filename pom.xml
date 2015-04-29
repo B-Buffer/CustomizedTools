@@ -23,6 +23,7 @@
 	<version.org.mockito>1.9.5</version.org.mockito>
 	<version.javahelp>2.0.05</version.javahelp>
 	<version.mysql>5.1.30</version.mysql>
+	<version.aesh>0.60</version.aesh>
 
 	<version.jar.plugin>2.2</version.jar.plugin>
 	<version.assembly.plugin>2.4</version.assembly.plugin>
@@ -141,6 +142,11 @@
             <artifactId>cst-tda</artifactId>
             <version>${project.version}</version>
         </dependency>
+	<dependency>
+	    <groupId>org.jboss.aesh</groupId>
+	    <artifactId>aesh</artifactId>
+	    <version>${version.aesh}</version>
+	</dependency>
     	<dependency>
 	    <groupId>javax.xml.bind</groupId>
 	    <artifactId>jaxb-api</artifactId>

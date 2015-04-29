@@ -85,13 +85,6 @@ public class Container extends TreeInputConsole implements LifeCycle {
 		setStatus(Status.DESTORY);
 	}
 	
-	enum Status {
-		STOP,
-		INIT,
-		START,
-		DESTORY,
-	}
-	
 	Map<String, String> map = new HashMap<String, String>();
 
 	protected void handleLS(String pointer) {

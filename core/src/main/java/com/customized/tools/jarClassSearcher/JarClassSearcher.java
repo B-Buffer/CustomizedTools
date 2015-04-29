@@ -33,6 +33,10 @@ public class JarClassSearcher extends AbstractTools {
 	public JarClassSearcher(Entity entity, InputConsole console) {
 		super(entity, console);
 	}
+	
+	public JarClassSearcher(InputConsole console, boolean isAesh) {
+		super(null, console, isAesh);
+	}
 
 	public void execute() {
 		
@@ -41,11 +45,13 @@ public class JarClassSearcher extends AbstractTools {
 		logger.info("JarClassSearcher Start");
 		
 		try {
-			if(console.readFromCli(jarClassSearcher.getId())) {
-				String folder = console.readFolderPath("Input jarClassSearcher folder path", jarClassSearcher.getFolderPath(), true);
-				jarClassSearcher.setFolderPath(folder);
-				String className = console.readString("Input jarClassSearcher class name", jarClassSearcher.getClassName(), false);
-				jarClassSearcher.setClassName(className);
+			if(!isAesh){
+				if(console.readFromCli(jarClassSearcher.getId())) {
+					String folder = console.readFolderPath("Input jarClassSearcher folder path", jarClassSearcher.getFolderPath(), true);
+					jarClassSearcher.setFolderPath(folder);
+					String className = console.readString("Input jarClassSearcher class name", jarClassSearcher.getClassName(), false);
+					jarClassSearcher.setClassName(className);
+				}
 			}
 			
 			String prompt = "Searching '" + jarClassSearcher.getClassName() + "' Under Directory " + jarClassSearcher.getFolderPath() ;
@@ -64,6 +70,7 @@ public class JarClassSearcher extends AbstractTools {
 			logger.error("", ex);
 //			throw ex;
 		}
+
 	}
 	
 
