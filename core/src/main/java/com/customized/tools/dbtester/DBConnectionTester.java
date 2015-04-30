@@ -2,8 +2,6 @@ package com.customized.tools.dbtester;
 
 import java.sql.Connection;
 import java.sql.DatabaseMetaData;
-import java.sql.Driver;
-import java.sql.DriverManager;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
@@ -42,7 +40,7 @@ public class DBConnectionTester extends AbstractTools {
 		try {	
 			console.prompt("DBConnectionTester Properties: " +  dbTester);
 						
-			conn = getConnection();
+			conn = JDBCUtil.getConnection(dbTester.getDriver(), dbTester.getUrl(), dbTester.getUsername(), dbTester.getPassword());
 			
 			promptConnectionResult(conn);
 			
@@ -91,19 +89,6 @@ public class DBConnectionTester extends AbstractTools {
 		
 		logger.info(sb.toString());
 		
-	}
-
-	private Connection getConnection() throws Exception {
-
-		try {
-			Class<?> c = Class.forName(dbTester.getDriver());
-			Driver d = (Driver) c.newInstance();
-			DriverManager.registerDriver(d);
-			Connection conn = DriverManager.getConnection(dbTester.getUrl(), dbTester.getUsername(), dbTester.getPassword());
-			return conn;
-		} catch (Exception e) {
-			throw e ;
-		}
 	}
 	
 }
