@@ -24,6 +24,7 @@
 	<version.javahelp>2.0.05</version.javahelp>
 	<version.mysql>5.1.30</version.mysql>
 	<version.aesh>0.60</version.aesh>
+	<version.itextpdf>5.5.5</version.itextpdf>
 
 	<version.jar.plugin>2.2</version.jar.plugin>
 	<version.assembly.plugin>2.4</version.assembly.plugin>
@@ -173,6 +174,11 @@
 	    <artifactId>mysql-connector-java</artifactId>
 	    <version>${version.mysql}</version>
         </dependency>
+	<dependency>
+	    <groupId>com.itextpdf</groupId>
+	    <artifactId>itextpdf</artifactId>
+	    <version>${version.itextpdf}</version>
+	</dependency>
 
 
 
