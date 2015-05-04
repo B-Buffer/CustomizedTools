@@ -21,6 +21,7 @@ import com.customized.tools.commands.ExitCommand;
 import com.customized.tools.commands.FileChangeMonitorCommand;
 import com.customized.tools.commands.FileSearcherCommand;
 import com.customized.tools.commands.GCViewerWrapperCommand;
+import com.customized.tools.commands.JVMConfigCommand;
 import com.customized.tools.commands.JarClassSearcherCommand;
 import com.customized.tools.commands.TDAWrapperCommand;
 
@@ -74,6 +75,7 @@ public class AeshContainer implements LifeCycle {
 				.command(GCViewerWrapperCommand.class)
 				.command(TDAWrapperCommand.class)
 				.command(DBTesterCommand.class)
+				.command(JVMConfigCommand.class)
 				.create();
 		
 		AeshConsole aeshConsole = new AeshConsoleBuilder()

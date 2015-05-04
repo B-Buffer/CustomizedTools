@@ -11,6 +11,64 @@ import org.jboss.aesh.console.command.validator.ValidatorInvocation;
 
 public class Validator {
 	
+	public static class BooleanValidator implements OptionValidator<ValidatorInvocation<Boolean,?>> {
+
+		@Override
+		public void validate(ValidatorInvocation<Boolean, ?> validatorInvocation)throws OptionValidatorException {			
+			validatorInvocation.getValue();
+		}
+		
+	}
+	
+	public static class IntegerValidator implements OptionValidator<ValidatorInvocation<Integer,?>> {
+
+		@Override
+		public void validate(ValidatorInvocation<Integer, ?> validatorInvocation)throws OptionValidatorException {			
+			if(validatorInvocation.getValue() <= 0){
+				throw new OptionValidatorException("Validation failed, " + validatorInvocation.getValue() + " not a larger 0 number.");
+			}
+		}
+		
+	}
+	
+	public static class JVMCollectorValidator implements OptionValidator<ValidatorInvocation<String,?>> {
+		
+		static Set<String> oppSet = new HashSet<>();
+		
+		static {
+			oppSet.add("CMS");
+			oppSet.add("Parallel");
+			oppSet.add("G1");
+		}
+
+		@Override
+		public void validate(ValidatorInvocation<String, ?> validatorInvocation) throws OptionValidatorException {
+			if(!oppSet.contains(validatorInvocation.getValue())){
+				throw new OptionValidatorException("Validation failed, " + validatorInvocation.getValue() + " not a valid Collector, accepted Collectors: " + oppSet);
+			}
+		}
+		
+	}
+	
+	public static class JVMVendorValidator implements OptionValidator<ValidatorInvocation<String,?>> {
+		
+		static Set<String> oppSet = new HashSet<>();
+		
+		static {
+			oppSet.add("Oracle");
+			oppSet.add("OpenJDK");
+			oppSet.add("IBM");
+		}
+
+		@Override
+		public void validate(ValidatorInvocation<String, ?> validatorInvocation) throws OptionValidatorException {
+			if(!oppSet.contains(validatorInvocation.getValue())){
+				throw new OptionValidatorException("Validation failed, " + validatorInvocation.getValue() + " not supported, supported Vendors: " + oppSet);
+			}
+		}
+		
+	}
+	
 	public static class DBTesterOptionValidator implements OptionValidator<ValidatorInvocation<String,?>> {
 		
 		static Set<String> oppSet = new HashSet<>();
