@@ -3,12 +3,25 @@ package com.customized.tools.dbtester;
 import java.util.Stack;
 
 /**
- * A simple parser that separates SQLStatements.
+ * A simple parser that separates SQLStatements. 
  * 
- * @author kylin
+ * A usage example:
+ * <pre>
+ * SQLCommandParser parser = new SQLCommandParser();
+ * 
+ * parser.append("select * from foo; select * from bar \n");
+ * parser.append("select * from zoo;");
+ * 
+ * while(parser.hasNext()){
+ *     String sql = parser.next();
+ *     ...
+ * }
+ * </pre>
+ * 
+ * @author Kylin
  *
  */
-public class SQLStatementParser {
+public class SQLCommandParser {
 	
 	private static final byte NEW_STATEMENT   = 0;
     private static final byte START           = 1;  // statement == start
@@ -75,7 +88,7 @@ public class SQLStatementParser {
     private ParseState _currentState;
     private Stack<ParseState> _stateStack;
     
-    public SQLStatementParser(){
+    public SQLCommandParser(){
     	_currentState = new ParseState();
     	_stateStack = new Stack<>();
     	_removeComments = true;
@@ -150,6 +163,33 @@ public class SQLStatementParser {
     	parsePartialInput();
     	
     	return (_currentState.getState() == POTENTIAL_END_FOUND);
+    }
+    
+    public String next() throws IllegalStateException {
+    	
+    	if (_currentState.getState() != POTENTIAL_END_FOUND) {
+    		throw new IllegalStateException ("next() called without hasNext()");
+    	}
+    	
+    	consumed();
+    	
+    	String command = _currentState.getCommandBuffer().toString();
+    	
+    	if (command.endsWith("/")) {
+    	    command = command.substring(0, command.length()-1);
+    	}
+    	
+    	// remove trailing ';' and whitespaces.
+    	StringBuffer cmdBuf = new StringBuffer(command.trim());
+    	int i = 0;
+    	for (i = cmdBuf.length()-1; i > 0; --i) {
+    	    char c = cmdBuf.charAt(i);
+    	    if (c != ';' && !Character.isWhitespace(c))
+    		break;
+    	}
+    	cmdBuf.setLength(i+1);
+    	
+    	return cmdBuf.toString();
     }
 
     /**

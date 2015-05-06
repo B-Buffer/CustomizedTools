@@ -23,6 +23,7 @@
 	<version.org.mockito>1.9.5</version.org.mockito>
 	<version.javahelp>2.0.05</version.javahelp>
 	<version.mysql>5.1.30</version.mysql>
+	<version.com.h2database>1.4.186</version.com.h2database>
 	<version.aesh>0.60</version.aesh>
 	<version.itextpdf>5.5.5</version.itextpdf>
 
@@ -173,6 +174,11 @@
 	    <groupId>mysql</groupId>
 	    <artifactId>mysql-connector-java</artifactId>
 	    <version>${version.mysql}</version>
+        </dependency>
+	<dependency>
+            <groupId>com.h2database</groupId>
+            <artifactId>h2</artifactId>
+            <version>${version.com.h2database}</version>
         </dependency>
 	<dependency>
 	    <groupId>com.itextpdf</groupId>

@@ -1,10 +1,10 @@
 package com.customized.tools.dbtester;
 
-import com.customized.tools.dbtester.metdata.Metdata;
+import com.customized.tools.dbtester.metdata.Metadata;
 
 
 public interface MetadataProcessor<C> {
 	
-	public void process(Metdata metadata, C connection) throws Exception;
+	public void process(Metadata metadata, C connection) throws Exception;
 
 }

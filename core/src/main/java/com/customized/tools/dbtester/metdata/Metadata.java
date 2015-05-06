@@ -2,7 +2,7 @@ package com.customized.tools.dbtester.metdata;
 
 import java.util.List;
 
-public class Metdata {
+public class Metadata {
 	
 	private List<Table> tables;
 	

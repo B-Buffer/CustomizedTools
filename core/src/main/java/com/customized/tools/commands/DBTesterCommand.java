@@ -1,14 +1,20 @@
 package com.customized.tools.commands;
 
+import java.io.BufferedReader;
 import java.io.IOException;
+import java.io.InputStreamReader;
+import java.io.PrintStream;
 import java.sql.Connection;
 
 import org.jboss.aesh.cl.CommandDefinition;
 import org.jboss.aesh.cl.Option;
 import org.jboss.aesh.console.command.Command;
+import org.jboss.aesh.console.command.CommandOperation;
 import org.jboss.aesh.console.command.CommandResult;
 import org.jboss.aesh.console.command.invocation.CommandInvocation;
+import org.jboss.aesh.terminal.Key;
 
+import com.customized.tools.AeshContainer;
 import com.customized.tools.cli.InputConsole;
 import com.customized.tools.commands.Validator.DBDriverValidator;
 import com.customized.tools.commands.Validator.DBTesterOptionValidator;
@@ -16,7 +22,7 @@ import com.customized.tools.commands.Validator.DBURLValidator;
 import com.customized.tools.dbtester.DBConnectionTester;
 import com.customized.tools.dbtester.JDBCMetdataProcessor;
 import com.customized.tools.dbtester.JDBCUtil;
-import com.customized.tools.dbtester.metdata.Metdata;
+import com.customized.tools.dbtester.metdata.Metadata;
 import com.customized.tools.model.DBTester;
 
 @CommandDefinition(name="dbTester", description = "Test Database Connection, Metadata")
@@ -82,14 +88,37 @@ public class DBTesterCommand implements Command<CommandInvocation> {
 		return CommandResult.SUCCESS;
 	}
 
-	private void sqlplus(CommandInvocation commandInvocation, DBTester entity) {
-		commandInvocation.println("SQLPlus");
+	private void sqlplus(CommandInvocation commandInvocation, DBTester entity) throws InterruptedException {
+//		BufferedReader br = new BufferedReader(new InputStreamReader(commandInvocation.getShell().in().getStdError()));
+	
+//		commandInvocation.print(commandInvocation.getPrompt().getPromptAsString());
+//		StringBuffer sb = new StringBuffer();
+//		while(true){
+//			Key key = commandInvocation.getInput().getInputKey();
+//			sb.append(key);
+//			if(key != Key.ESC && key != Key.END && key != Key.HOME && key != Key.F && key != Key.UP && key != Key.DOWN){
+//				commandInvocation.print(key.getAsChar() + "");
+//			}
+//			
+//			if(key == Key.SEMI_COLON) {
+//				commandInvocation.println("");
+//				break;
+//			}
+//		}
+//		commandInvocation.println(sb.toString());
+//		commandInvocation.println(commandInvocation.getPrompt().getPromptAsString());
+		
+		commandInvocation.println("Start New console");
+		
+		new AeshContainer().doStart();
+		commandInvocation.println("Exit New console");
+
 	}
 
 	private void dbmetadataTest(CommandInvocation commandInvocation, DBTester entity) {
 		try {
 			Connection conn = JDBCUtil.getConnection(entity.getDriver(), entity.getUrl(), entity.getUsername(), entity.getPassword());
-			Metdata metdata = new Metdata();
+			Metadata metdata = new Metadata();
 			JDBCMetdataProcessor processor = new JDBCMetdataProcessor();
 			processor.process(metdata, conn);
 			commandInvocation.println(metdata.getTables().toString());

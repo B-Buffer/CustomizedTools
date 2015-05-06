@@ -22,7 +22,7 @@ import com.customized.tools.dbtester.metdata.Column;
 import com.customized.tools.dbtester.metdata.ForeignKey;
 import com.customized.tools.dbtester.metdata.Column.NullType;
 import com.customized.tools.dbtester.metdata.KeyRecord;
-import com.customized.tools.dbtester.metdata.Metdata;
+import com.customized.tools.dbtester.metdata.Metadata;
 import com.customized.tools.dbtester.metdata.Procedure;
 import com.customized.tools.dbtester.metdata.ProcedureParameter;
 import com.customized.tools.dbtester.metdata.ProcedureParameter.Type;
@@ -77,7 +77,7 @@ public class JDBCMetdataProcessor implements MetadataProcessor<Connection> {
 	private String quoteString;
 
 	@Override
-	public void process(Metdata dataHolder, Connection conn) throws Exception {
+	public void process(Metadata dataHolder, Connection conn) throws Exception {
 		
 		if(JdbcTypeNames == null) {
 			initJdbcTypeNamesMap();

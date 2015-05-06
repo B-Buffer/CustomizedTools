@@ -10,11 +10,18 @@ import java.sql.Statement;
 
 public class JDBCUtil {
 	
-	public static Connection getConnection(String driver, String url, String user, String pass) throws Exception {
+	public static Connection getConnection(String driver, String url, String user, String pass) throws InstantiationException, IllegalAccessException, SQLException, ClassNotFoundException  {
 		Class<?> c = Class.forName(driver);
 		Driver d = (Driver) c.newInstance();
 		DriverManager.registerDriver(d);
 		return DriverManager.getConnection(url, user, pass); 
+	}
+	
+	public static Connection getConnection(String driver, String url) throws SQLException, InstantiationException, IllegalAccessException, ClassNotFoundException {
+		Class<?> c = Class.forName(driver);
+		Driver d = (Driver) c.newInstance();
+		DriverManager.registerDriver(d);
+		return DriverManager.getConnection(url); 
 	}
 
 	public static void close(Connection conn) {

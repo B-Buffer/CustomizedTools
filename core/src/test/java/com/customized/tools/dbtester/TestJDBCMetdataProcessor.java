@@ -5,7 +5,7 @@ import java.sql.Connection;
 import org.junit.Ignore;
 import org.junit.Test;
 
-import com.customized.tools.dbtester.metdata.Metdata;
+import com.customized.tools.dbtester.metdata.Metadata;
 import com.customized.tools.dbtester.metdata.Table;
 
 public class TestJDBCMetdataProcessor {
@@ -23,7 +23,7 @@ public class TestJDBCMetdataProcessor {
 		
 		JDBCMetdataProcessor processor = new JDBCMetdataProcessor();
 		
-		Metdata metadata = new Metdata();
+		Metadata metadata = new Metadata();
 		processor.process(metadata, conn);
 		
 		for(Table table : metadata.getTables()){
