@@ -1,4 +1,4 @@
-package com.customized.tools.dbtester.view;
+package com.customized.tools.dbtester.renderer;
 
 
 import java.sql.ResultSet;
@@ -97,7 +97,6 @@ public class ResultSetRenderer implements Interruptable {
 
     public int execute() throws SQLException {
     	
-    	
 		int rows = 0;
 	
 		running = true;
@@ -132,7 +131,7 @@ public class ResultSetRenderer implements Interruptable {
 		    	lastRowTime = System.currentTimeMillis();
 		    }
 		    
-		    table.closeTable();
+		    table.renderer();
 	            if (!running) {
 	                try {
 	                    rset.getStatement().cancel();
@@ -161,7 +160,7 @@ public class ResultSetRenderer implements Interruptable {
 	}
     
     public String elapsedTime(){
-    	double elapsedTimeSec = (firstRowTime - lastRowTime)/1000D;
+    	double elapsedTimeSec = (lastRowTime - firstRowTime)/1000D;
     	return "("+ Double.parseDouble(new DecimalFormat("##.##").format(elapsedTimeSec)) + " sec)";
     }
 

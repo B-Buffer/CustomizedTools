@@ -4,10 +4,24 @@ import java.io.PrintStream;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.text.DecimalFormat;
 
-import com.customized.tools.dbtester.view.PrintStreamOutputDevice;
-import com.customized.tools.dbtester.view.ResultSetRenderer;
+import com.customized.tools.dbtester.renderer.ResultSetRenderer;
+import com.customized.tools.dbtester.renderer.TerminalOutputDevice;
 
+/**
+ *  A SQLPlus can execute one line SQL or multiple lines SQL.
+ *  
+ *  Support SQL including:
+ *    * CREATE TABLE
+ *    * INSERT TABLE
+ *    * UPDATE TABLE
+ *    * DELETE TABLE
+ *    * SELECT TABLE
+ *    * DROP   TABLE
+ * 
+ *
+ */
 public class SQLPlus {
 	
 	public static final byte LINE_EXECUTED   = 1;
@@ -81,6 +95,7 @@ public class SQLPlus {
 			return;
 		}
 		
+		final long startTime = System.currentTimeMillis();
 		Statement stmt = null;
 		ResultSet rs = null;
 		
@@ -103,12 +118,26 @@ public class SQLPlus {
 					int rows = renderer.execute();
 					out.println(rows + " rows in set " + renderer.elapsedTime());
 					
+				} else {
+					int updateCount = stmt.getUpdateCount();
+					if (updateCount >= 0){
+						out.println(updateCount + " rows affected " + elapsedTime(startTime) );
+					}
 				}
 			}
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}
 	}
+	
+	private String elapsedTime(long startTime){
+		return elapsedTime(startTime, System.currentTimeMillis());
+	}
+	
+	private String elapsedTime(long startTime, long endTime){
+    	double elapsedTimeSec = (endTime - startTime)/1000D;
+    	return "("+ Double.parseDouble(new DecimalFormat("##.##").format(elapsedTimeSec)) + " sec)";
+    }
 
 	public String getColumnDelimiter() {
 		return columnDelimiter;
@@ -157,33 +186,6 @@ public class SQLPlus {
 	public void shutdown() {
 		sessionManager.closeAll();
 		parser.discard();
-	}
-	
-	private class TerminalOutputDevice extends PrintStreamOutputDevice {
-		
-		private static final String BOLD   = "\033[1m";
-	    private static final String NORMAL = "\033[m";
-	    private static final String GREY   = "\033[1;30m";
-
-		public TerminalOutputDevice(PrintStream out) {
-			super(out);
-		}
-		
-		public void attributeBold()  { 
-	        print( BOLD );
-	    }
-	    public void attributeGrey()  { 
-	        print( GREY );
-	    }
-
-	    public void attributeReset() { 
-	        print( NORMAL );
-	    }
-
-	    public boolean isTerminal() {
-	        return true;
-	    }
-		
 	}
 
 }

@@ -160,12 +160,36 @@ public class SQLCommandParser {
     		return false;
     	}
     	
-    	parsePartialInput();
+    	parse();
     	
     	return (_currentState.getState() == POTENTIAL_END_FOUND);
     }
     
-    public String next() throws IllegalStateException {
+    /**
+     *  Validating operations including:
+     *   * consume the parser if the command is empty
+     *   * trim semicolon(';') and whitespace(' ', '\n', '\t') at the end of command
+     *   * trim the slash '/' at the end of command
+     */
+    private void validation() {
+    	
+    	for(int i = _currentState.getCommandBuffer().length()- 1 ; i >= 0 ; i--){
+    		char c = _currentState.getCommandBuffer().charAt(i);
+    		if (c == ';' || Character.isWhitespace(c) || c == '/'){
+    			_currentState.getCommandBuffer().deleteCharAt(i);
+			} else {
+				break;
+			}
+    	}
+    	
+    	if(_currentState.getCommandBuffer().length() == 0){
+    		consumed();
+    		return;
+    	}
+    	
+	}
+
+	public String next() throws IllegalStateException {
     	
     	if (_currentState.getState() != POTENTIAL_END_FOUND) {
     		throw new IllegalStateException ("next() called without hasNext()");
@@ -173,29 +197,13 @@ public class SQLCommandParser {
     	
     	consumed();
     	
-    	String command = _currentState.getCommandBuffer().toString();
-    	
-    	if (command.endsWith("/")) {
-    	    command = command.substring(0, command.length()-1);
-    	}
-    	
-    	// remove trailing ';' and whitespaces.
-    	StringBuffer cmdBuf = new StringBuffer(command.trim());
-    	int i = 0;
-    	for (i = cmdBuf.length()-1; i > 0; --i) {
-    	    char c = cmdBuf.charAt(i);
-    	    if (c != ';' && !Character.isWhitespace(c))
-    		break;
-    	}
-    	cmdBuf.setLength(i+1);
-    	
-    	return cmdBuf.toString();
+    	return _currentState.getCommandBuffer().toString();
     }
 
     /**
      * parse partial input and set state to POTENTIAL_END_FOUND if we either reached end-of-line or a semicolon.
      */
-	private void parsePartialInput() {
+	private void parse() {
 		
 		int pos = 0;
 		char current;
@@ -207,10 +215,11 @@ public class SQLCommandParser {
 		final StringBuffer input  = _currentState.getInputBuffer();
 		final StringBuffer parsed = _currentState.getCommandBuffer();
 		
+		//remove whitespace prefix
 		if (state == NEW_STATEMENT) {
 			parsed.setLength(0);
 			while (pos < input.length() && Character.isWhitespace (input.charAt(pos))) {
-				_currentState.setNewlineSeen( input.charAt(pos) == '\n');
+				_currentState.setNewlineSeen(false);
 				++pos;
 			}
 			input.delete(0, pos);
@@ -266,9 +275,12 @@ public class SQLCommandParser {
 		    		if (current == ';'){
 		    			state = ENDLINE_COMMENT;
 		    		} else {
-		    			state = POTENTIAL_END_FOUND;
-		    			current = ';';
-		    			--pos;
+		    			input.delete(0, pos);
+		    			state = STATEMENT;
+		    			pos --;
+//		    			state = POTENTIAL_END_FOUND;
+//		    			current = ';';
+//		    			--pos;
 		    		}
 		    		break;
 		    	case START_COMMENT:
@@ -355,12 +367,7 @@ public class SQLCommandParser {
 		    	
 		    } while(reIterate);
 		    
-		    if (!vetoAppend && ((state == STATEMENT && oldstate != PRE_END_COMMENT)
-		    		    || state == NEW_STATEMENT
-		    		    || state == STATEMENT_QUOTE
-		    		    || state == STRING
-		    		    || state == SQLSTRING
-		    		    || state == POTENTIAL_END_FOUND)) {
+		    if (!vetoAppend && ((state == STATEMENT && oldstate != PRE_END_COMMENT) || state == NEW_STATEMENT || state == STATEMENT_QUOTE || state == STRING || state == SQLSTRING || state == POTENTIAL_END_FOUND)) {
 		    	parsed.append(current);
 		    }
 		    
@@ -371,6 +378,8 @@ public class SQLCommandParser {
 		}
 		input.delete(0, pos);
 		_currentState.setState(state);
+		
+		validation();
 	}
 
 }

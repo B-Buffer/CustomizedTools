@@ -25,6 +25,7 @@
 	<version.mysql>5.1.30</version.mysql>
 	<version.com.h2database>1.4.186</version.com.h2database>
 	<version.aesh>0.60</version.aesh>
+	<version.aesh-extensions>0.59</version.aesh-extensions>
 	<version.itextpdf>5.5.5</version.itextpdf>
 
 	<version.jar.plugin>2.2</version.jar.plugin>
@@ -148,6 +149,11 @@
 	    <groupId>org.jboss.aesh</groupId>
 	    <artifactId>aesh</artifactId>
 	    <version>${version.aesh}</version>
+	</dependency>
+	<dependency>
+	    <groupId>org.jboss.aesh</groupId>
+	    <artifactId>aesh-extensions</artifactId>
+	    <version>${version.aesh-extensions}</version>
 	</dependency>
     	<dependency>
 	    <groupId>javax.xml.bind</groupId>

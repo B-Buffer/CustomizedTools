@@ -15,6 +15,7 @@
     	<module name="org.apache.log4j" services="import"/>
     	<module name="com.mgmtp.gcviewer" services="import"/>
     	<module name="org.jboss.aesh" services="import"/>
+    	<module name="org.jboss.aesh.extensions" services="import"/>
     	<module name="com.mysql" services="import"/>
     </dependencies>
 </module>

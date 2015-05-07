@@ -13,6 +13,9 @@ import java.nio.file.WatchKey;
 import java.nio.file.WatchService;
 import java.util.List;
 
+import org.junit.Ignore;
+
+@Ignore
 public class TestWatchServiceAPI {
 
 	public static void main(String[] args) throws IOException {

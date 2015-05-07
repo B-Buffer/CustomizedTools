@@ -1,4 +1,4 @@
-package com.customized.tools.dbtester.view;
+package com.customized.tools.dbtester.renderer;
 
 import java.util.ArrayList;
 import java.util.StringTokenizer;

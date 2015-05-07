@@ -12,6 +12,8 @@ import org.jboss.aesh.console.command.registry.CommandRegistry;
 import org.jboss.aesh.console.helper.ManProvider;
 import org.jboss.aesh.console.settings.Settings;
 import org.jboss.aesh.console.settings.SettingsBuilder;
+import org.jboss.aesh.extensions.exit.Exit;
+import org.jboss.aesh.extensions.ls.Ls;
 import org.jboss.aesh.terminal.Color;
 import org.jboss.aesh.terminal.TerminalColor;
 import org.jboss.aesh.terminal.TerminalString;
@@ -68,6 +70,9 @@ public class AeshContainer implements LifeCycle {
 				.create();
 		
 		CommandRegistry registry = new AeshCommandRegistryBuilder()
+//				.command(Exit.class)
+//				.command(Ls.class)
+//				.command(Matrix.class)
 				.command(ExitCommand.class)
 				.command(JarClassSearcherCommand.class)
 				.command(FileSearcherCommand.class)

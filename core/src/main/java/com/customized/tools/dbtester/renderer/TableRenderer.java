@@ -1,12 +1,40 @@
-package com.customized.tools.dbtester.view;
-
+package com.customized.tools.dbtester.renderer;
 
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Iterator;
 
-
-public class TableRenderer {
+/**
+ * A <tt>TableRenderer</tt> can renderer table as a formated table output, The {@link #renderer}
+ * method will output the formated table. Before execute the {@link #renderer} the{@link #addRow}
+ * method should be invoked, The table header be initialized by constructor {@link #TableRenderer}.
+ * 
+ * A usage Example:
+ * <pre>
+ * ColumnMetaData[] header = new ColumnMetaData [2];
+ * header[0] = new ColumnMetaData("COL0", ColumnMetaData.ALIGN_RIGHT);
+ * header[1] = new ColumnMetaData("COL1", ColumnMetaData.ALIGN_RIGHT);
+ * 
+ * TableRenderer renderer = new TableRenderer(header,  out, "|", true, true);
+ * 
+ * Column[] row = new Column[2];
+ * row[0] = new Column(0);
+ * row[1] = new Column(1);
+ * 
+ * renderer.addRow(row);
+ * renderer.renderer();
+ * </pre>
+ * 
+ * The rendered table like:
+ * <pre>
+ * +------+------+
+ * | COL0 | COL1 |
+ * |    0 |    1 |
+ * +------+------+
+ * </pre>
+ *
+ */
+public class TableRenderer implements Renderer{
     
     private static final int MAX_CACHE_ELEMENTS = 500;
 
@@ -18,7 +46,7 @@ public class TableRenderer {
     private boolean enableHeader;
     private boolean enableFooter;
 
-    protected final ColumnMetaData meta[];
+    protected final ColumnMetaData[] meta;
     protected final OutputDevice out;
     protected final String colSeparator;
     protected final String colPreSeparator;
@@ -58,7 +86,6 @@ public class TableRenderer {
         cacheRows.add(row);
         if (cacheRows.size() >= MAX_CACHE_ELEMENTS) {
             flush();
-            cacheRows.clear();
         }
     }
     
@@ -75,12 +102,15 @@ public class TableRenderer {
      */
     protected void updateColumnWidths(Column[] row) {
         for (int i = 0; i < meta.length; ++i) {
+        	if(row[i] == null) {
+        		continue;
+        	}
             row[i].setAutoWrap(meta[i].getAutoWrap());
             meta[i].updateWidth(row[i].getWidth());
         }
     }
 
-    public void closeTable() {
+    public void renderer() {
         flush();
         if (writtenRows > 0 && enableFooter) {
             printHorizontalLine();
@@ -109,6 +139,7 @@ public class TableRenderer {
             while (hasMoreLines);
             ++writtenRows;
         }
+        cacheRows.clear();
     }
 
     protected boolean printColumns(Column[] currentRow, boolean hasMoreLines) {
@@ -130,13 +161,20 @@ public class TableRenderer {
                                   int i) {
         String txt;
         out.print(" ");
-        txt = formatString( col.getNextLine(), ' ', meta[i].getWidth(),meta[i].getAlignment());
-        hasMoreLines |= col.hasNextLine();
-        if (col.isNull())
-            out.attributeGrey();
-        out.print(txt);
-        if (col.isNull())
-            out.attributeReset();
+        if(col == null) {
+        	txt = formatString( "null", ' ', meta[i].getWidth(),meta[i].getAlignment());
+        	hasMoreLines = false;
+        	out.print(txt);
+        } else {
+        	txt = formatString( col.getNextLine(), ' ', meta[i].getWidth(),meta[i].getAlignment());
+            hasMoreLines |= col.hasNextLine();
+            if (col.isNull())
+                out.attributeGrey();
+            out.print(txt);
+            if (col.isNull())
+                out.attributeReset();
+        }
+        
         out.print(colSeparator);
         return hasMoreLines;
     }

@@ -15,6 +15,8 @@ public class Table extends ColumnSet{
 	
 	private String annotation;
 	
+	private String simpleName;
+	
 	private volatile long cardinality = UNKNOWN_CARDINALITY;
 	
 	private List<ForeignKey> foriegnKeys = new ArrayList<ForeignKey>(2);
@@ -119,6 +121,14 @@ public class Table extends ColumnSet{
 
 	public void setForiegnKeys(List<ForeignKey> foriegnKeys) {
 		this.foriegnKeys = foriegnKeys;
+	}
+
+	public String getSimpleName() {
+		return simpleName;
+	}
+
+	public void setSimpleName(String simpleName) {
+		this.simpleName = simpleName;
 	}
 
 	public enum Type {

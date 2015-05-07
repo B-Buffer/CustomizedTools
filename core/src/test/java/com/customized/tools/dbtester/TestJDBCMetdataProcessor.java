@@ -1,7 +1,10 @@
 package com.customized.tools.dbtester;
 
+import java.io.FileReader;
 import java.sql.Connection;
 
+import org.h2.tools.RunScript;
+import org.junit.BeforeClass;
 import org.junit.Ignore;
 import org.junit.Test;
 
@@ -9,6 +12,29 @@ import com.customized.tools.dbtester.metdata.Metadata;
 import com.customized.tools.dbtester.metdata.Table;
 
 public class TestJDBCMetdataProcessor {
+	
+	private static final String DRIVER = "org.h2.Driver";
+	private static final String URL = "jdbc:h2:mem://localhost/~/test";
+	private static final String USER = "sa";
+	private static final String PASSWORD = "sa";
+	
+	static Metadata metadata = new Metadata();
+	
+	@BeforeClass
+	public static void init() throws Exception{
+		
+		SQLSession session = new SQLSession(DRIVER, URL, USER, PASSWORD);
+		RunScript.execute(session.getConn(), new FileReader("src/test/resources/customer-schema-h2.sql"));
+		JDBCMetdataProcessor processor = new JDBCMetdataProcessor();
+		processor.process(metadata, session.getConn());
+	}
+	
+	@Test
+	public void testTables(){
+		for(Table table : metadata.getTables()){
+			System.out.println(table.getName());
+		}
+	}
 	
 	@Test
 	@Ignore
@@ -31,13 +57,6 @@ public class TestJDBCMetdataProcessor {
 		}
 		
 		JDBCUtil.close(conn);
-	}
-	
-	public static void main(String[] args) throws Exception {
-		
-		TestJDBCMetdataProcessor test = new TestJDBCMetdataProcessor();
-		
-		test.testMysqlMetdata();
 	}
 
 }

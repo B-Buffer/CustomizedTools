@@ -1,4 +1,4 @@
-package com.customized.tools.dbtester.view;
+package com.customized.tools.dbtester.renderer;
 
 /**
  * own wrapper for the column meta data.
