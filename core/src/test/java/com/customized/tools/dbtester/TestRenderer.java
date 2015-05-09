@@ -10,13 +10,15 @@ import org.junit.AfterClass;
 import org.junit.BeforeClass;
 import org.junit.Test;
 
-import com.customized.tools.dbtester.renderer.Column;
-import com.customized.tools.dbtester.renderer.ColumnMetaData;
-import com.customized.tools.dbtester.renderer.OutputDevice;
-import com.customized.tools.dbtester.renderer.PrintStreamOutputDevice;
-import com.customized.tools.dbtester.renderer.ResultSetRenderer;
-import com.customized.tools.dbtester.renderer.TableRenderer;
-import com.customized.tools.dbtester.renderer.TerminalOutputDevice;
+import com.customized.tools.renderer.Column;
+import com.customized.tools.renderer.ColumnMetaData;
+import com.customized.tools.renderer.OutputDevice;
+import com.customized.tools.renderer.PrintStreamOutputDevice;
+import com.customized.tools.renderer.ResultSetRenderer;
+import com.customized.tools.renderer.TableRenderer;
+import com.customized.tools.renderer.TerminalOutputDevice;
+import com.customized.tools.renderer.TreeNode;
+import com.customized.tools.renderer.TreeRenderer;
 
 public class TestRenderer {
 	
@@ -242,6 +244,16 @@ public class TestRenderer {
 	}
 	
 	@Test
+	public void testTableRenderer_9(){
+		ColumnMetaData[] metadata = ColumnMetaData.Factory.create("COL1", "COL2", "COL3");
+		OutputDevice out = new PrintStreamOutputDevice(System.out);
+		TableRenderer renderer = new TableRenderer(metadata,  out, "|", true, true);
+		renderer.addRow(Column.Factory.create(0, 1, 2));
+		renderer.addRow(Column.Factory.create(0, 1, 2));
+		renderer.renderer();
+	}
+	
+	@Test
 	public void testResultSetRenderer_0() throws InstantiationException, IllegalAccessException, ClassNotFoundException, SQLException, FileNotFoundException {
 		
 		Connection conn = session.getConn();
@@ -302,6 +314,94 @@ public class TestRenderer {
  
     	JDBCUtil.close(rs, stmt);
     	
+	}
+	
+	@Test
+	public void testTreeRenderer_0() {
+		
+		TreeNode<String> a = new TreeNode<>("a");
+		TreeNode<String> b = new TreeNode<>("b");
+		TreeNode<String> c = new TreeNode<>("c");
+		TreeNode<String> d = new TreeNode<>("d");
+		TreeNode<String> e = new TreeNode<>("e");
+		a.addChild(b).addChild(c).addChild(d);
+		a.addChild(e);
+		
+		OutputDevice out = new PrintStreamOutputDevice(System.out);
+		
+		TreeRenderer renderer = new TreeRenderer(a, out);
+		renderer.renderer();
+	}
+	
+	@Test
+	public void testTreeRenderer_1() {
+		
+		TreeNode<String> a = new TreeNode<>("a");
+		a.addChild("b").addChild("c").addChild("d").addChild("e");
+		new TreeRenderer(a, new PrintStreamOutputDevice(System.out)).renderer();
+	}
+	
+	@Test
+	public void testTreeRenderer_2() {
+		
+		TreeNode<String> a = new TreeNode<>("a");
+		TreeNode<String> b = new TreeNode<>("b");
+		TreeNode<String> c = new TreeNode<>("c");
+		TreeNode<String> d = new TreeNode<>("d");
+		TreeNode<String> e = new TreeNode<>("e");
+		a.addChild(b).addChild(c).addChild(d);
+		b.addChild(e);
+		
+		new TreeRenderer(a, new PrintStreamOutputDevice(System.out)).renderer();
+	}
+	
+	@Test
+	public void testTreeRenderer_3() {
+		
+		TreeNode<String> a = new TreeNode<>("a");
+		TreeNode<String> b = new TreeNode<>("b123456789");
+		TreeNode<String> c = new TreeNode<>("c");
+		TreeNode<String> d = new TreeNode<>("d");
+		TreeNode<String> e = new TreeNode<>("e");
+		a.addChild(b).addChild(c).addChild(d);
+		b.addChild(e);
+		
+		new TreeRenderer(a, new PrintStreamOutputDevice(System.out)).renderer();
+	}
+	
+	@Test
+	public void testTreeRenderer_4() {
+		
+		TreeNode<String> a = new TreeNode<>("a");
+		TreeNode<String> b = new TreeNode<>("b");
+		TreeNode<String> c = new TreeNode<>("c");
+		TreeNode<String> d = new TreeNode<>("d");
+		TreeNode<String> e = new TreeNode<>("e");
+		TreeNode<String> f = new TreeNode<>("f");
+		TreeNode<String> g = new TreeNode<>("g");
+		a.addChild(b).addChild(c).addChild(d);
+		a.addChild(e);
+		b.addChild(f);
+		b.addChild(g);
+		
+		new TreeRenderer(a, new PrintStreamOutputDevice(System.out)).renderer();
+	}
+	
+	@Test
+	public void testTreeRenderer_5() {
+		
+		TreeNode<String> root = new TreeNode<>(".");
+		TreeNode<String> a = new TreeNode<>("a");
+		TreeNode<String> b = new TreeNode<>("b");
+		TreeNode<String> c = new TreeNode<>("c");
+		TreeNode<String> d = new TreeNode<>("d");
+		TreeNode<String> e = new TreeNode<>("e");
+		root.addChild(a);
+		a.addChild(b).addChild(c);
+		root.addChild(d);
+		root.addChild(e);
+		
+		new TreeRenderer(root, new TerminalOutputDevice(System.out)).renderer();
 	}
 	
 	@AfterClass

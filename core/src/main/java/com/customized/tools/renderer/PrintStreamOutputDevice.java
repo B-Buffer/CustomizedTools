@@ -1,4 +1,4 @@
-package com.customized.tools.dbtester.renderer;
+package com.customized.tools.renderer;
 
 import java.io.PrintStream;
 

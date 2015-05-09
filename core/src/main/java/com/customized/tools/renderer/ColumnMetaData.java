@@ -1,4 +1,4 @@
-package com.customized.tools.dbtester.renderer;
+package com.customized.tools.renderer;
 
 /**
  * own wrapper for the column meta data.
@@ -81,5 +81,20 @@ public final class ColumnMetaData {
 		if (w > width) {
 		    width = w;
 		}
+    }
+    
+    public static class Factory {
+    	
+    	public static ColumnMetaData[] create(int align, String... items) {
+    		ColumnMetaData[] metadata = new ColumnMetaData [items.length];
+    		for(int i = 0 ; i < items.length ; i ++) {
+    			metadata[i] = new ColumnMetaData(items[i], ColumnMetaData.ALIGN_CENTER);
+    		}
+    		return metadata;
+    	}
+    	
+    	public static ColumnMetaData[] create(String... items) {
+    		return create(ALIGN_CENTER, items);
+    	}
     }
 }

@@ -1,4 +1,4 @@
-package com.customized.tools.dbtester.renderer;
+package com.customized.tools.renderer;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -31,6 +31,13 @@ import java.util.Iterator;
  * | COL0 | COL1 |
  * |    0 |    1 |
  * +------+------+
+ * </pre>
+ * 
+ * Alternatively, There is a Factory class in <tt>ColumnMetaData</tt> and <tt>Column</tt> which used quick create
+ * MetaData Header and Data Row, for example:
+ * <pre>
+ * ColumnMetaData[] header = ColumnMetaData.Factory.create("COL0", "COL1");
+ * Column[] row = Column.Factory.create(0, 1);
  * </pre>
  *
  */

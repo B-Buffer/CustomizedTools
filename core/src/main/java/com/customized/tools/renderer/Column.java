@@ -1,4 +1,4 @@
-package com.customized.tools.dbtester.renderer;
+package com.customized.tools.renderer;
 
 import java.util.ArrayList;
 import java.util.StringTokenizer;
@@ -137,5 +137,24 @@ public class Column {
         }
         ++pos;
         return result;
+    }
+    
+    public static class Factory {
+    	
+    	public static Column[] create(String... items) {
+    		Column[] row = new Column[items.length];
+    		for(int i = 0 ; i < items.length ; i ++){
+    			row[i] = new Column(items[i]);
+    		}
+    		return row;
+    	}
+    	
+    	public static Column[] create(long... items) {
+    		Column[] row = new Column[items.length];
+    		for(int i = 0 ; i < items.length ; i ++){
+    			row[i] = new Column(items[i]);
+    		}
+    		return row;
+    	}
     }
 }

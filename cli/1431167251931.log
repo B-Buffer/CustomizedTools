@@ -1,0 +1,21 @@
+[2015-05-09 18:27:31 953] TreeNode Content Stack():
+/  -  
+└── a  -  [key=value]
+    ├── b  -  [key=value]
+    │   └── d  -  [key=value]
+    │       └── e  -  [key=value]
+    └── c  -  [key=value]
+[2015-05-09 18:28:01 186] TreeNode Content Stack(ls):
+/  -  
+└── a  -  [key=value]
+    ├── b  -  [key=value]
+    │   └── d  -  [key=value]
+    │       └── e  -  [key=value]
+    └── c  -  [key=value]
+[2015-05-09 18:28:03 256] TreeNode Content Stack(tree):
+/  -  
+└── a  -  [key=value]
+    ├── b  -  [key=value]
+    │   └── d  -  [key=value]
+    │       └── e  -  [key=value]
+    └── c  -  [key=value]

@@ -6,8 +6,8 @@ import java.sql.SQLException;
 import java.sql.Statement;
 import java.text.DecimalFormat;
 
-import com.customized.tools.dbtester.renderer.ResultSetRenderer;
-import com.customized.tools.dbtester.renderer.TerminalOutputDevice;
+import com.customized.tools.renderer.ResultSetRenderer;
+import com.customized.tools.renderer.TerminalOutputDevice;
 
 /**
  *  A SQLPlus can execute one line SQL or multiple lines SQL.
