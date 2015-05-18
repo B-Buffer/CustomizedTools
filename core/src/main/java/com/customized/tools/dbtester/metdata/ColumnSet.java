@@ -5,17 +5,23 @@ import java.util.List;
 import java.util.Map;
 import java.util.TreeMap;
 
-public class ColumnSet extends AbstractMetadataRecord {
-	
+public class ColumnSet<T extends AbstractMetadataRecord>  extends AbstractMetadataRecord {
+
+	private static final long serialVersionUID = 6522855816511582922L;
 	private List<Column> columns;
-	private transient Map<String, Column> columnMap;
-	
-	
-	public List<Column> getColumns() {
+    private T parent;
+    private transient Map<String, Column> columnMap;
+    
+    public List<Column> getColumns() {
     	return columns;
     }
-	
-	public Column getColumnByName(String name) {
+    
+    /**
+     * Get the {@link Column} via a case-insensitive lookup
+     * @param name
+     * @return the {@link Column} or null if it doesn't exist
+     */
+    public Column getColumnByName(String name) {
     	if (columns == null || name == null) {
     		return null;
     	}
@@ -29,8 +35,8 @@ public class ColumnSet extends AbstractMetadataRecord {
     	}
     	return map.get(name);
     }
-	
-	public void addColumn(Column column) {
+    
+    public void addColumn(Column column) {
     	if (columns == null) {
     		columns = new ArrayList<Column>();
     	}
@@ -40,10 +46,19 @@ public class ColumnSet extends AbstractMetadataRecord {
     		map.put(column.getName(), column);
     	}
     }
-	
-	public void setColumns(List<Column> columns) {
+
+    public void setColumns(List<Column> columns) {
 		this.columns = columns;
 		columnMap = null;
+	}
+    
+    @Override
+    public T getParent() {
+    	return parent;
+    }
+    
+    public void setParent(T parent) {
+		this.parent = parent;
 	}
 
 }

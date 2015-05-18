@@ -16,17 +16,18 @@ import java.util.Map;
 import java.util.Set;
 import java.util.TreeMap;
 
-import com.customized.tools.StringUtil;
 import com.customized.tools.dbtester.metdata.AbstractMetadataRecord;
 import com.customized.tools.dbtester.metdata.Column;
 import com.customized.tools.dbtester.metdata.ForeignKey;
-import com.customized.tools.dbtester.metdata.Column.NullType;
 import com.customized.tools.dbtester.metdata.KeyRecord;
 import com.customized.tools.dbtester.metdata.Metadata;
 import com.customized.tools.dbtester.metdata.Procedure;
 import com.customized.tools.dbtester.metdata.ProcedureParameter;
 import com.customized.tools.dbtester.metdata.ProcedureParameter.Type;
 import com.customized.tools.dbtester.metdata.Table;
+import com.customized.tools.util.StringUtil;
+
+import com.customized.tools.dbtester.metdata.BaseColumn.NullType;
 
 
 public class JDBCMetdataProcessor implements MetadataProcessor<Connection> {
@@ -170,7 +171,7 @@ public class JDBCMetdataProcessor implements MetadataProcessor<Connection> {
 		primaryKey.setParent(table);
 		primaryKey.setColumns(new ArrayList<Column>(columnNames.size()));
 		primaryKey.setName(name);
-		primaryKey.setUuid(formUUID(primaryKey));
+		primaryKey.setUUID(formUUID(primaryKey));
 		assignColumns(columnNames, table, primaryKey);
 		table.setPrimaryKey(primaryKey);
 	}
@@ -257,8 +258,8 @@ public class JDBCMetdataProcessor implements MetadataProcessor<Connection> {
 		foreignKey.setReferenceTableName(referenceTable);
 		foreignKey.setReferenceColumns(referencedColumnNames);
 		foreignKey.setName(name);
-		foreignKey.setUuid(this.formUUID(foreignKey));
-		table.getForiegnKeys().add(foreignKey);
+		foreignKey.setUUID(this.formUUID(foreignKey));
+		table.getForeignKeys().add(foreignKey);
 		return foreignKey;
 	}
 
@@ -366,7 +367,7 @@ public class JDBCMetdataProcessor implements MetadataProcessor<Connection> {
 		index.setColumns(new ArrayList<Column>(columnNames.size()));
 		index.setName(indexName);
 		assignColumns(columnNames, table, index);
-		index.setUuid(this.formUUID(index));
+		index.setUUID(this.formUUID(index));
 		if (nonUnique) {
 			table.getIndexes().add(index);
 		} else {
@@ -460,7 +461,7 @@ public class JDBCMetdataProcessor implements MetadataProcessor<Connection> {
 	private Procedure addProcedure(String name) {
 		Procedure procedure = new Procedure();
 		procedure.setName(name);
-		procedure.setUuid(this.formUUID(procedure));
+		procedure.setUUID(this.formUUID(procedure));
 		procedure.setParameters(new LinkedList<ProcedureParameter>());
 		return procedure;
 	}
@@ -558,8 +559,8 @@ public class JDBCMetdataProcessor implements MetadataProcessor<Connection> {
 		table.addColumn(column);
 		column.setParent(table);
 		column.setPosition(table.getColumns().size());
-		column.setType(runtimeType);
-		column.setUuid(formUUID(column));
+		column.setRuntimeType(runtimeType);
+		column.setUUID(formUUID(column));
 		return column;
 	}
 
@@ -593,7 +594,7 @@ public class JDBCMetdataProcessor implements MetadataProcessor<Connection> {
 		Table table = new Table();
 		table.setTableType(Table.Type.Table);
 		table.setName(useFullSchemaName ? fullName : tableName);
-		table.setUuid(formUUID(table));
+		table.setUUID(formUUID(table));
 		table.setSupportsUpdate(true);
 		table.setAnnotation(remarks);
 		
@@ -602,7 +603,7 @@ public class JDBCMetdataProcessor implements MetadataProcessor<Connection> {
 
 	private String formUUID(AbstractMetadataRecord table) {
 		
-		int lsb = table.getUuid().hashCode();
+		int lsb = table.getUUID().hashCode();
 		lsb = 31 * lsb + table.getName().hashCode();
 		String uuid = StringUtil.hex(lsb, 8) ;
 		return uuid;

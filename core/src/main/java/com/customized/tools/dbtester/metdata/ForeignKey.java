@@ -31,7 +31,7 @@ public class ForeignKey extends KeyRecord{
 			if (primaryKey.getParent() != null) {
 				this.referenceTableName = primaryKey.getParent().getName();
 			}
-			this.uniqueKeyID = primaryKey.getUuid();
+			this.uniqueKeyID = primaryKey.getUUID();
 		} else {
 			this.referenceColumns = null;
 			this.referenceTableName = null;

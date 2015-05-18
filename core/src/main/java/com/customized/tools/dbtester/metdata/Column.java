@@ -1,146 +1,283 @@
 package com.customized.tools.dbtester.metdata;
 
-public class Column extends AbstractMetadataRecord{
-	
-	public enum NullType {
-		No_Nulls {
+public class Column extends BaseColumn implements Comparable<Column>{
+
+	private static final long serialVersionUID = -8063988389642056326L;
+
+	public enum SearchType {
+		Unsearchable,
+		Like_Only {
 			@Override
 			public String toString() {
-				return "No Nulls"; 
+				return "Like Only"; //$NON-NLS-1$ 
 			}
 		},
-		Nullable,
-		Unknown		
+		All_Except_Like {
+			@Override
+			public String toString() {
+				return "All Except Like"; //$NON-NLS-1$
+			}
+		},
+		Searchable
 	}
 	
-	private Table parent;
-	
-	private int position;
-	
-	private int precision;
-	
-	private int length;
-	
-    private int radix;
-    
+    private boolean selectable = true;
+    private boolean updatable;
+    private boolean autoIncremented;
+    private boolean caseSensitive;
+    private boolean signed;
+    private boolean currency;
+    private boolean fixedLength;
+    private SearchType searchType;
+    private volatile String minimumValue;
+    private volatile String maximumValue;
+    //TODO: nativeType is now on the base class, but left here for serialization compatibility
+    private String nativeType;
+    private String format;
     private int charOctetLength;
-	
-	private String type;
-	
-	private String nativeType;
-	
-	private String annotation;
-	
-	 private String defaultValue;
-	
-	private NullType nullType;
-	
-	private boolean updatable;
-	
-	private boolean autoIncremented;
-
-	public Table getParent() {
-		return parent;
-	}
-
-	public void setParent(Table parent) {
+    private volatile int distinctValues = -1;
+    private volatile int nullValues = -1;
+    private ColumnSet<?> parent;
+    
+    @Override
+    public void setDatatype(Datatype datatype, boolean copyAttributes, int arrayDimensions) {
+    	super.setDatatype(datatype, copyAttributes, arrayDimensions);
+    	if (datatype != null && copyAttributes) {
+    		//if (DefaultDataTypes.STRING.equals(datatype.getRuntimeTypeName())) { 
+    		    //TODO - this is not quite valid since we are dealing with length representing chars in UTF-16, then there should be twice the bytes
+    			//this.charOctetLength = datatype.getLength();
+    		//}
+    		this.signed = datatype.isSigned();
+    		this.autoIncremented = datatype.isAutoIncrement();
+    		this.caseSensitive = datatype.isCaseSensitive();
+    		this.signed = datatype.isSigned();
+    	}
+    }
+    
+    public void setParent(ColumnSet<?> parent) {
 		this.parent = parent;
 	}
+    
+    @Override
+    public ColumnSet<?> getParent() {
+    	return parent;
+    }
 
-	public int getPosition() {
-		return position;
-	}
+    @Override
+    public int compareTo(Column record) {
+    	return this.getPosition() - record.getPosition();
+    }
+    
+    public int getCharOctetLength() {
+        return charOctetLength;
+    }
 
-	public void setPosition(int position) {
-		this.position = position;
-	}
+    public String getMaximumValue() {
+        return maximumValue;
+    }
 
-	public String getType() {
-		return type;
-	}
+    public String getMinimumValue() {
+        return minimumValue;
+    }
 
-	public void setType(String type) {
-		this.type = type;
-	}
+    public SearchType getSearchType() {
+    	if (searchType == null) {
+    		return this.getDatatype().getSearchType();
+    	}
+        return searchType;
+    }
+    
+    public boolean isSearchTypeSet() {
+    	return searchType != null;
+    }
 
-	public int getPrecision() {
-		return precision;
-	}
+    public String getFormat() {
+        return format;
+    }
 
-	public void setPrecision(int precision) {
-		this.precision = precision;
-	}
+    public boolean isAutoIncremented() {
+        return autoIncremented;
+    }
 
-	public int getLength() {
-		return length;
-	}
+    public boolean isCaseSensitive() {
+        return caseSensitive;
+    }
 
-	public String getNativeType() {
-		return nativeType;
-	}
+    public boolean isCurrency() {
+        return currency;
+    }
 
-	public void setNativeType(String nativeType) {
-		this.nativeType = nativeType;
-	}
+    public boolean isFixedLength() {
+        return fixedLength;
+    }
 
-	public void setLength(int length) {
-		this.length = length;
-	}
+    public boolean isSelectable() {
+        return selectable;
+    }
 
-	public int getRadix() {
-		return radix;
-	}
+    public boolean isSigned() {
+        return signed;
+    }
 
-	public void setRadix(int radix) {
-		this.radix = radix;
-	}
+    public boolean isUpdatable() {
+        return updatable;
+    }
 
-	public NullType getNullType() {
-		return nullType;
-	}
+    public String getNativeType() {
+        return nativeType;
+    }
 
-	public void setNullType(NullType nullType) {
-		this.nullType = nullType;
-	}
+    public int getNullValues() {
+    	if (nullValues >= -1) {
+    		return nullValues;
+    	}
+    	return Integer.MAX_VALUE;
+    }
+    
+    public float getNullValuesAsFloat() {
+    	return Table.asFloat(nullValues);
+    }
+    
+    public int getDistinctValues() {
+    	if (distinctValues >= -1) {
+    		return distinctValues;
+    	}
+    	return Integer.MAX_VALUE;
+    }
+    
+    public float getDistinctValuesAsFloat() {
+    	return Table.asFloat(distinctValues);
+    }
 
-	public String getAnnotation() {
-		return annotation;
-	}
+    /**
+     * @param b
+     */
+    public void setAutoIncremented(boolean b) {
+    	autoIncremented = b;
+    }
 
-	public void setAnnotation(String annotation) {
-		this.annotation = annotation;
-	}
+    /**
+     * @param b
+     */
+    public void setCaseSensitive(boolean b) {
+        caseSensitive = b;
+    }
 
-	public String getDefaultValue() {
-		return defaultValue;
-	}
+    /**
+     * @param i
+     */
+    public void setCharOctetLength(int i) {
+        charOctetLength = i;
+    }
 
-	public void setDefaultValue(String defaultValue) {
-		this.defaultValue = defaultValue;
-	}
+    /**
+     * @param b
+     */
+    public void setCurrency(boolean b) {
+        currency = b;
+    }
 
-	public boolean isUpdatable() {
-		return updatable;
-	}
+    /**
+     * @param b
+     */
+    public void setFixedLength(boolean b) {
+        fixedLength = b;
+    }
 
-	public void setUpdatable(boolean updatable) {
-		this.updatable = updatable;
-	}
+    /**
+     * @param object
+     */
+    public void setMaximumValue(String object) {
+//        maximumValue = DataTypeManager.getCanonicalString(object);
+    }
 
-	public int getCharOctetLength() {
-		return charOctetLength;
-	}
+    /**
+     * @param object
+     */
+    public void setMinimumValue(String object) {
+//        minimumValue = DataTypeManager.getCanonicalString(object);
+    }
 
-	public void setCharOctetLength(int charOctetLength) {
-		this.charOctetLength = charOctetLength;
-	}
+    /**
+     * @param s
+     */
+    public void setSearchType(SearchType s) {
+        searchType = s;
+    }
 
-	public boolean isAutoIncremented() {
-		return autoIncremented;
-	}
+    /**
+     * @param b
+     */
+    public void setSelectable(boolean b) {
+        selectable = b;
+    }
 
-	public void setAutoIncremented(boolean autoIncremented) {
-		this.autoIncremented = autoIncremented;
-	}
+    /**
+     * @param b
+     */
+    public void setSigned(boolean b) {
+        signed = b;
+    }
+
+    /**
+     * @param b
+     */
+    public void setUpdatable(boolean b) {
+        updatable = b;
+    }
+
+    /**
+     * @param string
+     */
+    public void setFormat(String string) {
+//        format = DataTypeManager.getCanonicalString(string);
+    }
+
+    /**
+     * @param distinctValues The distinctValues to set.
+     * @since 4.3
+     */
+    public void setDistinctValues(int distinctValues) {
+        this.distinctValues = Table.asInt(distinctValues);
+    }
+    
+    public void setDistinctValues(long distinctValues) {
+    	this.distinctValues = Table.asInt(distinctValues);
+    }
+
+    /**
+     * @param nullValues The nullValues to set.
+     * @since 4.3
+     */
+    public void setNullValues(int nullValues) {
+        this.nullValues = Table.asInt(nullValues);
+    }
+    
+    public void setNullValues(long nullValues) {
+    	this.nullValues = Table.asInt(nullValues);
+    }
+
+    /**
+     * @param nativeType The nativeType to set.
+     * @since 4.2
+     */
+    public void setNativeType(String nativeType) {
+//        this.nativeType = DataTypeManager.getCanonicalString(nativeType);
+    }
+    
+    public void setColumnStats(ColumnStats stats) {
+    	if (stats.getDistinctValues() != null) {
+			setDistinctValues(stats.getDistinctValues().longValue());
+		}
+		if (stats.getNullValues() != null) {
+			setNullValues(stats.getNullValues().longValue());
+		}
+		if (stats.getMaximumValue() != null) {
+			setMaximumValue(stats.getMaximumValue());
+		}
+		if (stats.getMinimumValue() != null) {
+			setMinimumValue(stats.getMinimumValue());
+		}
+    }
 
 }
