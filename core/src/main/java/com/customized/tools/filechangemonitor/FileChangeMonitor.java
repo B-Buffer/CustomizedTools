@@ -112,16 +112,16 @@ public class FileChangeMonitor extends AbstractTools {
 			
 			logger.info("FileChangeMonitor Start");
 			
-			IFileChangeListener listener = new FileChangeListener(console, pw);
-			IFileChangeHandler handler = new FileChangeHandler();
-			while(live){
-				listener.addListener(handler, new File(monitorFolder));
-				try {
-					Thread.sleep(50);
-				} catch (InterruptedException e) {
-					logger.error("", e);
-				}
-			}
+//			IFileChangeListener listener = /*new FileChangeListener(console, pw);*/
+//			IFileChangeHandler handler = new FileChangeHandler();
+//			while(live){
+//				listener.addListener(handler, new File(monitorFolder));
+//				try {
+//					Thread.sleep(50);
+//				} catch (InterruptedException e) {
+//					logger.error("", e);
+//				}
+//			}
 			
 			console.prompt("FileChangeMonitor stop");
 			

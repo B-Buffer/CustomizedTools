@@ -1,18 +1,13 @@
 package com.customized.tools.commands;
 
-import java.io.BufferedReader;
 import java.io.IOException;
-import java.io.InputStreamReader;
-import java.io.PrintStream;
 import java.sql.Connection;
 
 import org.jboss.aesh.cl.CommandDefinition;
 import org.jboss.aesh.cl.Option;
 import org.jboss.aesh.console.command.Command;
-import org.jboss.aesh.console.command.CommandOperation;
 import org.jboss.aesh.console.command.CommandResult;
 import org.jboss.aesh.console.command.invocation.CommandInvocation;
-import org.jboss.aesh.terminal.Key;
 
 import com.customized.tools.AeshContainer;
 import com.customized.tools.cli.InputConsole;
@@ -29,43 +24,50 @@ import com.customized.tools.model.DBTester;
 public class DBTesterCommand implements Command<CommandInvocation> {
 	
 	
-	@Option(name = "driver",
+	@Option(shortName = 'H', name = "help", hasValue = false,
+            description = "display this help and exit")
+    private boolean help;
+	
+	@Option(shortName = 'd',
+			name = "driver",
 			description = "DB Driver Class",
 			required = true,
 			defaultValue = {"org.h2.Driver", "com.mysql.jdbc.Driver", "org.postgresql.Driver"},
 			validator = DBDriverValidator.class)
 	private String driverClass;
 	
-	@Option(name = "url",
+	@Option(shortName = 'c',
+			name = "url",
 			description = "DB Connection URL",
 			required = true,
 			defaultValue = {"jdbc:mysql://localhost:3306/test", "jdbc:h2:mem:test;DB_CLOSE_DELAY=-1"},
 			validator = DBURLValidator.class)
 	private String connURL;
 	
-	@Option(name = "user",
+	@Option(shortName = 'u',
+			name = "user",
 			description = "DB User",
 			required = true,
 			defaultValue = {"test_user", "sa"})
 	private String user;
 	
-	@Option(name = "password",
+	@Option(shortName = 'p',
+			name = "password",
 			description = "DB Password",
 			required = true,
 			defaultValue = {"test_pass", "sa"})
 	private String password;
-	
-	@Option(name = "option",
-			description = "DBTester Option",
-			required = true,
-			defaultValue = {"DBConnectionTest", "DBMetadataTest", "SQLPlus"},
-			validator = DBTesterOptionValidator.class)
 	private String option;
 	
 	DBConnectionTester tester = new DBConnectionTester(null, new InputConsole());
 
 	@Override
 	public CommandResult execute(CommandInvocation commandInvocation)throws IOException, InterruptedException {
+		
+		if(help) {
+            commandInvocation.getShell().out().println(commandInvocation.getHelpInfo("find"));
+            return CommandResult.SUCCESS;
+        }
 		
 		DBTester entity = new DBTester();
 		entity.setDriver(driverClass);

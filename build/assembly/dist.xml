@@ -87,13 +87,6 @@
 	      <unpack>false</unpack>
 		</dependencySet>
 		
-		<dependencySet>
-		  <includes>
-	        <include>org.jboss.aesh:aesh-extensions:jar</include>
-	      </includes>
-		  <outputDirectory>modules/system/layers/base/org/jboss/aesh/extensions/main</outputDirectory>
-	      <unpack>false</unpack>
-		</dependencySet>
 		
 		<dependencySet>
 		  <includes>

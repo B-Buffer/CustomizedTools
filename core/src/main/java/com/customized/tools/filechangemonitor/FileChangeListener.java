@@ -1,23 +1,23 @@
 package com.customized.tools.filechangemonitor;
 
 import java.io.File;
+import java.io.PrintStream;
 import java.io.PrintWriter;
 import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
-import com.customized.tools.cli.InputConsole;
 
 public class FileChangeListener implements IFileChangeListener {
 	
-	private InputConsole console;
+	private PrintStream out;
 	
 	private PrintWriter pw;
 	
-	public FileChangeListener(InputConsole console, PrintWriter pw) {
+	public FileChangeListener(PrintStream out, PrintWriter pw) {
 		super();
-		this.console = console;
+		this.out = out;
 		this.pw = pw;
 	}
 
@@ -60,7 +60,7 @@ public class FileChangeListener implements IFileChangeListener {
 			}
 		}
 		
-		handler.hander(changeList, console, pw);
+		handler.hander(changeList, out, pw);
 	}
 	
 	private void initializeContentSet(Set<File> contentSet, File file) {

@@ -57,13 +57,6 @@
             <scope>provided</scope>
         </dependency>
         
-        <dependency>
-			<groupId>org.jboss.aesh</groupId>
-			<artifactId>aesh-extensions</artifactId>
-		</dependency>
-        
-         
-		
     </dependencies>
 
 	

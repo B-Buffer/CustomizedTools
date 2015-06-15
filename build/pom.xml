@@ -57,11 +57,6 @@
 			<artifactId>aesh</artifactId>
 		</dependency>
 		
-		<dependency>
-			<groupId>org.jboss.aesh</groupId>
-			<artifactId>aesh-extensions</artifactId>
-		</dependency>
-		
 
     </dependencies>
     
