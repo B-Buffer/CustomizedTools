@@ -24,7 +24,7 @@
 	<version.javahelp>2.0.05</version.javahelp>
 	<version.mysql>5.1.30</version.mysql>
 	<version.com.h2database>1.4.186</version.com.h2database>
-	<version.aesh>0.61-SNAPSHOT</version.aesh>
+	<version.aesh>0.61</version.aesh>
 	<version.aesh-extensions>0.59</version.aesh-extensions>
 	<version.itextpdf>5.5.5</version.itextpdf>
 
